@@ -43,4 +43,20 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="Логин" />
+    <string name="Пароль" />
+    <string name="password_ru">Пароль</string>
+    <string name="login_ru">Логин</string>
+    <string name="drinkollect">DrinKollect</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="welcome_ru">Добро пожаловать!</string>
+    <string name="wrong_password_ru">Неверный пароль…</string>
+    <string name="log_in_ru">Войти</string>
+    <string name="register_ru">Зарегистрироваться</string>
+    <string name="i_want_to_watch_ru">Мне просто посмотреть…</string>
+    <string name="login_fragment_label">Login Fragment</string>
+    <string name="register_fragment_label">Register Fragment</string>
+    <string name="password_repeat_ru">Пароль ещё раз</string>
+    <string name="registration_ru">Регистрация</string>
+    <string name="go_back_to_login">Go back to login</string>
 </resources>

@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="field"> #E7E0EC</color>
+    <color name="wrongRed">#B3261E</color>
+    <color name="buttonsAuth">#6750A4</color>
 </resources>

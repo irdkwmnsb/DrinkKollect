@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:autofillHints="auto"
+        android:background="@drawable/rounded_auth_bottom"
+        android:ems="10"
+        android:hint="@string/password_ru"
+        android:importantForAutofill="yes"
+        android:inputType="textPassword"
+        android:padding="7dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_above="@id/editTextTextPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:autofillHints="auto"
+        android:background="@drawable/rounded_auth_top"
+        android:ems="10"
+        android:hint="@string/login_ru"
+        android:importantForAutofill="yes"
+        android:inputType="textEmailAddress"
+        android:padding="7dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/viewTextWelcomeRU"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_above="@id/editTextTextEmailAddress"
+        android:gravity="center"
+        android:text="@string/welcome_ru" />
+
+    <TextView
+        android:id="@+id/viewTextNameDrinkKollect"
+        android:layout_width="354dp"
+        android:layout_height="60dp"
+        android:layout_above="@id/viewTextWelcomeRU"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:ems="10"
+        android:gravity="center"
+        android:importantForAutofill="no"
+        android:text="@string/drinkollect"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/textWrongPassword"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/editTextTextPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/wrong_password_ru"
+        android:textColor="@color/wrongRed" />
+
+    <Button
+        android:id="@+id/buttonLogIn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/textWrongPassword"
+        android:layout_alignStart="@id/editTextTextPassword"
+        android:backgroundTint="@color/buttonsAuth"
+        android:text="@string/log_in_ru" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonRegister"
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/textWrongPassword"
+        android:layout_alignEnd="@id/editTextTextPassword"
+        android:backgroundTint="@color/white"
+        android:text="@string/register_ru"
+        android:textColor="@color/buttonsAuth"
+        app:strokeColor="@color/buttonsAuth"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonIWantToWatch"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_below="@id/buttonRegister"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/buttonsAuth"
+        android:text="@string/i_want_to_watch_ru"
+        />
+</RelativeLayout>
