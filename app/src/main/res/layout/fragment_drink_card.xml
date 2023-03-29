@@ -42,10 +42,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier1"
         app:layout_constraintEnd_toEndOf="@id/barrier_v1"
+        android:layout_marginEnd="9dp"
 
         android:textAppearance="@style/TextAppearance.DrinkKollect.Title.Large"
-        android:lineSpacingExtra="3sp"
-        android:translationY="-1.57sp"
         android:gravity="top"
         tools:text="Monster - VR46" />
 
@@ -57,16 +56,16 @@
         android:textAppearance="@style/TextAppearance.DrinkKollect.Body.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
-        android:lineSpacingExtra="0sp"
+        app:layout_constraintEnd_toEndOf="@id/title"
         android:gravity="top"
-        tools:text="На вкус как дрянь" />
+        tools:text="На вкус как дрянь ааааааааааааааааааааааaaaaaaaaaaaaaaаа" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/barrier_v1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.5" />
 
     <ImageView
         android:id="@+id/image"
@@ -80,6 +79,8 @@
         app:layout_constraintStart_toEndOf="@id/barrier_v1"
         app:layout_constraintEnd_toEndOf="@id/container"
         app:layout_constraintTop_toBottomOf="@id/barrier1"
+
+        android:layout_marginStart="9dp"
 
         android:background="@drawable/round_outline"
         android:scaleType="centerCrop"
@@ -130,7 +131,6 @@
         android:layout_marginStart="11dp"
 
         android:textAppearance="@style/TextAppearance.DrinkKollect.Body.Medium"
-        android:lineSpacingExtra="0sp"
         android:gravity="top"
         tools:text="Локальный дикси" />
 </androidx.constraintlayout.widget.ConstraintLayout>
