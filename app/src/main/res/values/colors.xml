@@ -5,4 +5,5 @@
     <color name="field"> #E7E0EC</color>
     <color name="wrongRed">#B3261E</color>
     <color name="buttonsAuth">#6750A4</color>
+    <color name="editTextNames">#49454F</color>
 </resources>

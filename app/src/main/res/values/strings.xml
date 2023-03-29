@@ -59,4 +59,6 @@
     <string name="password_repeat_ru">Пароль ещё раз</string>
     <string name="registration_ru">Регистрация</string>
     <string name="go_back_to_login">Go back to login</string>
+    <string name="wrong_login_ru">Неверный логин...</string>
+    <string name="password_dont_match_ru">Пароли не совпадают...</string>
 </resources>
