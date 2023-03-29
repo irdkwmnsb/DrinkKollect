@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.alzhanov.drinkkollect.MainActivity">
+    <item
+        android:id="@+id/menu_item_change_password"
+        android:orderInCategory="1"
+        android:title="@string/change_password"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_item_change_account"
+        android:orderInCategory="2"
+        android:title="@string/change_account"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_item_delete_account"
+        android:orderInCategory="3"
+        android:title="@string/delete_account"
+        app:showAsAction="never" />
+
+</menu>
