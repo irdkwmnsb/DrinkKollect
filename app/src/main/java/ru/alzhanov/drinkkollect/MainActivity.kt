@@ -1,15 +1,13 @@
 package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import ru.alzhanov.drinkkollect.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -23,10 +21,22 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
 
+
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+        // transitions between fragments
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.LoginFragment -> {
+                    binding.toolbar.visibility = View.GONE
+                }
+                else -> {
+                    binding.toolbar.visibility = View.VISIBLE
+                }
+            }
+        }
+
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
