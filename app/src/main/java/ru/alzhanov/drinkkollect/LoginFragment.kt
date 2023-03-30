@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
         }
 
-        binding.buttonJustWatch.setOnClickListener {
+        binding.buttonIWantToWatch.setOnClickListener {
             //TODO handle entrance by unknown user
             findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
         }
