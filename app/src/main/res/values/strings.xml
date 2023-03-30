@@ -43,4 +43,14 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="enter">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="just_watch">Мне просто посмотреть</string>
+    <string name="back">Назад</string>
+    <string name="main_scroll_menu">Меню главной страницы</string>
+    <string name="change_account">Выйти</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="delete_account">Удалить страничку</string>
+    <string name="done_action">Готово</string>
+    <string name="add_post_fab">Кнопка добавления поста</string>
 </resources>
