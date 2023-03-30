@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- m3 title large -->
+    <style name="TextAppearance.DrinkKollect.Title.Large" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/zenmarugothic</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <!-- m3 body medium -->
+    <style name="TextAppearance.DrinkKollect.Body.Medium" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:fontFamily">@font/zenmarugothic</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <!-- m3 label medium -->
+    <style name="TextAppearance.DrinkKollect.Label.Medium" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:fontFamily">@font/zenmarugothic</item>
+        <item name="android:fontWeight">500</item>
+    </style>
+    <!-- m3 label large -->
+    <style name="TextAppearance.DrinkKollect.Label.Large" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:fontFamily">@font/zenmarugothic</item>
+        <item name="android:fontWeight">500</item>
+    </style>
+</resources>
