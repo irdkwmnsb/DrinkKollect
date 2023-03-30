@@ -12,9 +12,11 @@ import ru.alzhanov.drinkkollect.models.Drink
 
 
 val drinks = arrayListOf<Drink>(
-    Drink("Monster Energy", "Monster Energy is an energy drink introduced by Hansen Natural Company in April 2002.", R.drawable.rich),
-    Drink("Adrenalin", "Adrenalin is an energy drink introduced by Hansen Natural Company in April 2002.", R.drawable.rich),
-    Drink("Red bull", "Red bull is an energy drink introduced by Hansen Natural Company in April 2002.", R.drawable.rich),
+    Drink("Monster - VR46", "На вкус как дрянь", R.drawable.rich),
+    Drink("Монстр от Льюиса Хамильтона", "Я ОБОЖАЮ ФОРМУЛУ ОДИН\n" +
+            "В МОНАКО РАЗДАВАЛИ ВОТ ТАКИЕ", R.drawable.rich),
+    Drink("Розовый монстр", "Вкус как попа", R.drawable.rich),
+    Drink("Adrenaline rush", "Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich),
 )
 
 /**
