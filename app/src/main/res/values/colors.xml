@@ -6,4 +6,9 @@
     <color name="wrongRed">#B3261E</color>
     <color name="buttonsAuth">#6750A4</color>
     <color name="editTextNames">#49454F</color>
+    <color name="searchName">#1C1B1F</color>
+    <color name="descriptionBackground">#F4EFF4</color>
+    <color name="searchBackground">#715AAE</color>
+    <color name="addPhotoOutline">#79747E</color>
+    <color name="addPhoto">#49454F</color>
 </resources>
