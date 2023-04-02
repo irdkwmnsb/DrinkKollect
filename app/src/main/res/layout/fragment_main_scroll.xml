@@ -24,5 +24,6 @@
         android:layout_marginBottom="16dp"
         android:elevation="10dp"
         app:srcCompat="@android:drawable/ic_input_add"
+        android:background=""
         android:contentDescription="@string/add_post_fab" />
 </RelativeLayout>
