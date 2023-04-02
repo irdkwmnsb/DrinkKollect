@@ -61,8 +61,7 @@ class MainScrollFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.addPostFab.setOnClickListener {
-            val dialog = DialogAddPost(requireActivity())
-            dialog.show()
+            val dialog = AddPostFragment()
         }
     }
 
