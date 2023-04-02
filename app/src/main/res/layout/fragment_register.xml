@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="4dp"
+        android:autofillHints="auto"
+        android:background="@drawable/rounded_auth_middle"
+        android:ems="10"
+        android:importantForAutofill="yes"
+        app:helperText="@string/wrong_password_ru"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/password_ru"
+            android:background="@drawable/rounded_auth_bottom"
+            android:inputType="textPassword"
+            android:textColor="@color/editTextNames"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextTextPasswordRepeat"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/editTextTextPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:autofillHints="auto"
+        android:background="@drawable/rounded_auth_bottom"
+        android:ems="10"
+        android:importantForAutofill="yes"
+        android:inputType="textPassword"
+        app:helperText="@string/password_dont_match_ru"
+        app:hintEnabled="false">
+
+
+    <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/password_repeat_ru"
+            android:background="@drawable/rounded_auth_bottom"
+            android:inputType="textPassword"
+            android:textColor="@color/editTextNames"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/editTextTextPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:autofillHints="auto"
+        android:background="@drawable/rounded_auth_top"
+        android:ems="10"
+        android:importantForAutofill="yes"
+        android:inputType="textEmailAddress"
+        app:helperText="@string/wrong_login_ru"
+        app:hintEnabled="false">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_auth_bottom"
+            android:hint="@string/login_ru"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/editTextNames"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textWrongPassword"-->
+    <!--        android:layout_width="200dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_below="@id/editTextTextPasswordRepeat"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginBottom="10dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="@string/wrong_password_ru"-->
+    <!--        android:textColor="@color/wrongRed" />-->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonRegister"
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/editTextTextPasswordRepeat"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@android:color/transparent"
+        android:text="@string/register_ru"
+        android:textColor="@color/buttonsAuth"
+        app:strokeColor="@color/buttonsAuth"
+        app:strokeWidth="1dp" />
+</RelativeLayout>

@@ -14,8 +14,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.DrinkKollect">
+            android:theme="@style/Theme.DrinkKollect" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,5 +22,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>
