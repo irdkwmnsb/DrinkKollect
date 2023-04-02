@@ -69,11 +69,13 @@
     <string name="password_repeat_ru">Пароль ещё раз</string>
     <string name="registration_ru">Регистрация</string>
     <string name="go_back_to_login">Go back to login</string>
-    <string name="wrong_login_ru">Неверный логин...</string>
-    <string name="password_dont_match_ru">Пароли не совпадают...</string>
+    <string name="wrong_login_ru">Неверный логин…</string>
+    <string name="password_dont_match_ru">Пароли не совпадают…</string>
     <string name="drink_name_ru">Название напитка</string>
     <string name="your_opinion_ru">Ваши впечатления?</string>
     <string name="where_found_ru">А где вы это взяли?</string>
     <string name="add_to_collection_ru">Добавить в коллекцию</string>
     <string name="add_photo_ru">Добавить фото</string>
+    <string name="friends">Друзья</string>
+    <string name="total_in_collection">Всего в коллекции</string>
 </resources>
