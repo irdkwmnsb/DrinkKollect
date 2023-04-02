@@ -25,8 +25,8 @@
                 android:background="@drawable/searchbar_name"
                 android:hint="@string/drink_name_ru"
                 android:inputType="text"
-                android:textColor="@color/searchName"
-                android:textColorHint="@color/searchName"
+                android:textColor="?colorOnSurfaceVariant"
+                android:textColorHint="?colorOnSurfaceVariant"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +48,7 @@
                 android:background="@drawable/drink_description"
                 android:hint="@string/your_opinion_ru"
                 android:inputType="textMultiLine"
-                android:textColorHint="@color/searchName"
+                android:textColorHint="?colorOnSurfaceVariant"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +70,7 @@
                 android:background="@drawable/drink_description"
                 android:hint="@string/where_found_ru"
                 android:inputType="text"
-                android:textColorHint="@color/searchName"
+                android:textColorHint="?colorOnSurfaceVariant"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,12 +83,12 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@android:color/transparent"
-            android:drawableLeft="@drawable/ic_add"
+            android:drawableStart="@drawable/ic_add"
             android:gravity="center"
             android:text="@string/add_photo_ru"
-            android:textColor="@color/addPhoto"
+            android:textColor="?colorOnSurfaceVariant"
             app:cornerRadius="8dp"
-            app:strokeColor="@color/addPhotoOutline"
+            app:strokeColor="?colorSurfaceInverse"
             app:strokeWidth="1dp" />
 
         <Button
