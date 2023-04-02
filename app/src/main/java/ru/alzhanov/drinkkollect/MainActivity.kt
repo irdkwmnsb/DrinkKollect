@@ -36,11 +36,12 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.title = "Регистрация"
                     binding.toolbar.visibility = View.VISIBLE
                 }
-                R.id.MainScrollFragment -> {
-                    binding.toolbar.title = "DrinkKollect"
+                R.id.ProfileFragment -> {
+                    binding.toolbar.title = "@irdkwmnsb"
                     binding.toolbar.visibility = View.VISIBLE
                 }
                 else -> {
+                    binding.toolbar.title = "DrinkKollect"
                     binding.toolbar.visibility = View.VISIBLE
                 }
             }
