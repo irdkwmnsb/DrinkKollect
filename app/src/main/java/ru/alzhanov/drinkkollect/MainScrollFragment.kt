@@ -2,11 +2,13 @@ package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import ru.alzhanov.drinkkollect.databinding.FragmentMainScrollBinding
 import ru.alzhanov.drinkkollect.models.Drink
 
@@ -45,6 +47,18 @@ class MainScrollFragment : Fragment() {
         val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinks)
         binding.mainItemsList.adapter = customAdapter
         binding.mainItemsList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+
+        val dividerItemDecoration = DividerItemDecoration(
+            context,
+            DividerItemDecoration.VERTICAL
+        )
+        getContext()?.let {
+            ContextCompat.getDrawable(it, R.drawable.drink_list_divider)
+                ?.let { dividerItemDecoration.setDrawable(it) }
+        }
+        binding.mainItemsList.addItemDecoration(
+            dividerItemDecoration
+        )
 
         val menuHost: MenuHost = requireActivity()
 
