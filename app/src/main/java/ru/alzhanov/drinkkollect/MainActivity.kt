@@ -10,6 +10,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import ru.alzhanov.drinkkollect.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -31,7 +32,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.LoginFragment -> {
                     binding.toolbar.visibility = View.GONE
                 }
+                R.id.RegisterFragment -> {
+                    binding.toolbar.title = "Регистрация"
+                    binding.toolbar.visibility = View.VISIBLE
+                }
+                R.id.ProfileFragment -> {
+                    binding.toolbar.title = "@irdkwmnsb"
+                    binding.toolbar.visibility = View.VISIBLE
+                }
                 else -> {
+                    binding.toolbar.title = "DrinkKollect"
                     binding.toolbar.visibility = View.VISIBLE
                 }
             }
