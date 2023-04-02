@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.alzhanov.drinkkollect.databinding.FragmentNewPostBinding
 
-class AddPostFragment : Fragment() {
+class NewPostFragment : Fragment() {
     private var _binding: FragmentNewPostBinding? = null
 
     // This property is only valid between onCreateView and
