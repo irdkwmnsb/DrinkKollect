@@ -26,7 +26,7 @@
             android:hint="@string/password_ru"
             android:background="@drawable/rounded_auth_bottom"
             android:inputType="textPassword"
-            android:textColor="@color/editTextNames"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,7 +52,7 @@
             android:hint="@string/password_repeat_ru"
             android:background="@drawable/rounded_auth_bottom"
             android:inputType="textPassword"
-            android:textColor="@color/editTextNames"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +79,7 @@
             android:background="@drawable/rounded_auth_bottom"
             android:hint="@string/login_ru"
             android:inputType="textEmailAddress"
-            android:textColor="@color/editTextNames"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,7 +103,7 @@
         android:layout_centerHorizontal="true"
         android:backgroundTint="@android:color/transparent"
         android:text="@string/register_ru"
-        android:textColor="@color/buttonsAuth"
-        app:strokeColor="@color/buttonsAuth"
+        android:textColor="?colorPrimary"
+        app:strokeColor="?colorPrimary"
         app:strokeWidth="1dp" />
 </RelativeLayout>

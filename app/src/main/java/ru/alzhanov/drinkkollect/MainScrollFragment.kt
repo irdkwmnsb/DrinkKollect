@@ -14,11 +14,11 @@ import ru.alzhanov.drinkkollect.models.Drink
 
 
 val drinks = arrayListOf<Drink>(
-    Drink("Monster - VR46", "На вкус как дрянь", R.drawable.rich),
-    Drink("Монстр от Льюиса Хамильтона", "Я ОБОЖАЮ ФОРМУЛУ ОДИН\n" +
+    Drink("Monster - VR46", "TestTest На вкус как дрянь", R.drawable.rich),
+    Drink("Монстр от Льюиса Хамильтона", "TestTest Я ОБОЖАЮ ФОРМУЛУ ОДИН\n" +
             "В МОНАКО РАЗДАВАЛИ ВОТ ТАКИЕ", R.drawable.rich),
-    Drink("Розовый монстр", "Вкус как попа", R.drawable.rich),
-    Drink("Adrenaline rush", "Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich),
+    Drink("Розовый монстр", "TestTest Вкус как попа", R.drawable.rich),
+    Drink("Adrenaline rush", "TestTest Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich),
 )
 
 /**

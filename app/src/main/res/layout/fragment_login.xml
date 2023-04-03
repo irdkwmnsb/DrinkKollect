@@ -26,7 +26,7 @@
             android:background="@drawable/rounded_auth_bottom"
             android:hint="@string/password_ru"
             android:inputType="textPassword"
-            android:textColor="@color/editTextNames"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +53,7 @@
             android:background="@drawable/rounded_auth_bottom"
             android:hint="@string/login_ru"
             android:inputType="textEmailAddress"
-            android:textColor="@color/editTextNames"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,7 +88,7 @@
         android:layout_height="50dp"
         android:layout_below="@id/editTextTextPassword"
         android:layout_alignStart="@id/editTextTextPassword"
-        android:backgroundTint="@color/buttonsAuth"
+        android:backgroundTint="?colorPrimary"
         android:text="@string/log_in_ru" />
 
     <com.google.android.material.button.MaterialButton
@@ -99,8 +99,8 @@
         android:layout_alignEnd="@id/editTextTextPassword"
         android:backgroundTint="@android:color/transparent"
         android:text="@string/register_ru"
-        android:textColor="@color/buttonsAuth"
-        app:strokeColor="@color/buttonsAuth"
+        android:textColor="?colorPrimary"
+        app:strokeColor="?colorPrimary"
         app:strokeWidth="1dp" />
 
     <com.google.android.material.button.MaterialButton
@@ -112,5 +112,5 @@
         android:backgroundTint="@android:color/transparent"
         android:gravity="center"
         android:text="@string/i_want_to_watch_ru"
-        android:textColor="@color/buttonsAuth" />
+        android:textColor="?colorPrimary" />
 </RelativeLayout>
