@@ -1,15 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:content=".ProfileFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="32sp"
-        android:text="Прикол Приколов"/>
-</RelativeLayout>
+        android:orientation="vertical"
+        android:paddingTop="0dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="10dp"
+        android:background="@drawable/header_nav"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profile_header_friends"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="24dp"
+            >
+            <!-- I don't know what's a better way to add icons to the layout so be it -->
+            <ImageView
+                android:id="@+id/profile_header_friends_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:src="@drawable/circle_list_bullet"
+                app:layout_constraintStart_toStartOf="@id/profile_header_friends"
+                app:layout_constraintTop_toTopOf="@id/profile_header_friends"
+                app:layout_constraintBottom_toBottomOf="@id/profile_header_friends"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/profile_header_friends_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/friends_ru"
+                android:layout_marginStart="18dp"
+                app:layout_constraintStart_toEndOf="@id/profile_header_friends_icon"
+                app:layout_constraintTop_toTopOf="@id/profile_header_friends"
+                app:layout_constraintBottom_toBottomOf="@id/profile_header_friends"
+                style="@style/TextAppearance.DrinkKollect.Label.Large"
+                />
+
+            <TextView
+                android:id="@+id/profile_header_friends_count"
+                style="@style/TextAppearance.DrinkKollect.Label.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@id/profile_header_friends_badge"
+                app:layout_constraintTop_toTopOf="@id/profile_header_friends"
+                app:layout_constraintBottom_toBottomOf="@id/profile_header_friends"
+                tools:text="3+" />
+            <ImageView
+                android:id="@+id/profile_header_friends_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:src="@drawable/circle_badge"
+                app:layout_constraintEnd_toEndOf="@id/profile_header_friends"
+                app:layout_constraintTop_toTopOf="@id/profile_header_friends"
+                app:layout_constraintBottom_toBottomOf="@id/profile_header_friends"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profile_header_collection"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="24dp"
+            >
+            <TextView
+                android:id="@+id/profile_header_collection_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_in_collection_ru"
+                android:layout_centerVertical="true"
+                app:layout_constraintStart_toStartOf="@id/profile_header_collection"
+                app:layout_constraintTop_toTopOf="@id/profile_header_collection"
+                app:layout_constraintBottom_toBottomOf="@id/profile_header_collection"
+                style="@style/TextAppearance.DrinkKollect.Label.Large"
+                />
+
+            <TextView
+                android:id="@+id/profile_header_collection_value"
+                style="@style/TextAppearance.DrinkKollect.Label.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                app:layout_constraintEnd_toEndOf="@id/profile_header_collection"
+                app:layout_constraintTop_toTopOf="@id/profile_header_collection"
+                app:layout_constraintBottom_toBottomOf="@id/profile_header_collection"
+                tools:text="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:id="@+id/main_items_list"/>
+</LinearLayout>
