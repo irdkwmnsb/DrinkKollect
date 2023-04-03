@@ -43,8 +43,17 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="Логин" />
-    <string name="Пароль" />
+    <string name="card_image_description">Картинка напитка</string>
+    <string name="location_icon">Location icon</string>
+    <string name="enter">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="back">Назад</string>
+    <string name="main_scroll_menu">Меню главной страницы</string>
+    <string name="change_account">Выйти</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="delete_account">Удалить страничку</string>
+    <string name="done_action">Готово</string>
+    <string name="add_post_fab">Кнопка добавления поста</string>
     <string name="password_ru">Пароль</string>
     <string name="login_ru">Логин</string>
     <string name="drinkollect">DrinKollect</string>
@@ -59,6 +68,22 @@
     <string name="password_repeat_ru">Пароль ещё раз</string>
     <string name="registration_ru">Регистрация</string>
     <string name="go_back_to_login">Go back to login</string>
-    <string name="wrong_login_ru">Неверный логин...</string>
-    <string name="password_dont_match_ru">Пароли не совпадают...</string>
+    <string name="wrong_login_ru">Неверный логин…</string>
+    <string name="passwords_mismatch_ru">Пароли не совпадают…</string>
+    <string name="drink_name_ru">Название напитка</string>
+    <string name="your_opinion_ru">Ваши впечатления?</string>
+    <string name="where_found_ru">А где вы это взяли?</string>
+    <string name="add_to_collection_ru">Добавить в коллекцию</string>
+    <string name="add_photo_ru">Добавить фото</string>
+    <string name="friends_ru">Друзья</string>
+    <string name="total_in_collection_ru">Всего в коллекции</string>
+    <string name="are_you_sure_ru">Вы уверены?</string>
+    <string name="deletion_warning_ru">После удаления аккаунта вся информация о нем потеряется</string>
+    <string name="delete_ru">Удалить</string>
+    <string name="return_back_ru">Вернуться</string>
+    <string name="password_change_ru">Смена пароля</string>
+    <string name="change_ru">Сменить</string>
+    <string name="invalid_password_ru">Некорректный пароль</string>
+    <string name="current_password_ru">Текущий пароль</string>
+    <string name="new_password_ru">Новый пароль</string>
 </resources>

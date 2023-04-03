@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/card_bg"
+    android:padding="13dp"
+    android:id="@+id/container"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/container"
+        app:layout_constraintTop_toTopOf="@id/container"
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Label.Medium"
+        tools:text="\@irdkwmnsb" />
+
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        app:layout_constraintTop_toTopOf="@id/container"
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Label.Medium"
+        tools:text="20 секунд назад" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        app:constraint_referenced_ids="timestamp,username"
+        app:barrierDirection="bottom"
+        app:barrierMargin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier1"
+        app:layout_constraintEnd_toEndOf="@id/barrier_v1"
+        android:layout_marginEnd="9dp"
+
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Title.Large"
+        android:gravity="top"
+        tools:text="Monster - VR46" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="300dp"
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Body.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        android:gravity="top"
+        tools:text="На вкус как дрянь ааааааааааааааааааааааaaaaaaaaaaaaaaаа" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/barrier_v1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:minHeight="192dp"
+        android:contentDescription="@string/card_image_description"
+        android:src="@drawable/rich"
+
+        app:layout_constraintBottom_toTopOf="@id/barrier2"
+        app:layout_constraintStart_toEndOf="@id/barrier_v1"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        app:layout_constraintTop_toBottomOf="@id/barrier1"
+
+        android:layout_marginStart="9dp"
+
+        android:background="@drawable/round_outline"
+        android:scaleType="centerCrop"
+        android:clipToOutline="true" tools:targetApi="s"
+        android:adjustViewBounds="true"
+        />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierMargin="13dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="image,description">
+
+    </androidx.constraintlayout.widget.Barrier>
+
+    <ImageView
+        android:id="@+id/baseline_location_on_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/location_icon"
+        android:src="@drawable/baseline_location_on_24"
+        app:layout_constraintBottom_toBottomOf="@id/container"
+        app:layout_constraintStart_toStartOf="@id/container"
+        app:layout_constraintTop_toBottomOf="@id/barrier2" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Label.Large"
+        android:textColor="?colorOnSecondaryContainer"
+
+        tools:text="30 человек хотят"
+        app:chipStrokeWidth="0dp"
+        app:chipBackgroundColor="?colorSecondaryContainer"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        app:layout_constraintTop_toBottomOf="@id/barrier2"
+        app:layout_constraintBottom_toBottomOf="@id/container"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/container"
+        app:layout_constraintStart_toEndOf="@id/baseline_location_on_24"
+        app:layout_constraintTop_toBottomOf="@id/barrier2"
+        app:layout_constraintEnd_toStartOf="@id/label"
+        android:layout_marginStart="11dp"
+
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Body.Medium"
+        android:gravity="top"
+        tools:text="Локальный дикси" />
+</androidx.constraintlayout.widget.ConstraintLayout>
