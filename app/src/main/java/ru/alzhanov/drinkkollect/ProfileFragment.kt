@@ -43,7 +43,7 @@ class ProfileFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menu_item_change_password -> {
-                        //TODO change password confirmation and action
+                        ChangePasswordDialog().show(requireActivity().supportFragmentManager, "ChangePasswordDialog")
                         true
                     }
                     R.id.menu_item_change_account -> {
@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
                         true
                     }
                     R.id.menu_item_delete_account -> {
-                        //TODO delete account confirmation and action
+                        AccountDeletionDialog().show(requireActivity().supportFragmentManager, "AccountDeletionDialog")
                         true
                     }
                     else -> false

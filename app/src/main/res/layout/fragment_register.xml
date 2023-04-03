@@ -17,7 +17,7 @@
         android:background="@drawable/rounded_auth_middle"
         android:ems="10"
         android:importantForAutofill="yes"
-        app:helperText="@string/wrong_password_ru"
+        app:helperText="@string/invalid_password_ru"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -42,7 +42,7 @@
         android:ems="10"
         android:importantForAutofill="yes"
         android:inputType="textPassword"
-        app:helperText="@string/password_dont_match_ru"
+        app:helperText="@string/passwords_mismatch_ru"
         app:hintEnabled="false">
 
 

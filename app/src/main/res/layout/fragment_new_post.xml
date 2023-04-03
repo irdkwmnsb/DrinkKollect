@@ -86,7 +86,7 @@
             android:drawableLeft="@drawable/ic_add"
             android:gravity="center"
             android:text="@string/add_photo_ru"
-            android:textColor="@color/addPhoto"
+            android:textColor="@color/addPhotoText"
             app:cornerRadius="8dp"
             app:strokeColor="@color/addPhotoOutline"
             app:strokeWidth="1dp" />
