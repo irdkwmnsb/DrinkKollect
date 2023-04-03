@@ -10,6 +10,8 @@
     <color name="descriptionBackground">#F4EFF4</color>
     <color name="searchBackground">#efe9f5</color>
     <color name="addPhotoOutline">#79747E</color>
+    <color name="addPhotoText">#49454F</color>
+    <color name="dialogBodyText">#49454F</color>
     <color name="addPhoto">#49454F</color>
     <color name="seed">#6750A4</color>
     <color name="md_theme_light_primary">#6750A4</color>
