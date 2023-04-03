@@ -75,10 +75,8 @@
     <string name="where_found_ru">А где вы это взяли?</string>
     <string name="add_to_collection_ru">Добавить в коллекцию</string>
     <string name="add_photo_ru">Добавить фото</string>
-<<<<<<< HEAD
-    <string name="friends">Друзья</string>
-    <string name="total_in_collection">Всего в коллекции</string>
-=======
+    <string name="friends_ru">Друзья</string>
+    <string name="total_in_collection_ru">Всего в коллекции</string>
     <string name="are_you_sure_ru">Вы уверены?</string>
     <string name="deletion_warning_ru">После удаления аккаунта вся информация о нем потеряется</string>
     <string name="delete_ru">Удалить</string>
@@ -88,5 +86,4 @@
     <string name="invalid_password_ru">Некорректный пароль</string>
     <string name="current_password_ru">Текущий пароль</string>
     <string name="new_password_ru">Новый пароль</string>
->>>>>>> cfe32e9d812a7f8dc12d5cb404682ddb94e63ed7
 </resources>
