@@ -6,7 +6,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
-<!--    app:helperText="@string/invalid_password_ru"-->
+    <!--    app:helperText="@string/invalid_password_ru"-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextTextPassword"
         android:layout_width="300dp"
@@ -23,6 +23,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="flagNoExtractUi"
             android:background="@drawable/rounded_auth_bottom"
             android:hint="@string/password_ru"
             android:inputType="textPassword"
@@ -30,7 +31,7 @@
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    app:helperText="@string/passwords_mismatch_ru"-->
+    <!--    app:helperText="@string/passwords_mismatch_ru"-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextTextPasswordRepeat"
         android:layout_width="300dp"
@@ -49,6 +50,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="flagNoExtractUi"
             android:background="@drawable/rounded_auth_bottom"
             android:hint="@string/password_repeat_ru"
             android:inputType="textPassword"
@@ -76,7 +78,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_auth_bottom"
+            android:imeOptions="flagNoExtractUi"
+            android:background="@drawable/rounded_auth_top"
             android:hint="@string/login_ru"
             android:inputType="textEmailAddress"
             android:textColor="?colorOnSurfaceVariant"
