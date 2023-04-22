@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
     <font
-        android:font="@font/zenmarugothicblack"
-        android:fontStyle="normal"
-        android:fontWeight="900" />
+        app:font="@font/zenmarugothicblack"
+        app:fontStyle="normal"
+        app:fontWeight="900" />
     <font
-        android:font="@font/zenmarugothicbold"
-        android:fontStyle="normal"
-        android:fontWeight="700" />
+        app:font="@font/zenmarugothicbold"
+        app:fontStyle="normal"
+        app:fontWeight="700" />
     <font
-        android:font="@font/zenmarugothicmedium"
-        android:fontStyle="normal"
-        android:fontWeight="500" />
+        app:font="@font/zenmarugothicmedium"
+        app:fontStyle="normal"
+        app:fontWeight="500" />
     <font
-        android:font="@font/zenmarugothicregular"
-        android:fontStyle="normal"
-        android:fontWeight="400" />
+        app:font="@font/zenmarugothicregular"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
     <font
-        android:font="@font/zenmarugothiclight"
-        android:fontStyle="normal"
-        android:fontWeight="300" />
+        app:font="@font/zenmarugothiclight"
+        app:fontStyle="normal"
+        app:fontWeight="300" />
 </font-family>
