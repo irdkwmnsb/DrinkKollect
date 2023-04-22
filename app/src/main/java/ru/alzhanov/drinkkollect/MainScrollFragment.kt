@@ -9,16 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import kotlinx.datetime.Clock
 import ru.alzhanov.drinkkollect.databinding.FragmentMainScrollBinding
-import ru.alzhanov.drinkkollect.models.Drink
+import ru.alzhanov.drinkkollect.models.DrinkPost
+import ru.alzhanov.drinkkollect.models.OtherDrinkPost
+import ru.alzhanov.drinkkollect.models.OwnDrinkPost
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.minutes
 
 
-val drinks = arrayListOf<Drink>(
-    Drink("Monster - VR46", "TestTest На вкус как дрянь", R.drawable.rich),
-    Drink("Монстр от Льюиса Хамильтона", "TestTest Я ОБОЖАЮ ФОРМУЛУ ОДИН\n" +
-            "В МОНАКО РАЗДАВАЛИ ВОТ ТАКИЕ", R.drawable.rich),
-    Drink("Розовый монстр", "TestTest Вкус как попа", R.drawable.rich),
-    Drink("Adrenaline rush", "TestTest Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich),
+val drinkPosts = arrayListOf<DrinkPost>(
+    OwnDrinkPost("Monster - VR46", "TestTest На вкус как дрянь", R.drawable.rich, "Монако", "irdkwmnsb", Clock.System.now(), 5),
+    OtherDrinkPost("Монстр от Льюиса Хамильтона", "TestTest Я ОБОЖАЮ ФОРМУЛУ ОДИН\n" +
+            "В МОНАКО РАЗДАВАЛИ ВОТ ТАКИЕ", R.drawable.rich, "Монако", "irdkwmnsb",  Clock.System.now() - 1.minutes, true
+    ),
+    OtherDrinkPost("Розовый монстр", "TestTest Вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 1.days, false),
+    OtherDrinkPost("Adrenaline rush", "TestTest Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 2.days, false),
 )
 
 /**
@@ -44,7 +50,7 @@ class MainScrollFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinks)
+        val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
         binding.mainItemsList.adapter = customAdapter
         binding.mainItemsList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
 

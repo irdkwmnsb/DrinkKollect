@@ -86,4 +86,26 @@
     <string name="invalid_password_ru">Некорректный пароль</string>
     <string name="current_password_ru">Текущий пароль</string>
     <string name="new_password_ru">Новый пароль</string>
+    <string name="want_ru">Хочу</string>
+    <!-- Русский язык требует указать строки для one, few, many и other (на всякий случай).
+        По стандарту не используется zero, и не используется two — но, ничего страшного в
+        указании этих строк нет. На всякий случай можно их всё-таки указывать — кто знает,
+        а вдруг что-то поменяется в будущем.
+        (https://developer.alexanderklimov.ru/android/theory/plurals.php) -->
+    <plurals name="drinks_in_collection">
+        <item quantity="zero">%d напитков</item>
+        <item quantity="one">%d напиток</item>
+        <item quantity="two">%d напитка</item>
+        <item quantity="few">%d напитка</item>
+        <item quantity="many">%d напитков</item>
+        <item quantity="other">%d напитков</item>
+    </plurals>
+    <plurals name="people_want">
+        <item quantity="zero">%d людей хотят</item>
+        <item quantity="one">%d человек хочет</item>
+        <item quantity="two">%d человека хотят</item>
+        <item quantity="few">%d человека хочет</item>
+        <item quantity="many">%d людей хотят</item>
+        <item quantity="other">%d людей хотят</item>
+    </plurals>
 </resources>
