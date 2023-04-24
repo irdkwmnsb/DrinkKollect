@@ -113,11 +113,10 @@ func (m *migrator) executeMigration(version int, name string, sql string) error 
 	const setVersionQuery = `insert into migrations_version values (?, ?)`
 
 	tx, err := m.db.Begin(true)
-	defer tx.Rollback()
-
 	if err != nil {
 		return fmt.Errorf("beginning migration transaction: %w", err)
 	}
+	defer tx.Rollback()
 
 	if err := tx.Exec(sql); err != nil {
 		return fmt.Errorf("executing migration %q: %w", name, err)

@@ -32,3 +32,20 @@ func (g *Genji) Close() {
 		zap.S().Errorw("closing GenjiDB failed", "component", "storage", "error", err)
 	}
 }
+
+func (g *Genji) withTx(writable bool, f func(tx *genji.Tx) error) error {
+	tx, err := g.db.Begin(true)
+	if err != nil {
+		return fmt.Errorf("beginning transaction: %w", err)
+	}
+	defer tx.Rollback()
+
+	if err := f(tx); err != nil {
+		return err
+	}
+
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("committing transaction: %w", err)
+	}
+	return nil
+}
