@@ -9,7 +9,6 @@ import "google/protobuf/timestamp.proto";
 // Drinkollect provides all of the v1 API backend endpoints.
 // Most endpoints require authorization via the "Authorization" header along with the Bearer scheme.
 // Pagination is implemented in List* endpoints as specified in https://cloud.google.com/apis/design/naming_convention#list_response.
-
 service Drinkollect {
   // Register registers a new user and returns a token to be used for authorization.
   rpc Register(RegisterRequest) returns (RegisterResponse);
