@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/genjidb/genji v0.15.1
+	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.38.0
 	google.golang.org/protobuf v1.26.0
 )
@@ -28,7 +29,6 @@ require (
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	go.uber.org/zap v1.24.0 // indirect
 	golang.org/x/exp v0.0.0-20200513190911-00229845015e // indirect
 	golang.org/x/net v0.0.0-20211008194852-3b03d305991f // indirect
 	golang.org/x/sys v0.0.0-20220209214540-3681064d5158 // indirect
