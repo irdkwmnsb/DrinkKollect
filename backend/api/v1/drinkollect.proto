@@ -26,8 +26,6 @@ service Drinkollect {
   rpc LikePost(LikePostRequest) returns (google.protobuf.Empty);
   // ListUserPosts lists the post of a specific user and returns the total number of posts the user has.
   rpc ListUserPosts(ListUserPostsRequest) returns (ListUserPostsResponse);
-  // GetUserFriends gets a user's friends along with the number of posts each friend has.
-  rpc GetUserFriends(GetUserFriendsRequest) returns (GetUserFriendsResponse);
 }
 
 // S3Resource describes a resource stored in S3. The actual URL is constructed by the client, and the backend
@@ -107,17 +105,4 @@ message ListUserPostsRequest {
 message ListUserPostsResponse {
   repeated Post posts = 1;
   string next_page_token = 2;
-}
-
-message GetUserFriendsRequest {
-  string username = 1;
-}
-
-message GetUserFriendsResponse {
-  message Friend {
-    string username = 1;
-    uint64 posts = 2;
-  }
-
-  repeated Friend friends = 1;
 }
