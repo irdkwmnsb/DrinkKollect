@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package drinkollect.v1;
+option go_package = "github.com/irdkwmnsb/DrinkKollect/backend/internal/pb/v1/drinkollect";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// Drinkollect provides all of the v1 API backend endpoints.
+// Most endpoints require authorization via the "Authorization" header along with the Bearer scheme.
+// Pagination is implemented in List* endpoints as specified in https://cloud.google.com/apis/design/naming_convention#list_response.
+
+service Drinkollect {
+  // Register registers a new user and returns a token to be used for authorization.
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  // Login logins an existing user and returns a token to be used for authorization.
+  rpc Login(LoginRequest) returns (LoginResponse);
+  // ChangePassword changes an authorized user's password.
+  rpc ChangePassword(ChangePasswordRequest) returns (google.protobuf.Empty);
+  // DeleteAccount deletes the authorized user's account.
+  rpc DeleteAccount(google.protobuf.Empty) returns (google.protobuf.Empty);
+  // CreatePost creates a new post for an authorized user.
+  rpc CreatePost(CreatePostRequest) returns (google.protobuf.Empty);
+  // ListPosts lists all created posts.
+  rpc ListPosts(ListPostsRequest) returns (ListPostsResponse);
+  // LikePost labels a specific post as liked by the current user.
+  rpc LikePost(LikePostRequest) returns (google.protobuf.Empty);
+  // ListUserPosts lists the post of a specific user and returns the total number of posts the user has.
+  rpc ListUserPosts(ListUserPostsRequest) returns (ListUserPostsResponse);
+  // GetUserFriends gets a user's friends along with the number of posts each friend has.
+  rpc GetUserFriends(GetUserFriendsRequest) returns (GetUserFriendsResponse);
+}
+
+// S3Resource describes a resource stored in S3. The actual URL is constructed by the client, and the backend
+// only stores the path to the resource relative to an S3 host.
+message S3Resource {
+  string bucket = 1;
+  string id = 2;
+}
+
+// Post describes a single post by some user.
+message Post {
+  uint64 id = 1;
+  string title = 2;
+  string description = 3;
+  string location = 4;
+  S3Resource image = 5;
+  // Username of the post creator.
+  string creator = 6;
+  // Creation date and time.
+  google.protobuf.Timestamp timestamp = 7;
+  // Number of likes.
+  uint64 likes = 8;
+}
+
+message RegisterRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  string token = 1;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+
+message ChangePasswordRequest {
+  string password = 1;
+  string new_password = 2;
+}
+
+message CreatePostRequest {
+  string title = 1;
+  string description = 2;
+  string location = 3;
+  S3Resource image = 4;
+}
+
+message ListPostsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListPostsResponse {
+  repeated Post posts = 1;
+  string next_page_token = 2;
+}
+
+message LikePostRequest {
+  uint64 id = 1;
+}
+
+message ListUserPostsRequest {
+  string username = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListUserPostsResponse {
+  repeated Post posts = 1;
+  string next_page_token = 2;
+}
+
+message GetUserFriendsRequest {
+  string username = 1;
+}
+
+message GetUserFriendsResponse {
+  message Friend {
+    string username = 1;
+    uint64 posts = 2;
+  }
+
+  repeated Friend friends = 1;
+}
