@@ -50,6 +50,8 @@ message Post {
   google.protobuf.Timestamp timestamp = 7;
   // Number of likes.
   uint64 likes = 8;
+  // Flag indicating whether the post has been liked by the current user.
+  bool liked = 9;
 }
 
 message RegisterRequest {
