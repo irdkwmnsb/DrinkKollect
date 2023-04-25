@@ -15,8 +15,10 @@ service Drinkollect {
   // AlreadyExists is returned if a user with such username already exists.
   rpc Register(RegisterRequest) returns (RegisterResponse);
   // Login logins an existing user and returns a token to be used for authorization.
+  // InvalidArgument is returned if no such user exists or the password is invalid.
   rpc Login(LoginRequest) returns (LoginResponse);
   // ChangePassword changes an authorized user's password.
+  // InvalidArgument is returned if the specified password doesn't match the one in the DB. 
   rpc ChangePassword(ChangePasswordRequest) returns (google.protobuf.Empty);
   // DeleteAccount deletes the authorized user's account.
   rpc DeleteAccount(google.protobuf.Empty) returns (google.protobuf.Empty);
