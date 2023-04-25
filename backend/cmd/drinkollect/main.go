@@ -23,6 +23,7 @@ import (
 )
 
 var (
+	dbPath     string
 	jwtKeyPath string
 	gRPCAddr   string
 )
@@ -43,7 +44,7 @@ func main() {
 	authorizer := mustAuthorizer(jwtKey)
 
 	// Initialize database
-	genji := mustGenji()
+	genji := mustGenji(dbPath)
 	defer genji.Close()
 
 	// Initialize gRPC service
@@ -101,6 +102,7 @@ func initLogger() {
 
 func parseFlags() {
 	flag.StringVar(&jwtKeyPath, "jwt-key", "", "Path to ECDSA private key used for signing JWTs")
+	flag.StringVar(&dbPath, "db", "", "Path to DB directory")
 	flag.StringVar(&gRPCAddr, "grpc", ":18081", "Bind address for the gRPC server")
 	flag.Parse()
 }
@@ -133,8 +135,8 @@ func mustAuthorizer(key *ecdsa.PrivateKey) *auth.Authorizer {
 	return authorizer
 }
 
-func mustGenji() *db.Genji {
-	genji, err := db.OpenGenji("./db")
+func mustGenji(path string) *db.Genji {
+	genji, err := db.OpenGenji(path)
 	if err != nil {
 		zap.S().Fatalf("opening storage: %s", err)
 	}
