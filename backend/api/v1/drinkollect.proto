@@ -11,6 +11,8 @@ import "google/protobuf/timestamp.proto";
 // Pagination is implemented in List* endpoints as specified in https://cloud.google.com/apis/design/naming_convention#list_response.
 service Drinkollect {
   // Register registers a new user and returns a token to be used for authorization.
+  // InvalidArgument is returned if one of the request parameters is invalid.
+  // AlreadyExists is returned if a user with such username already exists.
   rpc Register(RegisterRequest) returns (RegisterResponse);
   // Login logins an existing user and returns a token to be used for authorization.
   rpc Login(LoginRequest) returns (LoginResponse);
