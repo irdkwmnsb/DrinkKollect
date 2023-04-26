@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextSearchBar"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="20dp"
@@ -55,23 +56,23 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextDrinkLocation"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/editTextDrinkDescription"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/drink_description"
+            android:background="@drawable/searchbar_name"
             android:ems="10">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/drink_description"
+                android:background="@drawable/searchbar_name"
                 android:hint="@string/where_found_ru"
                 android:inputType="text"
                 android:textColorHint="?colorOnSurfaceVariant"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -80,7 +81,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextDrinkLocation"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@android:color/transparent"
             android:drawableStart="@drawable/ic_add"
@@ -91,13 +91,14 @@
             app:strokeColor="?colorSurfaceInverse"
             app:strokeWidth="1dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_new_post_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonAddPhoto"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:text="@string/add_to_collection_ru" />
+            android:layout_marginBottom="20dp"
+            android:text="@string/add_to_collection_ru"
+            app:cornerRadius="8dp" />
     </RelativeLayout>
 </ScrollView>
