@@ -29,6 +29,10 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.buttonRegister.setOnClickListener {
+            // TODO add registration
+            findNavController().navigate(R.id.action_RegisterFragment_to_MainScrollFragment)
+        }
     }
 
     override fun onDestroyView() {
