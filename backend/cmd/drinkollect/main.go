@@ -156,6 +156,8 @@ func mustGRPC(addr string, service *app.Service, authorizer *auth.Authorizer) (n
 		grpc.UnaryInterceptor(authorizer.UnaryInterceptor(
 			"/drinkollect.v1.Drinkollect/Login",
 			"/drinkollect.v1.Drinkollect/Register",
+			"/drinkollect.v1.Drinkollect/ListPosts",
+			"/drinkollect.v1.Drinkollect/ListUserPosts",
 		)),
 	)
 	reflection.Register(server)

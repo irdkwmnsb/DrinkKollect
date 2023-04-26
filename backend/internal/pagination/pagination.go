@@ -41,7 +41,12 @@ func DecodePageToken[T any](pageToken string) T {
 }
 
 // EncodePageToken encodes a page token using json+base64.
-func EncodePageToken[T any](pageToken T) string {
+func EncodePageToken[T comparable](pageToken T) string {
+	var zero T
+	if pageToken == zero {
+		return ""
+	}
+
 	data, err := json.Marshal(pageToken)
 	if err != nil {
 		return ""

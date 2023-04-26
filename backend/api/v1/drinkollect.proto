@@ -26,11 +26,13 @@ service Drinkollect {
   // InvalidArgument is returned if the post title is empty. Other arguments aren't validated.
   rpc CreatePost(CreatePostRequest) returns (google.protobuf.Empty);
   // ListPosts lists all created posts.
+  // This endpoint doesn't require authorization.
   rpc ListPosts(ListPostsRequest) returns (ListPostsResponse);
   // TogglePostLike toggles the "liked" label a specific post by the current user.
-  // NotFound is returned if no such post exists. This should never occur, since post ID is taken from the response of ListPosts/ListUserPosts.
+  // NotFound is returned if no such post exists. This should never occur, since the post ID is taken from the response of ListPosts/ListUserPosts.
   rpc TogglePostLike(TogglePostLikeRequest) returns (google.protobuf.Empty);
   // ListUserPosts lists the post of a specific user and returns the total number of posts the user has.
+  // This endpoint doesn't require authorization.
   rpc ListUserPosts(ListUserPostsRequest) returns (ListUserPostsResponse);
 }
 

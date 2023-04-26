@@ -2,14 +2,18 @@ package app
 
 import (
 	"context"
+	"time"
 
 	"github.com/irdkwmnsb/DrinkKollect/backend/internal/auth"
 	"github.com/irdkwmnsb/DrinkKollect/backend/internal/db"
+	"github.com/irdkwmnsb/DrinkKollect/backend/internal/pagination"
 	desc "github.com/irdkwmnsb/DrinkKollect/backend/internal/pb/v1/drinkollect"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 var (
@@ -64,4 +68,74 @@ func (s *Service) TogglePostLike(ctx context.Context, req *desc.TogglePostLikeRe
 	}
 
 	return &emptypb.Empty{}, nil
+}
+
+// ListPosts provides a paginated list of posts.
+func (s *Service) ListPosts(ctx context.Context, req *desc.ListPostsRequest) (*desc.ListPostsResponse, error) {
+	limit, before := pagination.FromRequest[int64](req)
+
+	var posts []db.Post
+	var next int64
+	var err error
+	if before == 0 {
+		posts, next, err = s.storage.ListPostsFirst("", limit)
+	} else {
+		posts, next, err = s.storage.ListPostsNext("", before, limit)
+	}
+
+	if err != nil {
+		zap.S().Errorw("listing posts", "before", before, "limit", limit, "error", err)
+		return nil, internalServerError
+	}
+
+	return &desc.ListPostsResponse{
+		Posts:         dbPostsToPB(posts),
+		NextPageToken: pagination.EncodePageToken(next),
+	}, nil
+}
+
+// ListUserPosts provides a paginated list of a specific user's posts.
+func (s *Service) ListUserPosts(ctx context.Context, req *desc.ListUserPostsRequest) (*desc.ListUserPostsResponse, error) {
+	limit, before := pagination.FromRequest[int64](req)
+
+	var posts []db.Post
+	var next int64
+	var err error
+	if before == 0 {
+		posts, next, err = s.storage.ListPostsFirst(req.Username, limit)
+	} else {
+		posts, next, err = s.storage.ListPostsNext(req.Username, before, limit)
+	}
+
+	if err != nil {
+		zap.S().Errorw("listing posts", "before", before, "limit", limit, "error", err)
+		return nil, internalServerError
+	}
+
+	return &desc.ListUserPostsResponse{
+		Posts:         dbPostsToPB(posts),
+		NextPageToken: pagination.EncodePageToken(next),
+	}, nil
+}
+
+func dbPostsToPB(posts []db.Post) []*desc.Post {
+	const (
+		millisecondsInSeconds    = int64(time.Second / time.Millisecond)
+		nanosecondsInMillisecond = int64(time.Millisecond / time.Nanosecond)
+	)
+
+	return lo.Map(posts, func(post db.Post, _ int) *desc.Post {
+		return &desc.Post{
+			Id:          post.ID,
+			Title:       post.Title,
+			Description: post.Description,
+			Location:    post.Location,
+			Image: &desc.S3Resource{
+				Bucket: post.ImageBucket,
+				Id:     post.ImageID,
+			},
+			Creator:   post.CreatorUsername,
+			Timestamp: timestamppb.New(time.Unix(post.CreatedAt/millisecondsInSeconds, post.CreatedAt%millisecondsInSeconds*nanosecondsInMillisecond)),
+		}
+	})
 }
