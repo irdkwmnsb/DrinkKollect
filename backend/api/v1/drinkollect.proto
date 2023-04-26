@@ -23,11 +23,13 @@ service Drinkollect {
   // DeleteAccount deletes the authorized user's account.
   rpc DeleteAccount(google.protobuf.Empty) returns (google.protobuf.Empty);
   // CreatePost creates a new post for an authorized user.
+  // InvalidArgument is returned if the post title is empty. Other arguments aren't validated.
   rpc CreatePost(CreatePostRequest) returns (google.protobuf.Empty);
   // ListPosts lists all created posts.
   rpc ListPosts(ListPostsRequest) returns (ListPostsResponse);
-  // LikePost labels a specific post as liked by the current user.
-  rpc LikePost(LikePostRequest) returns (google.protobuf.Empty);
+  // TogglePostLike toggles the "liked" label a specific post by the current user.
+  // NotFound is returned if no such post exists. This should never occur, since post ID is taken from the response of ListPosts/ListUserPosts.
+  rpc TogglePostLike(TogglePostLikeRequest) returns (google.protobuf.Empty);
   // ListUserPosts lists the post of a specific user and returns the total number of posts the user has.
   rpc ListUserPosts(ListUserPostsRequest) returns (ListUserPostsResponse);
 }
@@ -96,7 +98,7 @@ message ListPostsResponse {
   string next_page_token = 2;
 }
 
-message LikePostRequest {
+message TogglePostLikeRequest {
   uint64 id = 1;
 }
 

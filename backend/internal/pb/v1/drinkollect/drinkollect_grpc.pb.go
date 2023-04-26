@@ -24,19 +24,25 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DrinkollectClient interface {
 	// Register registers a new user and returns a token to be used for authorization.
+	// InvalidArgument is returned if one of the request parameters is invalid.
+	// AlreadyExists is returned if a user with such username already exists.
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	// Login logins an existing user and returns a token to be used for authorization.
+	// InvalidArgument is returned if no such user exists or the password is invalid.
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	// ChangePassword changes an authorized user's password.
+	// InvalidArgument is returned if the specified password doesn't match the one in the DB.
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// DeleteAccount deletes the authorized user's account.
 	DeleteAccount(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// CreatePost creates a new post for an authorized user.
+	// InvalidArgument is returned if the post title is empty. Other arguments aren't validated.
 	CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// ListPosts lists all created posts.
 	ListPosts(ctx context.Context, in *ListPostsRequest, opts ...grpc.CallOption) (*ListPostsResponse, error)
-	// LikePost labels a specific post as liked by the current user.
-	LikePost(ctx context.Context, in *LikePostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// TogglePostLike toggles the "liked" label a specific post by the current user.
+	// NotFound is returned if no such post exists. This should never occur, since post ID is taken from the response of ListPosts/ListUserPosts.
+	TogglePostLike(ctx context.Context, in *TogglePostLikeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// ListUserPosts lists the post of a specific user and returns the total number of posts the user has.
 	ListUserPosts(ctx context.Context, in *ListUserPostsRequest, opts ...grpc.CallOption) (*ListUserPostsResponse, error)
 }
@@ -103,9 +109,9 @@ func (c *drinkollectClient) ListPosts(ctx context.Context, in *ListPostsRequest,
 	return out, nil
 }
 
-func (c *drinkollectClient) LikePost(ctx context.Context, in *LikePostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *drinkollectClient) TogglePostLike(ctx context.Context, in *TogglePostLikeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/drinkollect.v1.Drinkollect/LikePost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/drinkollect.v1.Drinkollect/TogglePostLike", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -126,19 +132,25 @@ func (c *drinkollectClient) ListUserPosts(ctx context.Context, in *ListUserPosts
 // for forward compatibility
 type DrinkollectServer interface {
 	// Register registers a new user and returns a token to be used for authorization.
+	// InvalidArgument is returned if one of the request parameters is invalid.
+	// AlreadyExists is returned if a user with such username already exists.
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	// Login logins an existing user and returns a token to be used for authorization.
+	// InvalidArgument is returned if no such user exists or the password is invalid.
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// ChangePassword changes an authorized user's password.
+	// InvalidArgument is returned if the specified password doesn't match the one in the DB.
 	ChangePassword(context.Context, *ChangePasswordRequest) (*emptypb.Empty, error)
 	// DeleteAccount deletes the authorized user's account.
 	DeleteAccount(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	// CreatePost creates a new post for an authorized user.
+	// InvalidArgument is returned if the post title is empty. Other arguments aren't validated.
 	CreatePost(context.Context, *CreatePostRequest) (*emptypb.Empty, error)
 	// ListPosts lists all created posts.
 	ListPosts(context.Context, *ListPostsRequest) (*ListPostsResponse, error)
-	// LikePost labels a specific post as liked by the current user.
-	LikePost(context.Context, *LikePostRequest) (*emptypb.Empty, error)
+	// TogglePostLike toggles the "liked" label a specific post by the current user.
+	// NotFound is returned if no such post exists. This should never occur, since post ID is taken from the response of ListPosts/ListUserPosts.
+	TogglePostLike(context.Context, *TogglePostLikeRequest) (*emptypb.Empty, error)
 	// ListUserPosts lists the post of a specific user and returns the total number of posts the user has.
 	ListUserPosts(context.Context, *ListUserPostsRequest) (*ListUserPostsResponse, error)
 	mustEmbedUnimplementedDrinkollectServer()
@@ -166,8 +178,8 @@ func (UnimplementedDrinkollectServer) CreatePost(context.Context, *CreatePostReq
 func (UnimplementedDrinkollectServer) ListPosts(context.Context, *ListPostsRequest) (*ListPostsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPosts not implemented")
 }
-func (UnimplementedDrinkollectServer) LikePost(context.Context, *LikePostRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LikePost not implemented")
+func (UnimplementedDrinkollectServer) TogglePostLike(context.Context, *TogglePostLikeRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TogglePostLike not implemented")
 }
 func (UnimplementedDrinkollectServer) ListUserPosts(context.Context, *ListUserPostsRequest) (*ListUserPostsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUserPosts not implemented")
@@ -293,20 +305,20 @@ func _Drinkollect_ListPosts_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Drinkollect_LikePost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LikePostRequest)
+func _Drinkollect_TogglePostLike_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TogglePostLikeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DrinkollectServer).LikePost(ctx, in)
+		return srv.(DrinkollectServer).TogglePostLike(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/drinkollect.v1.Drinkollect/LikePost",
+		FullMethod: "/drinkollect.v1.Drinkollect/TogglePostLike",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DrinkollectServer).LikePost(ctx, req.(*LikePostRequest))
+		return srv.(DrinkollectServer).TogglePostLike(ctx, req.(*TogglePostLikeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -361,8 +373,8 @@ var Drinkollect_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Drinkollect_ListPosts_Handler,
 		},
 		{
-			MethodName: "LikePost",
-			Handler:    _Drinkollect_LikePost_Handler,
+			MethodName: "TogglePostLike",
+			Handler:    _Drinkollect_TogglePostLike_Handler,
 		},
 		{
 			MethodName: "ListUserPosts",
