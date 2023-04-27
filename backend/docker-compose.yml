@@ -1,0 +1,18 @@
+version: "2.4"
+
+services:
+  drinkollect:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - storage:/usr/local/drinkollect/db
+      - ./jwt-key.pem:/usr/local/drinkollect/jwt-key.pem:ro
+    command: -jwt-key /usr/local/drinkollect/jwt-key.pem -db /usr/local/drinkollect/db
+    pids_limit: 16
+    mem_limit: 128m
+    cpus: 1
+    ports:
+      - 18081:18081
+
+volumes:
+  storage:
