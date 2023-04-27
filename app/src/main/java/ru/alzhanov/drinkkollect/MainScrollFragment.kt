@@ -19,10 +19,8 @@ import kotlin.time.Duration.Companion.minutes
 
 
 val drinkPosts = arrayListOf<DrinkPost>(
-    OwnDrinkPost("Monster - VR46", "TestTest На вкус как дрянь", R.drawable.rich, "Монако", "irdkwmnsb", Clock.System.now(), 5),
-    OtherDrinkPost("Монстр от Льюиса Хамильтона", "TestTest Я ОБОЖАЮ ФОРМУЛУ ОДИН\n" +
-            "В МОНАКО РАЗДАВАЛИ ВОТ ТАКИЕ", R.drawable.rich, "Монако", "irdkwmnsb",  Clock.System.now() - 1.minutes, true
-    ),
+    OwnDrinkPost("Monster - VR46", "На вкус как дрянь. Их новая линейка оказалось не такой вкусной. Если увидите - не берите", R.drawable.rich, "Монако", "irdkwmnsb", Clock.System.now(), 5),
+    OtherDrinkPost("Жигуль", "Если б было море пива. Я б дельфином стал красивым.", R.drawable.zhigulevskoye, "Дикси у дома", "vasya916",  Clock.System.now() - 1.minutes, true),
     OtherDrinkPost("Розовый монстр", "TestTest Вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 1.days, false),
     OtherDrinkPost("Adrenaline rush", "TestTest Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 2.days, false),
 )
