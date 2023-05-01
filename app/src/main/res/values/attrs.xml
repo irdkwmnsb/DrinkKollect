@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <attr name="colorPrimary" format="reference"/>-->
+<!--    <attr name="colorOnPrimary" format="reference"/>-->
+<!--    <attr name="colorPrimaryContainer" format="reference"/>-->
+<!--    <attr name="colorOnPrimaryContainer" format="reference"/>-->
+<!--    <attr name="colorSecondary" format="reference"/>-->
+<!--    <attr name="colorOnSecondary" format="reference"/>-->
+    <attr name="colorSecondaryContainer" format="reference"/>
+<!--    <attr name="colorOnSecondaryContainer" format="reference"/>-->
+<!--    <attr name="colorTertiary" format="reference"/>-->
+<!--    <attr name="colorOnTertiary" format="reference"/>-->
+<!--    <attr name="colorTertiaryContainer" format="reference"/>-->
+<!--    <attr name="colorOnTertiaryContainer" format="reference"/>-->
+<!--    <attr name="colorError" format="reference"/>-->
+<!--    <attr name="colorOnError" format="reference"/>-->
+<!--    <attr name="colorErrorContainer" format="reference"/>-->
+<!--    <attr name="colorOnErrorContainer" format="reference"/>-->
+    <attr name="colorOutline" format="reference"/>
+<!--&lt;!&ndash;    <attr name="backgroundColor" format="reference"/>&ndash;&gt;-->
+<!--    <attr name="colorOnBackground" format="reference"/>-->
+<!--    <attr name="colorSurface" format="reference"/>-->
+<!--    <attr name="colorOnSurface" format="reference"/>-->
+<!--    <attr name="colorSurfaceVariant" format="reference"/>-->
+<!--    <attr name="colorOnSurfaceVariant" format="reference"/>-->
+<!--    <attr name="colorSurfaceInverse" format="reference"/>-->
+<!--    <attr name="colorOnSurfaceInverse" format="reference"/>-->
+<!--    <attr name="colorPrimaryInverse" format="reference"/>-->
+</resources>

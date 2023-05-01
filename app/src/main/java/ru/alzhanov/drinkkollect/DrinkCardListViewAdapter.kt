@@ -2,6 +2,7 @@ package ru.alzhanov.drinkkollect
 
 import android.app.Activity
 import android.icu.text.RelativeDateTimeFormatter
+import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import ru.alzhanov.drinkkollect.models.DrinkPost
 import ru.alzhanov.drinkkollect.models.OtherDrinkPost
 import ru.alzhanov.drinkkollect.models.OwnDrinkPost
 import java.util.*
+import kotlin.math.roundToInt
 import kotlin.time.DurationUnit
 
 
@@ -32,35 +34,75 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
             )
         } else if (drinkPost is OtherDrinkPost) {
             binding.label.text = binding.root.resources.getText(R.string.want_ru)
-            binding.label.chipIcon = ResourcesCompat.getDrawable(
-                binding.root.resources,
-                if (drinkPost.like)
-                    R.drawable.ic_baseline_star_24 else
+            // set background color from attr
+            if (drinkPost.like) {
+                binding.label.closeIcon = ResourcesCompat.getDrawable(
+                    binding.root.resources,
+                        R.drawable.ic_baseline_star_24,
+                    null
+                )
+                val typedValue = TypedValue()
+                binding.root.context.theme.resolveAttribute(
+                    R.attr.colorSecondaryContainer,
+                    typedValue,
+                    true
+                )
+                binding.label.chipBackgroundColor = ResourcesCompat.getColorStateList(
+                    binding.root.resources,
+                    typedValue.resourceId,
+                    null
+                )
+
+            } else {
+                binding.label.closeIcon = ResourcesCompat.getDrawable(
+                    binding.root.resources,
                     R.drawable.ic_baseline_star_border_24,
                 null
-            )
-            // I have no idea why this doesn't work
-//            binding.label.chipIconTint = ResourcesCompat.getColorStateList(
-//                binding.root.resources,
-//                if (drinkPost.like)
-//                    R.color.pcolor else
-//                    R.color.colorSecondary,
-//                null
-//            )
+                )
+                binding.label.chipBackgroundColor = ResourcesCompat.getColorStateList(
+                    binding.root.resources,
+                    R.color.transparent,
+                    null
+                )
+                val dim = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, binding.root.resources.displayMetrics)
+                val typedValue = TypedValue()
+                binding.root.context.theme.resolveAttribute(
+                    R.attr.colorOutline,
+                    typedValue,
+                    true
+                )
+                binding.label.chipStrokeWidth = dim
+                binding.label.chipStrokeColor = ResourcesCompat.getColorStateList(
+                    binding.root.resources,
+                    typedValue.resourceId,
+                    null
+                )
+            }
         }
         binding.image.setImageResource(drinkPost.image)
     }
 
-    companion object {
-        private fun getRelativeTimeAgo(date: Instant): String {
-            val now = Clock.System.now()
-            val formatter = RelativeDateTimeFormatter.getInstance()
-            return formatter.format(
-                (now - date).toDouble(DurationUnit.SECONDS),
-                RelativeDateTimeFormatter.Direction.LAST,
-                RelativeDateTimeFormatter.RelativeUnit.SECONDS
-            )
+    private val periods = listOf(
+        RelativeDateTimeFormatter.RelativeUnit.SECONDS to 1,
+        RelativeDateTimeFormatter.RelativeUnit.MINUTES to 60,
+        RelativeDateTimeFormatter.RelativeUnit.HOURS to 60 * 60,
+        RelativeDateTimeFormatter.RelativeUnit.DAYS to 24 * 60 * 60,
+        RelativeDateTimeFormatter.RelativeUnit.WEEKS to 7 * 24 * 60 * 60,
+        RelativeDateTimeFormatter.RelativeUnit.MONTHS to 30 * 24 * 60 * 60,
+        RelativeDateTimeFormatter.RelativeUnit.YEARS to 365 * 24 * 60 * 60,
+    )
+    private fun getRelativeTimeAgo(date: Instant): String {
+        val now = Clock.System.now()
+        val formatter = RelativeDateTimeFormatter.getInstance()
+        val durationS = (now - date).toDouble(DurationUnit.SECONDS)
+        for ((unit, secs) in periods.reversed()) {
+            val amount = durationS / secs
+            if(amount >= 1)
+                return formatter.format(amount.roundToInt().toDouble(),
+                    RelativeDateTimeFormatter.Direction.LAST,
+                    unit)
         }
+        return binding.root.context.getString(R.string.just_now)
     }
 }
 
