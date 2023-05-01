@@ -33,7 +33,7 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
                 drinkPost.likes
             )
         } else if (drinkPost is OtherDrinkPost) {
-            binding.label.text = binding.root.resources.getText(R.string.want_ru)
+            binding.label.text = binding.root.resources.getText(R.string.want)
             // set background color from attr
             if (drinkPost.like) {
                 binding.label.closeIcon = ResourcesCompat.getDrawable(

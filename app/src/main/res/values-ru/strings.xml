@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">DrinkKollect</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -43,63 +42,60 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="card_image_description">Drink image</string>
+    <string name="card_image_description">Картинка напитка</string>
     <string name="location_icon">Location icon</string>
-    <string name="enter">Log in</string>
-    <string name="back">Back</string>
-    <string name="main_scroll_menu">Main page menu</string>
-    <string name="change_account">Log out</string>
-    <string name="change_password">Change password</string>
-    <string name="delete_account">Delege account</string>
-    <string name="done_action">Done</string>
-    <string name="add_post_fab">Add post button</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="welcome">Welcome!</string>
-    <string name="wrong_password">Wrong password…</string>
-    <string name="log_in">Log in</string>
-    <string name="register">Sign up</string>
-    <string name="i_want_to_watch">I\'m just looking</string>
+    <string name="enter">Войти</string>
+    <string name="back">Назад</string>
+    <string name="main_scroll_menu">Меню главной страницы</string>
+    <string name="change_account">Выйти</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="delete_account">Удалить страничку</string>
+    <string name="done_action">Готово</string>
+    <string name="add_post_fab">Кнопка добавления поста</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="wrong_password">Неверный пароль…</string>
+    <string name="log_in">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="i_want_to_watch">Мне просто посмотреть…</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
-    <string name="password_repeat">Repeat password</string>
-    <string name="registration">Sign up</string>
-    <string name="go_back_to_login">Go back to login</string>
-    <string name="wrong_login">Wrong login…</string>
-    <string name="passwords_mismatch">Passwords missmatch…</string>
-    <string name="drink_name">Drink name</string>
-    <string name="your_opinion">How was it?</string>
-    <string name="where_found">Where did you get that?</string>
-    <string name="add_to_collection">Add to your collection</string>
-    <string name="add_photo">Add photo</string>
-    <string name="friends">Friends</string>
-    <string name="total_in_collection">Collection</string>
-    <string name="are_you_sure">Are you sure?</string>
-    <string name="deletion_warning">After you delete your account all the information will be lost</string>
-    <string name="delete">Delete</string>
-    <string name="return_back">Back</string>
-    <string name="password_change">Change password</string>
-    <string name="change">Change</string>
-    <string name="invalid_password">Wrong password</string>
-    <string name="current_password">Current password</string>
-    <string name="new_password">New password</string>
-    <string name="want">I want it</string>
-    <string name="just_now">Just now</string>
-    <!-- Yes, MessageFormat exists, but it's not necessary here -->
+    <string name="password_repeat">Пароль ещё раз</string>
+    <string name="registration">Регистрация</string>
+    <string name="go_back_to_login">Вернуться к авторизации</string>
+    <string name="wrong_login">Неверный логин…</string>
+    <string name="passwords_mismatch">Пароли не совпадают…</string>
+    <string name="drink_name">Название напитка</string>
+    <string name="your_opinion">Ваши впечатления?</string>
+    <string name="where_found">А где вы это взяли?</string>
+    <string name="add_to_collection">Добавить в коллекцию</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="friends">Друзья</string>
+    <string name="total_in_collection">Всего в коллекции</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="deletion_warning">После удаления аккаунта вся информация о нем потеряется</string>
+    <string name="delete">Удалить</string>
+    <string name="return_back">Вернуться</string>
+    <string name="password_change">Смена пароля</string>
+    <string name="change">Сменить</string>
+    <string name="invalid_password">Некорректный пароль</string>
+    <string name="current_password">Текущий пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="want">Хочу</string>
+    <string name="just_now">Только что</string>
+    <!-- Русский язык требует указать строки для one, few, many и other (на всякий случай).
+        (https://developer.alexanderklimov.ru/android/theory/plurals.php) -->
     <plurals name="drinks_in_collection">
-        <item quantity="zero">%d drinks</item>
-        <item quantity="one">%d dirnk</item>
-        <item quantity="two">%d drinks</item>
-        <item quantity="few">%d drinks</item>
-        <item quantity="many">%d drinks</item>
-        <item quantity="other">%d drinks</item>
+        <item quantity="one">%d напиток</item>
+        <item quantity="few">%d напитка</item>
+        <item quantity="many">%d напитков</item>
+        <item quantity="other">%d напитков</item>
     </plurals>
     <plurals name="people_want">
-        <item quantity="zero">%d people want</item>
-        <item quantity="one">%d person wants</item>
-        <item quantity="two">%d people want</item>
-        <item quantity="few">%d people want</item>
-        <item quantity="many">%d people want</item>
-        <item quantity="other">%d people want</item>
+        <item quantity="one">%d человек хочет</item>
+        <item quantity="few">%d человека хочет</item>
+        <item quantity="many">%d людей хотят</item>
+        <item quantity="other">%d людей хотят</item>
     </plurals>
 </resources>

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.visibility = View.GONE
                 }
                 R.id.RegisterFragment -> {
-                    binding.toolbar.title = "Регистрация"
+                    binding.toolbar.title = getString(R.string.registration)
                     binding.toolbar.visibility = View.VISIBLE
                 }
                 R.id.ProfileFragment -> {

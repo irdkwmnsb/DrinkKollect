@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searchbar_name"
-                android:hint="@string/drink_name_ru"
+                android:hint="@string/drink_name"
                 android:inputType="text"
                 android:textColor="?colorOnSurfaceVariant"
                 android:textColorHint="?colorOnSurfaceVariant"
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/drink_description"
-                android:hint="@string/your_opinion_ru"
+                android:hint="@string/your_opinion"
                 android:inputType="textMultiLine"
                 android:textColorHint="?colorOnSurfaceVariant"
                 android:textSize="18sp" />
@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searchbar_name"
-                android:hint="@string/where_found_ru"
+                android:hint="@string/where_found"
                 android:inputType="text"
                 android:textColorHint="?colorOnSurfaceVariant"
                 android:textSize="18sp" />
@@ -85,7 +85,7 @@
             android:backgroundTint="@android:color/transparent"
             android:drawableStart="@drawable/ic_add"
             android:gravity="center"
-            android:text="@string/add_photo_ru"
+            android:text="@string/add_photo"
             android:textColor="?colorOnSurfaceVariant"
             app:cornerRadius="8dp"
             app:strokeColor="?colorSurfaceInverse"
@@ -98,7 +98,7 @@
             android:layout_below="@id/buttonAddPhoto"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
-            android:text="@string/add_to_collection_ru"
+            android:text="@string/add_to_collection"
             app:cornerRadius="8dp" />
     </RelativeLayout>
 </ScrollView>
