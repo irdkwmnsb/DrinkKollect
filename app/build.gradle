@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.protobuf'
 }
 
 android {
@@ -33,9 +34,21 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    sourceSets {
+        main {
+            proto {
+                srcDirs += '../backend/api/v1'
+            }
+        }
+    }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
-dependencies {
+dependencies  {
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation "androidx.core:core-splashscreen:1.0.1"
@@ -54,4 +67,41 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // GRPC
+//    protobuf 'com.google.protobuf:protobuf-java:3.22.3'
+    implementation "io.grpc:grpc-netty:1.54.1"  // CURRENT_GRPC_VERSION
+    implementation "io.grpc:grpc-protobuf:1.54.1"  // CURRENT_GRPC_VERSION
+    implementation "io.grpc:grpc-stub:1.54.1"  // CURRENT_GRPC_VERSION
+    compileOnly "org.apache.tomcat:annotations-api:6.0.53"
+//    api 'com.google.protobuf:protobuf-java:3.22.3'
+}
+
+protobuf {
+    protoc {
+        // Download from repositories
+        artifact = 'com.google.protobuf:protoc:3.22.3'
+    }
+    plugins {
+        // Optional: an artifact spec for a protoc plugin, with "grpc" as
+        // the identifier, which can be referred to in the "plugins"
+        // container of the "generateProtoTasks" closure.
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.54.1" // CURRENT_GRPC_VERSION
+        }
+    }
+    generateProtoTasks {
+        all().forEach {
+            it.builtins {
+                java {
+                    option "lite"
+                }
+            }
+            it.plugins {
+                grpc {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }
