@@ -1,6 +1,5 @@
 package ru.alzhanov.drinkkollect
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
@@ -80,9 +79,7 @@ class MainScrollFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.addPostFab.setOnClickListener {
-//            findNavController().navigate(R.id.action_MainScrollFragment_to_NewPostFragment)
-            val intent = Intent(activity, AddPostActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_MainScrollFragment_to_NewPostFragment)
         }
     }
 

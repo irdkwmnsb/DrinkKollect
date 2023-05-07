@@ -26,6 +26,8 @@
                 android:background="@drawable/searchbar_name"
                 android:hint="@string/drink_name_ru"
                 android:inputType="text"
+                android:layout_marginTop="50dp"
+
                 android:textColor="?colorOnSurfaceVariant"
                 android:textColorHint="?colorOnSurfaceVariant"
                 android:textSize="18sp" />
@@ -76,7 +78,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonAddPhoto"
+            android:id="@+id/buttonTakePhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextDrinkLocation"
@@ -85,7 +87,50 @@
             android:backgroundTint="@android:color/transparent"
             android:drawableStart="@drawable/ic_add"
             android:gravity="center"
-            android:text="@string/add_photo_ru"
+            android:text="@string/take_new_photo"
+            android:textColor="?colorOnSurfaceVariant"
+            app:cornerRadius="8dp"
+            app:strokeColor="?colorSurfaceInverse"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonAddPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonTakePhoto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:drawableStart="@drawable/ic_add"
+            android:gravity="center"
+            android:text="@string/upload_photo"
+            android:textColor="?colorOnSurfaceVariant"
+            app:cornerRadius="8dp"
+            app:strokeColor="?colorSurfaceInverse"
+            app:strokeWidth="1dp" />
+
+        <ImageView
+            android:id="@+id/imageDrink"
+            android:layout_below="@id/buttonAddPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/drinkpicture"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonRemovePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageDrink"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:drawableStart="@drawable/ic_add"
+            android:gravity="center"
+            android:text="@string/remove_photo"
             android:textColor="?colorOnSurfaceVariant"
             app:cornerRadius="8dp"
             app:strokeColor="?colorSurfaceInverse"
@@ -95,7 +140,7 @@
             android:id="@+id/button_new_post_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonAddPhoto"
+            android:layout_below="@id/buttonRemovePhoto"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
             android:text="@string/add_to_collection_ru"
