@@ -88,6 +88,10 @@
     <string name="new_password_ru">Новый пароль</string>
     <string name="want_ru">Хочу</string>
     <string name="just_now">Только что</string>
+    <string name="take_new_photo">Сделать фото</string>
+    <string name="upload_photo">Загрузить фото</string>
+    <string name="drink_picture">DrinkImage</string>
+    <string name="remove_photo">Удалить фото</string>
     <!-- Русский язык требует указать строки для one, few, many и other (на всякий случай).
         По стандарту не используется zero, и не используется two — но, ничего страшного в
         указании этих строк нет. На всякий случай можно их всё-таки указывать — кто знает,

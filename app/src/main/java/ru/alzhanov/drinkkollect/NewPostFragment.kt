@@ -33,10 +33,7 @@ class NewPostFragment : Fragment() {
                     val imageView = view?.findViewById<ImageView>(R.id.imageDrink)
                     imageView?.setImageURI(imageuri)
                     // TODO what to do with uploaded pic
-                    binding.imageDrink.visibility = View.VISIBLE
-                    binding.buttonAddPhoto.visibility = View.GONE
-                    binding.buttonTakePhoto.visibility = View.GONE
-                    binding.buttonRemovePhoto.visibility = View.VISIBLE
+                    updateBindingWithPic()
                 }
             }
         }
@@ -51,20 +48,15 @@ class NewPostFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 if (result.resultCode == AppCompatActivity.RESULT_OK && data != null) {
-                    val selectedUri = data.data
+                    imageuri = data.data
                     val imageView = view?.findViewById<ImageView>(R.id.imageDrink)
-                    imageView?.setImageURI(selectedUri)
+                    imageView?.setImageURI(imageuri)
                     // TODO what to do with taken pic
-                    binding.imageDrink.visibility = View.VISIBLE
-                    binding.buttonAddPhoto.visibility = View.GONE
-                    binding.buttonTakePhoto.visibility = View.GONE
-                    binding.buttonRemovePhoto.visibility = View.VISIBLE
+                    updateBindingWithPic()
                 }
             }
         }
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -77,16 +69,25 @@ class NewPostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.imageDrink.visibility = View.GONE
-        binding.buttonRemovePhoto.visibility = View.GONE
-
+        if (savedInstanceState?.getString("imageuri") != null) {
+            imageuri = Uri.parse(savedInstanceState.getString("imageuri"))
+        }
+        if (imageuri != null) {
+            binding.imageDrink.setImageURI(imageuri)
+            updateBindingWithPic()
+        } else {
+            updateBindingWithoutPic()
+        }
+        binding.editTextDrinkName.editText?.setText(savedInstanceState?.getString("drinkName"))
+        binding.editTextDrinkDescription.editText?.setText(savedInstanceState?.getString("drinkDescription"))
+        binding.editTextDrinkLocation.editText?.setText(savedInstanceState?.getString("drinkLocation"))
         val permissionLauncherForUploading = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
                 openUploadPhotoForResult()
             } else {
-                // Do otherwise
+                // TODO i guess do nothing with no permissions
             }
         }
         binding.buttonAddPhoto.setOnClickListener {
@@ -94,8 +95,8 @@ class NewPostFragment : Fragment() {
         }
         val permissionLauncherForCamera = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
-        ) { isGranged ->
-            if (isGranged) {
+        ) { isGranted ->
+            if (isGranted) {
                 val contentValues = ContentValues()
                 contentValues.put(MediaStore.Images.Media.TITLE, "Temp_pic")
                 contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp Description")
@@ -104,17 +105,51 @@ class NewPostFragment : Fragment() {
                     contentValues
                 )
                 openTakePicForResult()
+            } else {
+                // TODO i guess do nothing with no permissions
             }
         }
-            binding.buttonTakePhoto.setOnClickListener {
-                permissionLauncherForCamera.launch(Manifest.permission.CAMERA)
-            }
+        binding.buttonTakePhoto.setOnClickListener {
+            permissionLauncherForCamera.launch(Manifest.permission.CAMERA)
+        }
         binding.buttonRemovePhoto.setOnClickListener {
-            // TODO remove pic
-            binding.imageDrink.visibility = View.GONE
-            binding.buttonRemovePhoto.visibility = View.GONE
-            binding.buttonAddPhoto.visibility = View.VISIBLE
-            binding.buttonTakePhoto.visibility = View.VISIBLE
+            imageuri = null
+            updateBindingWithoutPic()
+        }
+    }
+
+    private fun updateBindingWithoutPic() {
+        binding.imageDrink.visibility = View.GONE
+        binding.buttonAddPhoto.visibility = View.VISIBLE
+        binding.buttonTakePhoto.visibility = View.VISIBLE
+        binding.buttonRemovePhoto.visibility = View.GONE
+    }
+
+    private fun updateBindingWithPic() {
+        binding.imageDrink.visibility = View.VISIBLE
+        binding.buttonAddPhoto.visibility = View.GONE
+        binding.buttonTakePhoto.visibility = View.GONE
+        binding.buttonRemovePhoto.visibility = View.VISIBLE
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(
+            "drinkName",
+            binding.editTextDrinkName.editText?.text.toString()
+        )
+        outState.putString(
+            "drinkDescription",
+            binding.editTextDrinkDescription.editText?.text.toString()
+        )
+        outState.putString(
+            "drinkLocation",
+            binding.editTextDrinkLocation.editText?.text.toString()
+        )
+        if (imageuri == null) {
+            outState.putString("imageuri", null)
+        } else {
+            outState.putString("imageuri", imageuri.toString())
         }
     }
 }
