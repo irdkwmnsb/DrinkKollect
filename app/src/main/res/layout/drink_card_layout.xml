@@ -119,6 +119,8 @@
         tools:text="30 человек хотят"
         app:chipStrokeWidth="0dp"
         app:chipBackgroundColor="?colorSecondaryContainer"
+        app:closeIconEnabled="true"
+        app:closeIcon="@null"
         app:layout_constraintEnd_toEndOf="@id/container"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
         app:layout_constraintBottom_toBottomOf="@id/container"
