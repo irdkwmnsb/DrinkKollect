@@ -12,8 +12,8 @@ services:
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
       - MINIO_CONSOLE_ADDRESS=:9001
-      # - MINIO_BROWSER_REDIRECT_URL=localhost:9001
-      - MINIO_SERVER_URL=s3.alzhanov.ru
+      - MINIO_BROWSER_REDIRECT_URL=http://192.168.0.5:9001
+      - MINIO_SERVER_URL=https://s3.alzhanov.ru
       - VIRTUAL_HOST=s3.alzhanov.ru
       - VIRTUAL_PORT=9000
     command: server /data
