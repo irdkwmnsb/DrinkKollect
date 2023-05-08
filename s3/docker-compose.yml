@@ -17,3 +17,13 @@ services:
       - VIRTUAL_HOST="s3.alzhanov.ru"
       - VIRTUAL_PORT="9000"
     command: server /data
+    networks:
+      - proxy
+
+volumes:
+  data:
+
+networks:
+  proxy:
+    external: true
+
