@@ -14,6 +14,8 @@ import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import drinkollect.v1.DrinkollectOuterClass
 import ru.alzhanov.drinkkollect.databinding.FragmentNewPostBinding
 
 class NewPostFragment : Fragment() {
@@ -32,7 +34,6 @@ class NewPostFragment : Fragment() {
                 if (result.resultCode == AppCompatActivity.RESULT_OK && data != null) {
                     val imageView = view?.findViewById<ImageView>(R.id.imageDrink)
                     imageView?.setImageURI(imageuri)
-                    // TODO what to do with uploaded pic
                     updateBindingWithPic()
                 }
             }
@@ -51,7 +52,6 @@ class NewPostFragment : Fragment() {
                     imageuri = data.data
                     val imageView = view?.findViewById<ImageView>(R.id.imageDrink)
                     imageView?.setImageURI(imageuri)
-                    // TODO what to do with taken pic
                     updateBindingWithPic()
                 }
             }
@@ -115,6 +115,20 @@ class NewPostFragment : Fragment() {
         binding.buttonRemovePhoto.setOnClickListener {
             imageuri = null
             updateBindingWithoutPic()
+        }
+        binding.buttonNewPostDone.setOnClickListener {
+            if ((activity as MainActivity).service.getUsername() == null) {
+                findNavController().navigate(R.id.action_NewPostFragment_to_LoginFragment)
+            } else {
+                (activity as MainActivity).service.createPostRequest(
+                    binding.editTextDrinkName.editText?.text.toString(),
+                    binding.editTextDrinkDescription.editText?.text.toString(),
+                    binding.editTextDrinkLocation.editText?.text.toString(),
+                    // TODO get S3Resource from imageuri
+                    DrinkollectOuterClass.S3Resource.getDefaultInstance()
+                )
+                findNavController().navigate(R.id.action_NewPostFragment_to_MainScrollFragment)
+            }
         }
     }
 

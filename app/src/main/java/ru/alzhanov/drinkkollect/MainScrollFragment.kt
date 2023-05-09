@@ -9,21 +9,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.FragmentMainScrollBinding
 import ru.alzhanov.drinkkollect.models.DrinkPost
 import ru.alzhanov.drinkkollect.models.OtherDrinkPost
-import ru.alzhanov.drinkkollect.models.OwnDrinkPost
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.minutes
 
 
-val drinkPosts = arrayListOf<DrinkPost>(
-    OwnDrinkPost("Monster - VR46", "На вкус как дрянь. Их новая линейка оказалось не такой вкусной. Если увидите - не берите", R.drawable.rich, "Монако", "irdkwmnsb", Clock.System.now(), 5),
-    OtherDrinkPost("Жигуль", "Если б было море пива. Я б дельфином стал красивым.", R.drawable.zhigulevskoye, "Дикси у дома", "vasya916",  Clock.System.now() - 1.minutes, true),
-    OtherDrinkPost("Розовый монстр", "TestTest Вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 1.days, false),
-    OtherDrinkPost("Adrenaline rush", "TestTest Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 2.days, false),
-)
+//val drinkPosts = arrayListOf<DrinkPost>(
+//    OwnDrinkPost("Monster - VR46",
+//        "На вкус как дрянь. Их новая линейка оказалось не такой вкусной. Если увидите - не берите",
+//        R.drawable.rich,
+//        "Монако",
+//        "irdkwmnsb",
+//        Clock.System.now(),
+//        5),
+//    OtherDrinkPost("Жигуль", "Если б было море пива. Я б дельфином стал красивым.", R.drawable.zhigulevskoye, "Дикси у дома", "vasya916",  Clock.System.now() - 1.minutes, true),
+//    OtherDrinkPost("Розовый монстр", "TestTest Вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 1.days, false),
+//    OtherDrinkPost("Adrenaline rush", "TestTest Ну во первых, это не монстр, а адреналин. Во вторых, это вкус как попа", R.drawable.rich, "где то", "irdkwmnsb",  Clock.System.now() - 2.days, false),
+//)
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -47,10 +50,28 @@ class MainScrollFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val posts = (activity as MainActivity).service.listPostsRequest()
+            ?.let { ArrayList(it) }
+        val drinkPosts: ArrayList<DrinkPost> = ArrayList()
+        if (posts != null) {
+            for (post in posts) {
+                drinkPosts.add(
+                    OtherDrinkPost(
+                        post.title,
+                        post.description,
+                        post.image,
+                        post.location,
+                        post.creator,
+                        Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
+                        post.liked
+                    )
+                )
+            }
+        }
         val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
         binding.mainItemsList.adapter = customAdapter
-        binding.mainItemsList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        binding.mainItemsList.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
 
         val dividerItemDecoration = DividerItemDecoration(
             context,
@@ -80,8 +101,6 @@ class MainScrollFragment : Fragment() {
 
         binding.addPostFab.setOnClickListener {
             findNavController().navigate(R.id.action_MainScrollFragment_to_NewPostFragment)
-//            val intent = Intent(activity, AddPostActivity::class.java)
-//            startActivity(intent)
         }
     }
 

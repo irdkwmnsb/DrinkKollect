@@ -3,6 +3,7 @@ package ru.alzhanov.drinkkollect
 import android.util.Log
 import drinkollect.v1.DrinkollectGrpc
 import drinkollect.v1.DrinkollectOuterClass
+import drinkollect.v1.DrinkollectOuterClass.S3Resource
 import io.grpc.CallCredentials
 import io.grpc.ManagedChannelBuilder
 import io.grpc.Metadata
@@ -16,6 +17,10 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         Metadata.Key.of("authorization", ASCII_STRING_MARSHALLER)
 
     private var jwt: String? = null
+    private var username: String? = null
+    fun getUsername(): String? {
+        return username
+    }
 
     private val channel = ManagedChannelBuilder
         .forAddress(host, port)
@@ -32,7 +37,7 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
 
     private fun onGotJwt(token: String) {
         jwt = token
-        service = DrinkollectGrpc.newBlockingStub(channel).withCallCredentials(object:
+        service = DrinkollectGrpc.newBlockingStub(channel).withCallCredentials(object :
             CallCredentials() {
             override fun applyRequestMetadata(
                 requestInfo: RequestInfo?,
@@ -58,6 +63,7 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
                 .build()
             val response = service.register(request)
             onGotJwt(response.token)
+            this.username = username
         } catch (e: Exception) {
             e.message.orEmpty().let { Log.i("request error: ", it) }
             throw e
@@ -73,6 +79,54 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
                 .build()
             val response = service.login(request)
             onGotJwt(response.token)
+            this.username = username
+        } catch (e: Exception) {
+            e.message.orEmpty().let { Log.i("request error: ", it) }
+            throw e
+        }
+    }
+
+    fun listUserPostsRequest(username: String): MutableList<DrinkollectOuterClass.Post>? {
+        try {
+            val request =
+                DrinkollectOuterClass.ListUserPostsRequest
+                    .newBuilder()
+                    .setUsername(username)
+                    .build()
+            val response = service.listUserPosts(request)
+            return response.postsList
+        } catch (e: Exception) {
+            e.message.orEmpty().let { Log.i("request error: ", it) }
+            throw e
+        }
+    }
+
+    fun listPostsRequest(): MutableList<DrinkollectOuterClass.Post>? {
+        try {
+            val request = DrinkollectOuterClass.ListPostsRequest.newBuilder().build()
+            val response = service.listPosts(request)
+            return response.postsList
+        } catch (e: Exception) {
+            e.message.orEmpty().let { Log.i("request error: ", it) }
+            throw e
+        }
+    }
+
+    fun createPostRequest(
+        title: String,
+        description: String?,
+        location: String?,
+        image: S3Resource?
+    ) {
+        try {
+            val request = DrinkollectOuterClass.CreatePostRequest
+                .newBuilder()
+                .setTitle(title)
+                .setDescription(description)
+                .setLocation(location)
+                .setImage(image)
+                .build()
+            service.createPost(request)
         } catch (e: Exception) {
             e.message.orEmpty().let { Log.i("request error: ", it) }
             throw e
@@ -95,6 +149,7 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
 
     fun logout() {
         onLostJwt()
+        username = null
     }
 
     override fun close() {

@@ -92,5 +92,21 @@
         android:id="@+id/NewPostFragment"
         android:name="ru.alzhanov.drinkkollect.NewPostFragment"
         tools:layout="@layout/fragment_new_post">
+        <action
+            android:id="@+id/action_NewPostFragment_to_MainScrollFragment"
+            app:destination="@id/MainScrollFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_NewPostFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 </navigation>
