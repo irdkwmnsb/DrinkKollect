@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.findNavController
 import ru.alzhanov.drinkkollect.databinding.ChangePasswordDialogBinding
 
 class ChangePasswordDialog : DialogFragment() {
@@ -30,7 +29,19 @@ class ChangePasswordDialog : DialogFragment() {
         }
 
         binding.changePasswordChange.setOnClickListener {
-            //TODO: change password
+            val oldPassword = binding.changePasswordOldPassword.text.toString()
+            val newPassword = binding.changePasswordNewPassword.text.toString()
+            val newPasswordRepeat = binding.changePasswordRepeat.text.toString()
+            if (newPassword != newPasswordRepeat) {
+                binding.changePasswordRepeat.error = resources.getString(R.string.passwords_mismatch_ru)
+                return@setOnClickListener
+            }
+            try {
+                (activity as MainActivity).service.changePasswordRequest(oldPassword, newPassword)
+            } catch (e: Exception) {
+                binding.changePasswordRepeat.error = e.message
+                return@setOnClickListener
+            }
             dialog!!.dismiss()
         }
     }

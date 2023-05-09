@@ -1,7 +1,6 @@
 package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
-//import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -9,10 +8,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-//import drinkollect.v1.DrinkollectGrpc
-//import drinkollect.v1.DrinkollectOuterClass.RegisterRequest
-//import drinkollect.v1.DrinkollectOuterClass.RegisterResponse
-//import io.grpc.ManagedChannelBuilder
 import ru.alzhanov.drinkkollect.databinding.ActivityMainBinding
 
 
@@ -21,21 +16,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-//        val channel = ManagedChannelBuilder.forAddress("renbou.ru", 18081).usePlaintext().build()
-//        val stub = DrinkollectGrpc.newBlockingStub(channel)
-//        val request = RegisterRequest.newBuilder()
-//            .setUsername("amogus").setPassword("amogus").build()
-//        val reply: RegisterResponse = stub.register(request)
-//        Log.i("GRPC Response: %s", reply.toString())
+    private val host by lazy { resources.getString(R.string.host) }
+    private val port by lazy { Integer.parseInt(resources.getString(R.string.port)) }
+    val service by lazy { DrinkKollectService(host, port) }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // transitions between fragments

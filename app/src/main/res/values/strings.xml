@@ -78,8 +78,10 @@
     <string name="friends_ru">Друзья</string>
     <string name="total_in_collection_ru">Всего в коллекции</string>
     <string name="are_you_sure_ru">Вы уверены?</string>
+    <string name="stay_ru">Остаться</string>
     <string name="deletion_warning_ru">После удаления аккаунта вся информация о нем потеряется</string>
     <string name="delete_ru">Удалить</string>
+    <string name="logout_ru">Выйти</string>
     <string name="return_back_ru">Вернуться</string>
     <string name="password_change_ru">Смена пароля</string>
     <string name="change_ru">Сменить</string>
@@ -92,6 +94,8 @@
     <string name="upload_photo">Загрузить фото</string>
     <string name="drink_picture">DrinkImage</string>
     <string name="remove_photo">Удалить фото</string>
+    <string name="host">bb139961.alzhanov.ru</string>
+    <string name="port">18081</string>
     <!-- Русский язык требует указать строки для one, few, many и other (на всякий случай).
         По стандарту не используется zero, и не используется two — но, ничего страшного в
         указании этих строк нет. На всякий случай можно их всё-таки указывать — кто знает,

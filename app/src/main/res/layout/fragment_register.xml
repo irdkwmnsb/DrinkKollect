@@ -8,7 +8,7 @@
 
     <!--    app:helperText="@string/invalid_password_ru"-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/registerEditTextPasswordLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -21,6 +21,7 @@
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerEditTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
@@ -33,10 +34,10 @@
 
     <!--    app:helperText="@string/passwords_mismatch_ru"-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextTextPasswordRepeat"
+        android:id="@+id/registerEditTextPasswordRepeatLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextTextPassword"
+        android:layout_below="@id/registerEditTextPasswordLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:autofillHints="auto"
@@ -46,8 +47,8 @@
         android:inputType="textPassword"
         app:hintEnabled="false">
 
-
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerEditTextPasswordRepeat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
@@ -60,28 +61,26 @@
 
     <!--    app:helperText="@string/wrong_login_ru"-->
     <com.google.android.material.textfield.TextInputLayout
-
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/registerEditTextUsernameLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_above="@id/editTextTextPassword"
+        android:layout_above="@id/registerEditTextPasswordLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
         android:autofillHints="auto"
         android:background="@drawable/rounded_auth_top"
         android:ems="10"
         android:importantForAutofill="yes"
-        android:inputType="textEmailAddress"
         app:hintEnabled="false">
 
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerEditTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
             android:background="@drawable/rounded_auth_top"
             android:hint="@string/login_ru"
-            android:inputType="textEmailAddress"
             android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -90,7 +89,7 @@
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextTextPasswordRepeat"
+        android:layout_below="@id/registerEditTextPasswordRepeatLayout"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@android:color/transparent"
         android:text="@string/register_ru"

@@ -35,12 +35,19 @@ class LoginFragment : Fragment() {
         }
 
         binding.buttonLogIn.setOnClickListener {
-            //TODO do the logging in (backend request) and set user info
+            try {
+                (activity as MainActivity).service.loginRequest(
+                    binding.loginEditTextUsername.text.toString(),
+                    binding.loginEditTextPassword.text.toString()
+                )
+            } catch (e: Exception) {
+                binding.loginEditTextPasswordLayout.error = e.message
+                return@setOnClickListener
+            }
             findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
         }
 
         binding.buttonIWantToWatch.setOnClickListener {
-            //TODO handle entrance by unknown user
             findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
         }
     }
