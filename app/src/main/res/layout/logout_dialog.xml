@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/default_dialog_bg">
+    
+    <TextView
+        android:id="@+id/logout_are_you_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/are_you_sure_ru"
+        android:textColor="?colorOnSurface"
+        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Title.Large"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        />
+
+    <Button
+        android:id="@+id/logout_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stay_ru"
+        android:layout_below="@id/logout_are_you_sure"
+        android:backgroundTint="?colorPrimary"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        />
+
+    <Button
+        android:id="@+id/logout_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout_ru"
+        android:backgroundTint="@android:color/transparent"
+        android:textColor="?colorPrimary"
+        app:strokeColor="?colorPrimary"
+        app:strokeWidth="1dp"
+        android:layout_below="@id/logout_are_you_sure"
+        android:layout_toStartOf="@id/logout_back"
+        android:layout_alignTop="@id/logout_back"
+        android:layout_alignBottom="@id/logout_back"
+        android:layout_marginEnd="10dp"
+        />
+
+</RelativeLayout>
