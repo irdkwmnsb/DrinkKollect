@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import ru.alzhanov.drinkkollect.databinding.FragmentLoginBinding
 
 /**
@@ -35,16 +38,34 @@ class LoginFragment : Fragment() {
         }
 
         binding.buttonLogIn.setOnClickListener {
-            try {
-                (activity as MainActivity).service.loginRequest(
-                    binding.loginEditTextUsername.text.toString(),
-                    binding.loginEditTextPassword.text.toString()
-                )
-            } catch (e: Exception) {
-                binding.loginEditTextPasswordLayout.error = e.message
-                return@setOnClickListener
+            val observer = object: Observer<Unit> {
+                override fun onSubscribe(d: Disposable) {
+                    binding.buttonLogIn.visibility = View.GONE
+                    binding.buttonRegister.visibility = View.GONE
+                    binding.buttonIWantToWatch.visibility = View.GONE
+                    binding.loginEditTextPasswordLayout.visibility = View.GONE
+                    binding.loginEditTextUsernameLayout.visibility = View.GONE
+                    binding.viewTextNameDrinkKollect.visibility = View.GONE
+                    binding.viewTextWelcomeRU.visibility = View.GONE
+                    binding.loginProgressBar.visibility = View.VISIBLE
+                }
+
+                override fun onNext(t: Unit) {}
+
+                override fun onError(e: Throwable) {
+                    binding.loginEditTextPasswordLayout.error = e.message
+                }
+
+                override fun onComplete() {
+                    findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
+                }
             }
-            findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
+
+            (activity as MainActivity).service.loginRequest(
+                observer,
+                binding.loginEditTextUsername.text.toString(),
+                binding.loginEditTextPassword.text.toString()
+            )
         }
 
         binding.buttonIWantToWatch.setOnClickListener {

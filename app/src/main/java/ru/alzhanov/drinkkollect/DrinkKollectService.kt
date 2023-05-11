@@ -7,6 +7,11 @@ import io.grpc.CallCredentials
 import io.grpc.ManagedChannelBuilder
 import io.grpc.Metadata
 import io.grpc.Metadata.ASCII_STRING_MARSHALLER
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.io.Closeable
 import java.util.concurrent.Executor
 
@@ -49,48 +54,62 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         })
     }
 
-    fun registerRequest(username: String, password: String) {
-        try {
-            val request = DrinkollectOuterClass.RegisterRequest
-                .newBuilder()
-                .setUsername(username)
-                .setPassword(password)
-                .build()
-            val response = service.register(request)
-            onGotJwt(response.token)
-        } catch (e: Exception) {
-            e.message.orEmpty().let { Log.i("request error: ", it) }
-            throw e
+    private fun <RequestType> tokenAchievingRequest(observer: Observer<Unit>,
+                                                    request: RequestType,
+                                                    requestAction: (RequestType) -> String) {
+        Observable.create(ObservableOnSubscribe<Unit> { emitter ->
+            try {
+                val token = requestAction(request)
+                onGotJwt(token)
+            } catch (e: Exception) {
+                e.message.orEmpty().let { Log.i("request error: ", it) }
+                emitter.onError(e)
+            }
+            emitter.onComplete()
+        }).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer)
+    }
+
+    fun registerRequest(observer: Observer<Unit>, username: String, password: String) {
+        val request = DrinkollectOuterClass.RegisterRequest
+            .newBuilder()
+            .setUsername(username)
+            .setPassword(password)
+            .build()
+        tokenAchievingRequest(observer, request) { req ->
+            service.register(req).token
         }
     }
 
-    fun loginRequest(username: String, password: String) {
-        try {
-            val request = DrinkollectOuterClass.LoginRequest
-                .newBuilder()
-                .setUsername(username)
-                .setPassword(password)
-                .build()
-            val response = service.login(request)
-            onGotJwt(response.token)
-        } catch (e: Exception) {
-            e.message.orEmpty().let { Log.i("request error: ", it) }
-            throw e
+    fun loginRequest(observer: Observer<Unit>, username: String, password: String) {
+        val request = DrinkollectOuterClass.LoginRequest
+            .newBuilder()
+            .setUsername(username)
+            .setPassword(password)
+            .build()
+        tokenAchievingRequest(observer, request) { req ->
+            service.login(req).token
         }
     }
 
-    fun changePasswordRequest(oldPassword: String, newPassword: String) {
-        try {
-            val request = DrinkollectOuterClass.ChangePasswordRequest
-                .newBuilder()
-                .setPassword(oldPassword)
-                .setNewPassword(newPassword)
-                .build()
-            service.changePassword(request)
-        } catch (e: Exception) {
-            e.message.orEmpty().let { Log.i("request error: ", it) }
-            throw e
-        }
+    fun changePasswordRequest(observer: Observer<Unit>, oldPassword: String, newPassword: String) {
+        Observable.create(ObservableOnSubscribe<Unit> { emitter ->
+            try {
+                val request = DrinkollectOuterClass.ChangePasswordRequest
+                    .newBuilder()
+                    .setPassword(oldPassword)
+                    .setNewPassword(newPassword)
+                    .build()
+                service.changePassword(request)
+            } catch (e: Exception) {
+                e.message.orEmpty().let { Log.i("request error: ", it) }
+                emitter.onError(e)
+            }
+            emitter.onComplete()
+        }).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer)
     }
 
     fun logout() {
