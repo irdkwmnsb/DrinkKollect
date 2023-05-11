@@ -12,5 +12,6 @@ data class OwnDrinkPost(
     override val author: String,
     override val timestamp: Instant,
     val likes: Long,
+    override val id: Long,
 ) : DrinkPost {
 }

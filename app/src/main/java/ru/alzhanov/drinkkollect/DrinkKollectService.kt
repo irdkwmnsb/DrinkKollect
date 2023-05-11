@@ -147,6 +147,19 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         }
     }
 
+    fun togglePostLikeRequest(id: Long) {
+        try {
+            val request = DrinkollectOuterClass.TogglePostLikeRequest
+                .newBuilder()
+                .setId(id)
+                .build()
+            service.togglePostLike(request)
+        } catch (e: Exception) {
+            e.message.orEmpty().let { Log.i("request error: ", it) }
+            throw e
+        }
+    }
+
     fun logout() {
         onLostJwt()
         username = null

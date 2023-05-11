@@ -12,4 +12,5 @@ data class OtherDrinkPost(
     override val author: String,
     override val timestamp: Instant,
     val like: Boolean,
+    override val id: Long,
 ) : DrinkPost

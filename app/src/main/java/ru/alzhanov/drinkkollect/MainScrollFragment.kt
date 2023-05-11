@@ -13,6 +13,7 @@ import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.FragmentMainScrollBinding
 import ru.alzhanov.drinkkollect.models.DrinkPost
 import ru.alzhanov.drinkkollect.models.OtherDrinkPost
+import ru.alzhanov.drinkkollect.models.OwnDrinkPost
 
 
 //val drinkPosts = arrayListOf<DrinkPost>(
@@ -55,17 +56,33 @@ class MainScrollFragment : Fragment() {
         val drinkPosts: ArrayList<DrinkPost> = ArrayList()
         if (posts != null) {
             for (post in posts) {
-                drinkPosts.add(
-                    OtherDrinkPost(
-                        post.title,
-                        post.description,
-                        post.image,
-                        post.location,
-                        post.creator,
-                        Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
-                        post.liked
+                if (post.creator != (activity as MainActivity).service.getUsername()) {
+                    drinkPosts.add(
+                        OtherDrinkPost(
+                            post.title,
+                            post.description,
+                            post.image,
+                            post.location,
+                            post.creator,
+                            Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
+                            post.liked,
+                            post.id
+                        )
                     )
-                )
+                } else {
+                    drinkPosts.add(
+                        OwnDrinkPost(
+                            post.title,
+                            post.description,
+                            post.image,
+                            post.location,
+                            post.creator,
+                            Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
+                            post.likes,
+                            post.id
+                        )
+                    )
+                }
             }
         }
         val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)

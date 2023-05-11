@@ -11,4 +11,5 @@ interface DrinkPost {
     val location: String
     val author: String
     val timestamp: Instant
+    val id: Long
 }

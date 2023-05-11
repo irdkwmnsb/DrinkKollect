@@ -85,7 +85,8 @@ class ProfileFragment : Fragment() {
                         post.location,
                         post.creator,
                         Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
-                        post.likes
+                        post.likes,
+                        post.id
                     )
                 )
             }
