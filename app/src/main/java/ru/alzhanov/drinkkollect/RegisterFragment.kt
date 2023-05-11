@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import ru.alzhanov.drinkkollect.databinding.FragmentRegisterBinding
 
 /**
@@ -37,13 +39,26 @@ class RegisterFragment : Fragment() {
                 binding.registerEditTextPasswordRepeatLayout.error = resources.getString(R.string.passwords_mismatch)
                 return@setOnClickListener
             }
-            try {
-                (activity as MainActivity).service.registerRequest(username, password)
-            } catch (e: Exception) {
-                binding.registerEditTextPasswordRepeatLayout.error = e.message
-                return@setOnClickListener
+            val observer = object: Observer<Unit> {
+                override fun onSubscribe(d: Disposable) {
+                    binding.registerEditTextUsernameLayout.visibility = View.GONE
+                    binding.registerEditTextPasswordLayout.visibility = View.GONE
+                    binding.registerEditTextPasswordRepeatLayout.visibility = View.GONE
+                    binding.buttonRegister.visibility = View.GONE
+                    binding.registerProgressBar.visibility = View.VISIBLE
+                }
+
+                override fun onNext(t: Unit) {}
+
+                override fun onError(e: Throwable) {
+                    binding.registerEditTextPasswordRepeatLayout.error = e.message
+                }
+
+                override fun onComplete() {
+                    findNavController().navigate(R.id.action_RegisterFragment_to_MainScrollFragment)
+                }
             }
-            findNavController().navigate(R.id.action_RegisterFragment_to_MainScrollFragment)
+            (activity as MainActivity).service.registerRequest(observer, username, password)
         }
     }
 
