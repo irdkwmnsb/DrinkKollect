@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import ru.alzhanov.drinkkollect.databinding.ChangePasswordDialogBinding
 
 class ChangePasswordDialog : DialogFragment() {
@@ -36,13 +39,20 @@ class ChangePasswordDialog : DialogFragment() {
                 binding.changePasswordRepeat.error = resources.getString(R.string.passwords_mismatch)
                 return@setOnClickListener
             }
-            try {
-                (activity as MainActivity).service.changePasswordRequest(oldPassword, newPassword)
-            } catch (e: Exception) {
-                binding.changePasswordRepeat.error = e.message
-                return@setOnClickListener
+            val observer = object: Observer<Unit> {
+                override fun onSubscribe(d: Disposable) {}
+
+                override fun onNext(t: Unit) {}
+
+                override fun onError(e: Throwable) {
+                    binding.changePasswordRepeat.error = e.message
+                }
+
+                override fun onComplete() {
+                    dialog!!.dismiss()
+                }
             }
-            dialog!!.dismiss()
+            (activity as MainActivity).service.changePasswordRequest(observer, oldPassword, newPassword)
         }
     }
 
