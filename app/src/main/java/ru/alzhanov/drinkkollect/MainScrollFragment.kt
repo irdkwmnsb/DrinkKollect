@@ -80,6 +80,8 @@ class MainScrollFragment : Fragment() {
 
         binding.addPostFab.setOnClickListener {
             findNavController().navigate(R.id.action_MainScrollFragment_to_NewPostFragment)
+//            val intent = Intent(activity, AddPostActivity::class.java)
+//            startActivity(intent)
         }
     }
 

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
 import ru.alzhanov.drinkkollect.databinding.FragmentProfileBinding
 
 /**
@@ -47,8 +46,7 @@ class ProfileFragment : Fragment() {
                         true
                     }
                     R.id.menu_item_change_account -> {
-                        //TODO logout confirmation and action
-                        findNavController().navigate(R.id.action_ProfileFragment_to_LoginFragment)
+                        LogoutDialog().show(requireActivity().supportFragmentManager, "Logout")
                         true
                     }
                     R.id.menu_item_delete_account -> {

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">DrinkKollect</string>
+    <string name="api_host" translatable="false">bb139961.alzhanov.ru</string>
+    <string name="api_port" translatable="false">18081</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -60,6 +62,10 @@
     <string name="log_in">Log in</string>
     <string name="register">Sign up</string>
     <string name="i_want_to_watch">I\'m just looking</string>
+    <string name="take_new_photo">Take new photo</string>
+    <string name="upload_photo">Upload photo</string>
+    <string name="drink_picture">Drink picture</string>
+    <string name="remove_photo">Remove photo</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
     <string name="password_repeat">Repeat password</string>
@@ -85,6 +91,8 @@
     <string name="new_password">New password</string>
     <string name="want">I want it</string>
     <string name="just_now">Just now</string>
+    <string name="stay">Stay</string>
+    <string name="logout">Logout</string>
     <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
         <item quantity="zero">%d drinks</item>

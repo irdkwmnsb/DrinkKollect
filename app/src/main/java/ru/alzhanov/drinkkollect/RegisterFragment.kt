@@ -30,7 +30,19 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonRegister.setOnClickListener {
-            // TODO add registration
+            val username = binding.registerEditTextUsername.text.toString()
+            val password = binding.registerEditTextPassword.text.toString()
+            val passwordRepeat = binding.registerEditTextPasswordRepeat.text.toString()
+            if (password != passwordRepeat) {
+                binding.registerEditTextPasswordRepeatLayout.error = resources.getString(R.string.passwords_mismatch)
+                return@setOnClickListener
+            }
+            try {
+                (activity as MainActivity).service.registerRequest(username, password)
+            } catch (e: Exception) {
+                binding.registerEditTextPasswordRepeatLayout.error = e.message
+                return@setOnClickListener
+            }
             findNavController().navigate(R.id.action_RegisterFragment_to_MainScrollFragment)
         }
     }

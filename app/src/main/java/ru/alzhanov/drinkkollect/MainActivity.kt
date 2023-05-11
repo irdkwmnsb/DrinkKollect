@@ -16,6 +16,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    private val host by lazy { resources.getString(R.string.api_host) }
+    private val port by lazy { Integer.parseInt(resources.getString(R.string.api_port)) }
+    val service by lazy { DrinkKollectService(host, port) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
@@ -23,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // transitions between fragments

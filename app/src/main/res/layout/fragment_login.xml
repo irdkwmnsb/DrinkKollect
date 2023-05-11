@@ -8,7 +8,7 @@
 
     <!--        app:helperText="@string/wrong_password_ru"-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/loginEditTextPasswordLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -21,6 +21,7 @@
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginEditTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
@@ -34,27 +35,26 @@
     <!--        app:helperText="@string/wrong_login_ru"-->
     <com.google.android.material.textfield.TextInputLayout
 
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/loginEditTextUsernameLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_above="@id/editTextTextPassword"
+        android:layout_above="@id/loginEditTextPasswordLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
         android:autofillHints="auto"
         android:background="@drawable/rounded_auth_top"
         android:ems="10"
         android:importantForAutofill="yes"
-        android:inputType="textEmailAddress"
         app:hintEnabled="false">
 
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginEditTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
             android:background="@drawable/rounded_auth_top"
             android:hint="@string/login"
-            android:inputType="textEmailAddress"
             android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,7 +64,7 @@
         android:id="@+id/viewTextWelcomeRU"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/editTextTextEmailAddress"
+        android:layout_above="@id/loginEditTextUsernameLayout"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:text="@string/welcome" />
@@ -88,8 +88,8 @@
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextTextPassword"
-        android:layout_alignEnd="@id/editTextTextPassword"
+        android:layout_below="@id/loginEditTextPasswordLayout"
+        android:layout_alignEnd="@id/loginEditTextPasswordLayout"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/buttonLogIn"
         android:backgroundTint="@android:color/transparent"
@@ -102,8 +102,8 @@
         android:id="@+id/buttonLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextTextPassword"
-        android:layout_alignStart="@id/editTextTextPassword"
+        android:layout_below="@id/loginEditTextPasswordLayout"
+        android:layout_alignStart="@id/loginEditTextPasswordLayout"
         android:layout_alignTop="@id/buttonRegister"
         android:layout_alignBottom="@id/buttonRegister"
         android:backgroundTint="?colorPrimary"

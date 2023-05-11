@@ -1,10 +1,10 @@
 <resources>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label">Первый фрагмент</string>
+    <string name="second_fragment_label">Второй фрагмент</string>
+    <string name="next">Дальше</string>
+    <string name="previous">Назад</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -43,7 +43,7 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="card_image_description">Картинка напитка</string>
-    <string name="location_icon">Location icon</string>
+    <string name="location_icon">Иконка "местоположение"</string>
     <string name="enter">Войти</string>
     <string name="back">Назад</string>
     <string name="main_scroll_menu">Меню главной страницы</string>
@@ -59,6 +59,10 @@
     <string name="log_in">Войти</string>
     <string name="register">Зарегистрироваться</string>
     <string name="i_want_to_watch">Мне просто посмотреть…</string>
+    <string name="take_new_photo">Сделать новое фото</string>
+    <string name="upload_photo">Загрузить фото</string>
+    <string name="drink_picture">Картинка напитка</string>
+    <string name="remove_photo">Удалить фото</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
     <string name="password_repeat">Пароль ещё раз</string>
@@ -98,4 +102,6 @@
         <item quantity="many">%d людей хотят</item>
         <item quantity="other">%d людей хотят</item>
     </plurals>
+    <string name="stay">Остаться</string>
+    <string name="logout">Выйти</string>
 </resources>
