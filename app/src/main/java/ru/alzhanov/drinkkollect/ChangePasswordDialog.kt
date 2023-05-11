@@ -33,7 +33,7 @@ class ChangePasswordDialog : DialogFragment() {
             val newPassword = binding.changePasswordNewPassword.text.toString()
             val newPasswordRepeat = binding.changePasswordRepeat.text.toString()
             if (newPassword != newPasswordRepeat) {
-                binding.changePasswordRepeat.error = resources.getString(R.string.passwords_mismatch_ru)
+                binding.changePasswordRepeat.error = resources.getString(R.string.passwords_mismatch)
                 return@setOnClickListener
             }
             try {

@@ -34,7 +34,7 @@ class RegisterFragment : Fragment() {
             val password = binding.registerEditTextPassword.text.toString()
             val passwordRepeat = binding.registerEditTextPasswordRepeat.text.toString()
             if (password != passwordRepeat) {
-                binding.registerEditTextPasswordRepeatLayout.error = resources.getString(R.string.passwords_mismatch_ru)
+                binding.registerEditTextPasswordRepeatLayout.error = resources.getString(R.string.passwords_mismatch)
                 return@setOnClickListener
             }
             try {

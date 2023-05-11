@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val host by lazy { resources.getString(R.string.host) }
-    private val port by lazy { Integer.parseInt(resources.getString(R.string.port)) }
+    private val host by lazy { resources.getString(R.string.api_host) }
+    private val port by lazy { Integer.parseInt(resources.getString(R.string.api_port)) }
     val service by lazy { DrinkKollectService(host, port) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.visibility = View.GONE
                 }
                 R.id.RegisterFragment -> {
-                    binding.toolbar.title = "Регистрация"
+                    binding.toolbar.title = getString(R.string.registration)
                     binding.toolbar.visibility = View.VISIBLE
                 }
                 R.id.ProfileFragment -> {

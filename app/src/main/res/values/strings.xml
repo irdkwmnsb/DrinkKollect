@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">DrinkKollect</string>
+    <string name="app_name" translatable="false">DrinkKollect</string>
+    <string name="api_host" translatable="false">bb139961.alzhanov.ru</string>
+    <string name="api_port" translatable="false">18081</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -43,78 +45,69 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="card_image_description">Картинка напитка</string>
+    <string name="card_image_description">Drink image</string>
     <string name="location_icon">Location icon</string>
-    <string name="enter">Войти</string>
-    <string name="register">Зарегистрироваться</string>
-    <string name="back">Назад</string>
-    <string name="main_scroll_menu">Меню главной страницы</string>
-    <string name="change_account">Выйти</string>
-    <string name="change_password">Сменить пароль</string>
-    <string name="delete_account">Удалить страничку</string>
-    <string name="done_action">Готово</string>
-    <string name="add_post_fab">Кнопка добавления поста</string>
-    <string name="password_ru">Пароль</string>
-    <string name="login_ru">Логин</string>
-    <string name="drinkollect">DrinkKollect</string>
-    <string name="welcome">Добро пожаловать!</string>
-    <string name="welcome_ru">Добро пожаловать!</string>
-    <string name="wrong_password_ru">Неверный пароль…</string>
-    <string name="log_in_ru">Войти</string>
-    <string name="register_ru">Зарегистрироваться</string>
-    <string name="i_want_to_watch_ru">Мне просто посмотреть…</string>
+    <string name="enter">Log in</string>
+    <string name="back">Back</string>
+    <string name="main_scroll_menu">Main page menu</string>
+    <string name="change_account">Log out</string>
+    <string name="change_password">Change password</string>
+    <string name="delete_account">Delege account</string>
+    <string name="done_action">Done</string>
+    <string name="add_post_fab">Add post button</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="welcome">Welcome!</string>
+    <string name="wrong_password">Wrong password…</string>
+    <string name="log_in">Log in</string>
+    <string name="register">Sign up</string>
+    <string name="i_want_to_watch">I\'m just looking</string>
+    <string name="take_new_photo">Take new photo</string>
+    <string name="upload_photo">Upload photo</string>
+    <string name="drink_picture">Drink picture</string>
+    <string name="remove_photo">Remove photo</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
-    <string name="password_repeat_ru">Пароль ещё раз</string>
-    <string name="registration_ru">Регистрация</string>
+    <string name="password_repeat">Repeat password</string>
+    <string name="registration">Sign up</string>
     <string name="go_back_to_login">Go back to login</string>
-    <string name="wrong_login_ru">Неверный логин…</string>
-    <string name="passwords_mismatch_ru">Пароли не совпадают…</string>
-    <string name="drink_name_ru">Название напитка</string>
-    <string name="your_opinion_ru">Ваши впечатления?</string>
-    <string name="where_found_ru">А где вы это взяли?</string>
-    <string name="add_to_collection_ru">Добавить в коллекцию</string>
-    <string name="add_photo_ru">Добавить фото</string>
-    <string name="friends_ru">Друзья</string>
-    <string name="total_in_collection_ru">Всего в коллекции</string>
-    <string name="are_you_sure_ru">Вы уверены?</string>
-    <string name="stay_ru">Остаться</string>
-    <string name="deletion_warning_ru">После удаления аккаунта вся информация о нем потеряется</string>
-    <string name="delete_ru">Удалить</string>
-    <string name="logout_ru">Выйти</string>
-    <string name="return_back_ru">Вернуться</string>
-    <string name="password_change_ru">Смена пароля</string>
-    <string name="change_ru">Сменить</string>
-    <string name="invalid_password_ru">Некорректный пароль</string>
-    <string name="current_password_ru">Текущий пароль</string>
-    <string name="new_password_ru">Новый пароль</string>
-    <string name="want_ru">Хочу</string>
-    <string name="just_now">Только что</string>
-    <string name="take_new_photo">Сделать фото</string>
-    <string name="upload_photo">Загрузить фото</string>
-    <string name="drink_picture">DrinkImage</string>
-    <string name="remove_photo">Удалить фото</string>
-    <string name="host">bb139961.alzhanov.ru</string>
-    <string name="port">18081</string>
-    <!-- Русский язык требует указать строки для one, few, many и other (на всякий случай).
-        По стандарту не используется zero, и не используется two — но, ничего страшного в
-        указании этих строк нет. На всякий случай можно их всё-таки указывать — кто знает,
-        а вдруг что-то поменяется в будущем.
-        (https://developer.alexanderklimov.ru/android/theory/plurals.php) -->
+    <string name="wrong_login">Wrong login…</string>
+    <string name="passwords_mismatch">Passwords missmatch…</string>
+    <string name="drink_name">Drink name</string>
+    <string name="your_opinion">How was it?</string>
+    <string name="where_found">Where did you get that?</string>
+    <string name="add_to_collection">Add to your collection</string>
+    <string name="add_photo">Add photo</string>
+    <string name="friends">Friends</string>
+    <string name="total_in_collection">Collection</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="deletion_warning">After you delete your account all the information will be lost</string>
+    <string name="delete">Delete</string>
+    <string name="return_back">Back</string>
+    <string name="password_change">Change password</string>
+    <string name="change">Change</string>
+    <string name="invalid_password">Wrong password</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="want">I want it</string>
+    <string name="just_now">Just now</string>
+    <string name="stay">Stay</string>
+    <string name="logout">Logout</string>
+    <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
-        <item quantity="zero">%d напитков</item>
-        <item quantity="one">%d напиток</item>
-        <item quantity="two">%d напитка</item>
-        <item quantity="few">%d напитка</item>
-        <item quantity="many">%d напитков</item>
-        <item quantity="other">%d напитков</item>
+        <item quantity="zero">%d drinks</item>
+        <item quantity="one">%d dirnk</item>
+        <item quantity="two">%d drinks</item>
+        <item quantity="few">%d drinks</item>
+        <item quantity="many">%d drinks</item>
+        <item quantity="other">%d drinks</item>
     </plurals>
     <plurals name="people_want">
-        <item quantity="zero">%d людей хотят</item>
-        <item quantity="one">%d человек хочет</item>
-        <item quantity="two">%d человека хотят</item>
-        <item quantity="few">%d человека хочет</item>
-        <item quantity="many">%d людей хотят</item>
-        <item quantity="other">%d людей хотят</item>
+        <item quantity="zero">%d people want</item>
+        <item quantity="one">%d person wants</item>
+        <item quantity="two">%d people want</item>
+        <item quantity="few">%d people want</item>
+        <item quantity="many">%d people want</item>
+        <item quantity="other">%d people want</item>
     </plurals>
 </resources>

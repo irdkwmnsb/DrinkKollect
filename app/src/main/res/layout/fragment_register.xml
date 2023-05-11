@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
             android:background="@drawable/rounded_auth_bottom"
-            android:hint="@string/password_ru"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
             android:background="@drawable/rounded_auth_bottom"
-            android:hint="@string/password_repeat_ru"
+            android:hint="@string/password_repeat"
             android:inputType="textPassword"
             android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="flagNoExtractUi"
             android:background="@drawable/rounded_auth_top"
-            android:hint="@string/login_ru"
+            android:hint="@string/login"
             android:textColor="?colorOnSurfaceVariant"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +92,7 @@
         android:layout_below="@id/registerEditTextPasswordRepeatLayout"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@android:color/transparent"
-        android:text="@string/register_ru"
+        android:text="@string/register"
         android:textColor="?colorPrimary"
         app:strokeColor="?colorPrimary"
         app:strokeWidth="1dp" />
