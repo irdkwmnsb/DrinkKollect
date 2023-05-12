@@ -1,134 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/loginProgressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerVertical="true"
-        android:layout_centerInParent="true"
-        android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="?colorPrimary"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"/>
-
-    <!--        app:helperText="@string/wrong_password_ru"-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/loginEditTextPasswordLayout"
-        android:layout_width="300dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="10dp"
-        android:autofillHints="auto"
-        android:background="@drawable/rounded_auth_bottom"
-        android:ems="10"
-        android:importantForAutofill="yes"
-        app:hintEnabled="false">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/loginEditTextPassword"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/loginProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="true"
+            android:indeterminateTint="?colorPrimary"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/viewTextNameDrinkKollect"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi"
-            android:background="@drawable/rounded_auth_bottom"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textColor="?colorOnSurfaceVariant"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:importantForAutofill="no"
+            android:text="@string/app_name"
+            android:textSize="28sp" />
 
-    <!--        app:helperText="@string/wrong_login_ru"-->
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:id="@+id/loginEditTextUsernameLayout"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/loginEditTextPasswordLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="4dp"
-        android:autofillHints="auto"
-        android:background="@drawable/rounded_auth_top"
-        android:ems="10"
-        android:importantForAutofill="yes"
-        app:hintEnabled="false">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/loginEditTextUsername"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/viewTextWelcomeRU"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_below="@id/viewTextNameDrinkKollect"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="@string/welcome" />
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/loginEditTextUsernameLayout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewTextWelcomeRU"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:autofillHints="auto"
             android:background="@drawable/rounded_auth_top"
-            android:hint="@string/login"
-            android:textColor="?colorOnSurfaceVariant"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:ems="10"
+            android:importantForAutofill="yes"
+            app:hintEnabled="false">
 
 
-    <TextView
-        android:id="@+id/viewTextWelcomeRU"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/loginEditTextUsernameLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:text="@string/welcome" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginEditTextUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_auth_top"
+                android:hint="@string/login"
+                android:imeOptions="flagNoExtractUi"
+                android:maxLines="1"
+                android:textColor="?colorOnSurfaceVariant"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/viewTextNameDrinkKollect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/viewTextWelcomeRU"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:importantForAutofill="no"
-        android:text="@string/app_name"
-        android:textSize="28sp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginEditTextPasswordLayout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginEditTextUsernameLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:autofillHints="auto"
+            android:background="@drawable/rounded_auth_bottom"
+            android:ems="10"
+            android:importantForAutofill="yes"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginEditTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_auth_bottom"
+                android:hint="@string/password"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="textPassword"
+                android:textColor="?colorOnSurfaceVariant"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        app:helperText="@string/wrong_login_ru"-->
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginEditTextPasswordLayout"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/buttonLogIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="?colorPrimary"
+                android:text="@string/log_in" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@string/register"
+                android:textColor="?colorPrimary"
+                app:strokeColor="?colorPrimary"
+                app:strokeWidth="1dp" />
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/loginEditTextPasswordLayout"
-        android:layout_alignEnd="@id/loginEditTextPasswordLayout"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/buttonLogIn"
-        android:backgroundTint="@android:color/transparent"
-        android:text="@string/register"
-        android:textColor="?colorPrimary"
-        app:strokeColor="?colorPrimary"
-        app:strokeWidth="1dp" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonLogIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/loginEditTextPasswordLayout"
-        android:layout_alignStart="@id/loginEditTextPasswordLayout"
-        android:layout_alignTop="@id/buttonRegister"
-        android:layout_alignBottom="@id/buttonRegister"
-        android:backgroundTint="?colorPrimary"
-        android:text="@string/log_in" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonIWantToWatch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonRegister"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@android:color/transparent"
-        android:text="@string/i_want_to_watch"
-        android:textColor="?colorPrimary" />
-</RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonIWantToWatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonsLayout"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@android:color/transparent"
+            android:text="@string/i_want_to_watch"
+            android:textColor="?colorPrimary" />
+    </RelativeLayout>
+</ScrollView>
