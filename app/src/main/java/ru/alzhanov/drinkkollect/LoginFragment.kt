@@ -33,6 +33,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        if (binding.buttonRegister.lineCount > 1) {
+//            binding.buttonRegister.android:layout_below="@id/buttonLogIn"
+//
+//        }
         binding.buttonRegister.setOnClickListener {
             findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
         }
