@@ -5,7 +5,7 @@
     <string name="second_fragment_label">Второй фрагмент</string>
     <string name="next">Дальше</string>
     <string name="previous">Назад</string>
-
+    <string name="please_auth">Вы не вошли в аккаунт. ПОжалуйста, авторизируйтесь, чтобы ставить на посты лайки.</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

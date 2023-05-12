@@ -37,74 +37,87 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
         } else if (drinkPost is OtherDrinkPost) {
             var like = drinkPost.like
             binding.label.setOnClickListener {
-                val observer = object : Observer<Unit> {
-                    override fun onSubscribe(d: Disposable) {}
+                if ((itemView.context as MainActivity).service.getUsername() == null) {
+                    Toast.makeText(
+                        itemView.context,
+                        "Please log in to like posts",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val observer = object : Observer<Unit> {
+                        override fun onSubscribe(d: Disposable) {}
 
-                    override fun onNext(t: Unit) {}
+                        override fun onNext(t: Unit) {}
 
-                    override fun onError(e: Throwable) {
-                        Toast.makeText(
-                            (itemView.context as MainActivity),
-                            "Something went wrong. Try again",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
+                        override fun onError(e: Throwable) {
+                            Toast.makeText(
+                                (itemView.context as MainActivity),
+                                "Something went wrong. Try again",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
 
-                    override fun onComplete() {
-                        like = !like
-                        binding.label.text = binding.root.resources.getText(R.string.want)
-                        // set background color from attr
-                        if (like) {
-                            binding.label.closeIcon = ResourcesCompat.getDrawable(
-                                binding.root.resources,
-                                R.drawable.ic_baseline_star_24,
-                                null
-                            )
-                            val typedValue = TypedValue()
-                            binding.root.context.theme.resolveAttribute(
-                                R.attr.colorSecondaryContainer,
-                                typedValue,
-                                true
-                            )
-                            binding.label.chipBackgroundColor = ResourcesCompat.getColorStateList(
-                                binding.root.resources,
-                                typedValue.resourceId,
-                                null
-                            )
+                        override fun onComplete() {
+                            like = !like
+                            binding.label.text = binding.root.resources.getText(R.string.want)
+                            // set background color from attr
+                            if (like) {
+                                binding.label.closeIcon = ResourcesCompat.getDrawable(
+                                    binding.root.resources,
+                                    R.drawable.ic_baseline_star_24,
+                                    null
+                                )
+                                val typedValue = TypedValue()
+                                binding.root.context.theme.resolveAttribute(
+                                    R.attr.colorSecondaryContainer,
+                                    typedValue,
+                                    true
+                                )
+                                binding.label.chipBackgroundColor =
+                                    ResourcesCompat.getColorStateList(
+                                        binding.root.resources,
+                                        typedValue.resourceId,
+                                        null
+                                    )
 
-                        } else {
-                            binding.label.closeIcon = ResourcesCompat.getDrawable(
-                                binding.root.resources,
-                                R.drawable.ic_baseline_star_border_24,
-                                null
-                            )
-                            binding.label.chipBackgroundColor = ResourcesCompat.getColorStateList(
-                                binding.root.resources,
-                                R.color.transparent,
-                                null
-                            )
-                            val dim = TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP,
-                                1f,
-                                binding.root.resources.displayMetrics
-                            )
-                            val typedValue = TypedValue()
-                            binding.root.context.theme.resolveAttribute(
-                                R.attr.colorOutline,
-                                typedValue,
-                                true
-                            )
-                            binding.label.chipStrokeWidth = dim
-                            binding.label.chipStrokeColor = ResourcesCompat.getColorStateList(
-                                binding.root.resources,
-                                typedValue.resourceId,
-                                null
-                            )
+                            } else {
+                                binding.label.closeIcon = ResourcesCompat.getDrawable(
+                                    binding.root.resources,
+                                    R.drawable.ic_baseline_star_border_24,
+                                    null
+                                )
+                                binding.label.chipBackgroundColor =
+                                    ResourcesCompat.getColorStateList(
+                                        binding.root.resources,
+                                        R.color.transparent,
+                                        null
+                                    )
+                                val dim = TypedValue.applyDimension(
+                                    TypedValue.COMPLEX_UNIT_DIP,
+                                    1f,
+                                    binding.root.resources.displayMetrics
+                                )
+                                val typedValue = TypedValue()
+                                binding.root.context.theme.resolveAttribute(
+                                    R.attr.colorOutline,
+                                    typedValue,
+                                    true
+                                )
+                                binding.label.chipStrokeWidth = dim
+                                binding.label.chipStrokeColor = ResourcesCompat.getColorStateList(
+                                    binding.root.resources,
+                                    typedValue.resourceId,
+                                    null
+                                )
+                            }
                         }
                     }
+                    (itemView.context as MainActivity).service.togglePostLikeRequest(
+                        observer,
+                        drinkPost.id
+                    )
                 }
-                (itemView.context as MainActivity).service.togglePostLikeRequest(observer, drinkPost.id)
             }
             binding.label.text = binding.root.resources.getText(R.string.want)
             // set background color from attr
