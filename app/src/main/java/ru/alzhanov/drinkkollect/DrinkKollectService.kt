@@ -1,6 +1,7 @@
 package ru.alzhanov.drinkkollect
 
 import android.util.Log
+import com.auth0.android.jwt.JWT
 import drinkollect.v1.DrinkollectGrpc
 import drinkollect.v1.DrinkollectOuterClass
 import io.grpc.CallCredentials
@@ -33,6 +34,10 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
     private fun onLostJwt() {
         jwt = null
         service = DrinkollectGrpc.newBlockingStub(channel)
+    }
+
+    fun getUsername(): String? {
+        return jwt?.let { JWT(it).getClaim("username").asString() } ?: run { null }
     }
 
     private fun onGotJwt(token: String) {
