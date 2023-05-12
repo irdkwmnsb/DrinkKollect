@@ -51,7 +51,17 @@ class RegisterFragment : Fragment() {
                 override fun onNext(t: Unit) {}
 
                 override fun onError(e: Throwable) {
-                    binding.registerEditTextPasswordRepeatLayout.error = e.message
+                    if(e is io.grpc.StatusRuntimeException) {
+                        binding.registerTextViewError.text = e.status.description
+                    } else {
+                        binding.registerTextViewError.text = e.message
+                    }
+                    binding.registerTextViewError.visibility = View.VISIBLE
+                    binding.registerEditTextUsernameLayout.visibility = View.VISIBLE
+                    binding.registerEditTextPasswordLayout.visibility = View.VISIBLE
+                    binding.registerEditTextPasswordRepeatLayout.visibility = View.VISIBLE
+                    binding.buttonRegister.visibility = View.VISIBLE
+                    binding.registerProgressBar.visibility = View.GONE
                 }
 
                 override fun onComplete() {

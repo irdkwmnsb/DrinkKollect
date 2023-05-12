@@ -68,8 +68,8 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             try {
                 val token = requestAction(request)
                 onGotJwt(token)
-            } catch (e: Exception) {
-                e.message.orEmpty().let { Log.i("request error: ", it) }
+            } catch (e: io.grpc.StatusRuntimeException) {
+                Log.e("DrinkKollectService", e.toString())
                 emitter.onError(e)
             }
             emitter.onComplete()
@@ -110,8 +110,8 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         Observable.create { emitter ->
             try {
                 emitter.onNext(requestAction(request))
-            } catch (e: Exception) {
-                e.message.orEmpty().let { Log.i("request error: ", it) }
+            } catch (e: io.grpc.StatusRuntimeException) {
+                Log.i("request error: ", e.status.toString())
                 emitter.onError(e)
             }
             emitter.onComplete()

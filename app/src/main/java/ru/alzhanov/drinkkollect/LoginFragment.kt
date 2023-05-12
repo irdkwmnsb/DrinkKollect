@@ -1,6 +1,7 @@
 package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,10 +34,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        if (binding.buttonRegister.lineCount > 1) {
-//            binding.buttonRegister.android:layout_below="@id/buttonLogIn"
-//
-//        }
         binding.buttonRegister.setOnClickListener {
             findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
         }
@@ -57,7 +54,19 @@ class LoginFragment : Fragment() {
                 override fun onNext(t: Unit) {}
 
                 override fun onError(e: Throwable) {
-                    binding.loginEditTextPasswordLayout.error = e.message
+                    if(e is io.grpc.StatusRuntimeException) {
+                        binding.loginEditTextPasswordLayout.error = e.status.description
+                    } else {
+                        binding.loginEditTextPasswordLayout.error = e.message
+                    }
+                    binding.buttonLogIn.visibility = View.VISIBLE
+                    binding.buttonRegister.visibility = View.VISIBLE
+                    binding.buttonIWantToWatch.visibility = View.VISIBLE
+                    binding.loginEditTextPasswordLayout.visibility = View.VISIBLE
+                    binding.loginEditTextUsernameLayout.visibility = View.VISIBLE
+                    binding.viewTextNameDrinkKollect.visibility = View.VISIBLE
+                    binding.viewTextWelcomeRU.visibility = View.VISIBLE
+                    binding.loginProgressBar.visibility = View.GONE
                 }
 
                 override fun onComplete() {
