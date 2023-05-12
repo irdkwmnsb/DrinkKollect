@@ -44,12 +44,11 @@ func (a *Authorizer) UnaryInterceptor(whitelist ...string) grpc.UnaryServerInter
 	}
 
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
-		if _, ok := whitelistedEndpoints[info.FullMethod]; ok {
-			return handler(ctx, req)
-		}
-
 		token, err := auth.AuthFromMD(ctx, bearerScheme)
 		if err != nil {
+			if _, isWhitelisted := whitelistedEndpoints[info.FullMethod]; isWhitelisted {
+				return handler(ctx, req)
+			}
 			return nil, status.Error(codes.Unauthenticated, "Missing token")
 		}
 
@@ -58,7 +57,8 @@ func (a *Authorizer) UnaryInterceptor(whitelist ...string) grpc.UnaryServerInter
 			return nil, status.Error(codes.Unauthenticated, "Invalid token")
 		}
 
-		return handler(usernameToCtx(ctx, username), req)
+		ctx = usernameToCtx(ctx, username)
+		return handler(ctx, req)
 	}
 }
 
