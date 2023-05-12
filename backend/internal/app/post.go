@@ -72,15 +72,16 @@ func (s *Service) TogglePostLike(ctx context.Context, req *desc.TogglePostLikeRe
 
 // ListPosts provides a paginated list of posts.
 func (s *Service) ListPosts(ctx context.Context, req *desc.ListPostsRequest) (*desc.ListPostsResponse, error) {
+	username := auth.UsernameFromCtx(ctx)
 	limit, before := pagination.FromRequest[int64](req)
 
 	var posts []db.Post
 	var next int64
 	var err error
 	if before == 0 {
-		posts, next, err = s.storage.ListPostsFirst("", limit)
+		posts, next, err = s.storage.ListPostsFirst("", limit, username)
 	} else {
-		posts, next, err = s.storage.ListPostsNext("", before, limit)
+		posts, next, err = s.storage.ListPostsNext("", before, limit, username)
 	}
 
 	if err != nil {
@@ -96,15 +97,16 @@ func (s *Service) ListPosts(ctx context.Context, req *desc.ListPostsRequest) (*d
 
 // ListUserPosts provides a paginated list of a specific user's posts.
 func (s *Service) ListUserPosts(ctx context.Context, req *desc.ListUserPostsRequest) (*desc.ListUserPostsResponse, error) {
+	ourUsername := auth.UsernameFromCtx(ctx)
 	limit, before := pagination.FromRequest[int64](req)
 
 	var posts []db.Post
 	var next int64
 	var err error
 	if before == 0 {
-		posts, next, err = s.storage.ListPostsFirst(req.Username, limit)
+		posts, next, err = s.storage.ListPostsFirst(req.Username, limit, ourUsername)
 	} else {
-		posts, next, err = s.storage.ListPostsNext(req.Username, before, limit)
+		posts, next, err = s.storage.ListPostsNext(req.Username, before, limit, ourUsername)
 	}
 
 	if err != nil {
@@ -134,6 +136,8 @@ func dbPostsToPB(posts []db.Post) []*desc.Post {
 				Bucket: post.ImageBucket,
 				Id:     post.ImageID,
 			},
+			Likes:     post.Likes,
+			Liked:     post.Liked,
 			Creator:   post.CreatorUsername,
 			Timestamp: timestamppb.New(time.Unix(post.CreatedAt/millisecondsInSeconds, post.CreatedAt%millisecondsInSeconds*nanosecondsInMillisecond)),
 		}

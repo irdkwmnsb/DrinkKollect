@@ -7,6 +7,7 @@ import (
 	"github.com/genjidb/genji"
 	"github.com/genjidb/genji/document"
 	"github.com/genjidb/genji/types"
+	"go.uber.org/zap"
 )
 
 // Post is the DB model describing a single post.
@@ -84,7 +85,7 @@ func (g *Genji) ToggleLikedPost(username string, postID uint64) error {
 }
 
 // ListPostsFirst lists the first page of posts, possibly with a username filter.
-func (g *Genji) ListPostsFirst(username string, limit int32) ([]Post, int64, error) {
+func (g *Genji) ListPostsFirst(username string, limit int32, ourUsername string) ([]Post, int64, error) {
 	const query = `select * from post where (? = "" or creator_username = ?) order by created_at desc limit ?`
 
 	res, err := g.db.Query(query, username, username, limit)
@@ -92,11 +93,11 @@ func (g *Genji) ListPostsFirst(username string, limit int32) ([]Post, int64, err
 		return nil, 0, wrapError("ListPosts", err)
 	}
 
-	return g.scanListPostsResult(res)
+	return g.scanListPostsResult(res, ourUsername)
 }
 
 // ListPostsNext lists the second and further pages of posts, possible with a username filter.
-func (g *Genji) ListPostsNext(username string, before int64, limit int32) ([]Post, int64, error) {
+func (g *Genji) ListPostsNext(username string, before int64, limit int32, ourUsername string) ([]Post, int64, error) {
 	const query = `select * from post where (? = "" or creator_username = ?) and created_at < ? order by created_at desc limit ?`
 
 	res, err := g.db.Query(query, username, username, before, limit)
@@ -104,15 +105,50 @@ func (g *Genji) ListPostsNext(username string, before int64, limit int32) ([]Pos
 		return nil, 0, wrapError("ListPosts", err)
 	}
 
-	return g.scanListPostsResult(res)
+	return g.scanListPostsResult(res, ourUsername)
 }
 
-func (g *Genji) scanListPostsResult(res *genji.Result) ([]Post, int64, error) {
+func (g *Genji) getPostLikes(postId uint64) (uint64, error) {
+	const query = `select count(*) from post_likes where post_id = ?`
+
+	var likes uint64
+	doc, err := g.db.QueryDocument(query, postId)
+	if err != nil {
+		return 0, wrapError("getPostLikes", err)
+	}
+
+	return likes, document.Scan(doc, &likes)
+}
+
+func (g *Genji) getPostLiked(postId uint64, username string) (bool, error) {
+	const query = `select count(*) from post_likes where post_id = ? and username = ?`
+
+	var liked uint64
+	doc, err := g.db.QueryDocument(query, postId, username)
+	if err != nil {
+		return false, wrapError("getPostLiked", err)
+	}
+
+	return liked > 0, document.Scan(doc, &liked)
+}
+
+func (g *Genji) scanListPostsResult(res *genji.Result, ourUsername string) ([]Post, int64, error) {
 	var posts []Post
 	if err := res.Iterate(func(d types.Document) error {
+		zap.L().Info("ListPosts", zap.Any("d", d))
 		var post Post
 		if err := document.StructScan(d, &post); err != nil {
 			return wrapScanError("ListPosts", err)
+		}
+
+		// fuck genjidb
+		likes, err := g.getPostLikes(post.ID)
+		if err != nil {
+			return wrapError("ListPosts", err)
+		}
+		liked, err := g.getPostLiked(post.ID, ourUsername)
+		if err != nil {
+			return wrapError("ListPosts", err)
 		}
 
 		// Need to copy strings manually because of GenjiDB bug: https://github.com/genjidb/genji/issues/497
@@ -122,6 +158,9 @@ func (g *Genji) scanListPostsResult(res *genji.Result) ([]Post, int64, error) {
 		post.ImageBucket = strings.Clone(post.ImageBucket)
 		post.ImageID = strings.Clone(post.ImageID)
 		post.CreatorUsername = strings.Clone(post.CreatorUsername)
+		post.Likes = likes
+		post.Liked = liked
+
 		posts = append(posts, post)
 		return nil
 	}); err != nil {
@@ -133,6 +172,8 @@ func (g *Genji) scanListPostsResult(res *genji.Result) ([]Post, int64, error) {
 	if len(posts) > 0 {
 		nextBefore = posts[len(posts)-1].CreatedAt
 	}
+
+	zap.L().Info("ListPosts", zap.Any("d", posts))
 
 	return posts, nextBefore, nil
 }
