@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -21,6 +22,10 @@ import drinkollect.v1.DrinkollectOuterClass
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import ru.alzhanov.drinkkollect.databinding.FragmentNewPostBinding
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+
 
 class NewPostFragment : Fragment() {
     private var _binding: FragmentNewPostBinding? = null
@@ -128,6 +133,13 @@ class NewPostFragment : Fragment() {
             if ((activity as MainActivity).service.getUsername() == null) {
                 findNavController().navigate(R.id.action_NewPostFragment_to_LoginFragment)
             } else {
+                val image =
+                    DrinkollectOuterClass.S3Resource.newBuilder().setBucket("drinkkollect").setId(
+                        imageuri.toString()
+                    ).build()
+                val binImage = getBytes(context, imageuri)
+                (activity as MainActivity).s3service.putUrl(image, binImage)
+
                 val observer = object : Observer<Unit> {
                     override fun onSubscribe(d: Disposable) {}
 
@@ -146,13 +158,14 @@ class NewPostFragment : Fragment() {
                         findNavController().navigate(R.id.action_NewPostFragment_to_MainScrollFragment)
                     }
                 }
+
                 (activity as MainActivity).service.createPostRequest(
                     observer,
                     binding.editTextDrinkName.editText?.text.toString(),
                     binding.editTextDrinkDescription.editText?.text.toString(),
                     binding.editTextDrinkLocation.editText?.text.toString(),
                     // TODO get S3Resource from imageuri
-                    DrinkollectOuterClass.S3Resource.getDefaultInstance()
+                    image
                 )
             }
         }
@@ -191,5 +204,46 @@ class NewPostFragment : Fragment() {
         } else {
             outState.putString("imageuri", imageuri.toString())
         }
+    }
+
+    fun getBytes(context: Context?, uri: Uri?): ByteArray? {
+        if (uri == null || context == null) {
+            return null
+        }
+        val iStream: InputStream? = context.contentResolver.openInputStream(uri)
+        return try {
+            if (iStream != null) {
+                getBytes(iStream)
+            } else {
+                null
+            }
+        } finally {
+            // close the stream
+            try {
+                iStream?.close()
+            } catch (ignored: IOException) { /* do nothing */
+            }
+        }
+    }
+
+    private fun getBytes(inputStream: InputStream): ByteArray? {
+        var bytesResult: ByteArray?
+        val byteBuffer = ByteArrayOutputStream()
+        val bufferSize = 1024
+        val buffer = ByteArray(bufferSize)
+        try {
+            var len: Int
+            while (inputStream.read(buffer).also { len = it } != -1) {
+                byteBuffer.write(buffer, 0, len)
+            }
+            bytesResult = byteBuffer.toByteArray()
+        } finally {
+            // close the stream
+            try {
+                byteBuffer.close()
+            } catch (ignored: IOException) { /* do nothing */
+            }
+        }
+        return bytesResult
     }
 }

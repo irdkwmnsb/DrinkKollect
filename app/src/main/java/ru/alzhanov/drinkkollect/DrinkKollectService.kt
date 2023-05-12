@@ -24,9 +24,9 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
 
     private var jwt: String? = null
     private var username: String? = null
-    fun getUsername(): String? {
-        return username
-    }
+//    fun getUsername(): String? {
+//        return username
+//    }
 
     private val channel = ManagedChannelBuilder
         .forAddress(host, port)

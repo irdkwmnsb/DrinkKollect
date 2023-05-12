@@ -81,6 +81,7 @@ dependencies  {
     implementation "io.grpc:grpc-netty:1.54.1"  // CURRENT_GRPC_VERSION
     implementation "io.grpc:grpc-protobuf:1.54.1"  // CURRENT_GRPC_VERSION
     implementation "io.grpc:grpc-stub:1.54.1"  // CURRENT_GRPC_VERSION
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     compileOnly "org.apache.tomcat:annotations-api:6.0.53"
 //    api 'com.google.protobuf:protobuf-java:3.22.3'
 
