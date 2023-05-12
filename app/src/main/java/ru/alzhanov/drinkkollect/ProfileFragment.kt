@@ -2,11 +2,15 @@ package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import drinkollect.v1.DrinkollectOuterClass
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.FragmentProfileBinding
 import ru.alzhanov.drinkkollect.models.DrinkPost
@@ -35,7 +39,11 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val username = (activity as MainActivity).service.getUsername()
+        if (username == null) {
+            findNavController().navigate(R.id.action_ProfileFragment_to_LoginFragment)
+            return
+        }
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
@@ -52,10 +60,12 @@ class ProfileFragment : Fragment() {
                         )
                         true
                     }
+
                     R.id.menu_item_change_account -> {
                         LogoutDialog().show(requireActivity().supportFragmentManager, "Logout")
                         true
                     }
+
                     R.id.menu_item_delete_account -> {
                         AccountDeletionDialog().show(
                             requireActivity().supportFragmentManager,
@@ -63,38 +73,67 @@ class ProfileFragment : Fragment() {
                         )
                         true
                     }
+
                     else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        val username = (activity as MainActivity).service.getUsername()
-        if (username == null) {
-            findNavController().navigate(R.id.action_ProfileFragment_to_LoginFragment)
-            return
-        }
-        val posts = (activity as MainActivity).service.listUserPostsRequest(username)
-            ?.let { ArrayList(it) }
-        val drinkPosts: ArrayList<DrinkPost> = ArrayList()
-        if (posts != null) {
-            for (post in posts) {
-                drinkPosts.add(
-                    OwnDrinkPost(
-                        post.title,
-                        post.description,
-                        post.image,
-                        post.location,
-                        post.creator,
-                        Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
-                        post.likes,
-                        post.id
-                    )
-                )
+
+        val observer = object : Observer<MutableList<DrinkollectOuterClass.Post>> {
+            override fun onSubscribe(d: Disposable) {
+                binding.mainItemsList.visibility = View.GONE
+                binding.profileProgressBar.visibility = View.VISIBLE
+            }
+
+            override fun onNext(t: MutableList<DrinkollectOuterClass.Post>) {
+                val drinkPosts: ArrayList<DrinkPost> = ArrayList()
+                if (t.size != 0) {
+                    for (post in t) {
+                        drinkPosts.add(
+                            OwnDrinkPost(
+                                post.title,
+                                post.description,
+                                post.image,
+                                post.location,
+                                post.creator,
+                                Instant.fromEpochSeconds(
+                                    post.timestamp.seconds,
+                                    post.timestamp.nanos
+                                ),
+                                post.likes,
+                                post.id
+                            )
+                        )
+                    }
+                }
+                val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
+                binding.mainItemsList.adapter = customAdapter
+                binding.mainItemsList.layoutManager =
+                    androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+            }
+
+            override fun onError(e: Throwable) {
+                Toast.makeText(
+                    activity,
+                    "Can't load posts. Check Internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onComplete() {
+
+                binding.mainItemsList.visibility = View.VISIBLE
+                binding.profileProgressBar.visibility = View.GONE
+                Toast.makeText(activity, "I'm in onComplete", Toast.LENGTH_SHORT).show()
+//                findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
             }
         }
-        val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
-        binding.mainItemsList.adapter = customAdapter
-        binding.mainItemsList.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        (activity as MainActivity).service.listUserPostsRequest(
+            observer,
+            username
+        )
+
+
     }
 
     override fun onDestroyView() {

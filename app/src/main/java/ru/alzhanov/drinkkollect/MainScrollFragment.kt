@@ -2,6 +2,7 @@ package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -9,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import drinkollect.v1.DrinkollectOuterClass
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.FragmentMainScrollBinding
 import ru.alzhanov.drinkkollect.models.DrinkPost
@@ -51,45 +55,68 @@ class MainScrollFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val posts = (activity as MainActivity).service.listPostsRequest()
-            ?.let { ArrayList(it) }
-        val drinkPosts: ArrayList<DrinkPost> = ArrayList()
-        if (posts != null) {
-            for (post in posts) {
-                if (post.creator != (activity as MainActivity).service.getUsername()) {
-                    drinkPosts.add(
-                        OtherDrinkPost(
-                            post.title,
-                            post.description,
-                            post.image,
-                            post.location,
-                            post.creator,
-                            Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
-                            post.liked,
-                            post.id
-                        )
-                    )
-                } else {
-                    drinkPosts.add(
-                        OwnDrinkPost(
-                            post.title,
-                            post.description,
-                            post.image,
-                            post.location,
-                            post.creator,
-                            Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
-                            post.likes,
-                            post.id
-                        )
-                    )
+        val observer = object : Observer<MutableList<DrinkollectOuterClass.Post>> {
+            override fun onSubscribe(d: Disposable) {
+                binding.mainItemsList.visibility = View.GONE
+                binding.mainScrollProgressBar.visibility = View.VISIBLE
+            }
+
+            override fun onNext(t: MutableList<DrinkollectOuterClass.Post>) {
+                val drinkPosts: ArrayList<DrinkPost> = ArrayList()
+                if (t.size != 0) {
+                    for (post in t) {
+                        if (post.creator != (activity as MainActivity).service.getUsername()) {
+                            drinkPosts.add(
+                                OtherDrinkPost(
+                                    post.title,
+                                    post.description,
+                                    post.image,
+                                    post.location,
+                                    post.creator,
+                                    Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
+                                    post.liked,
+                                    post.id
+                                )
+                            )
+                        } else {
+                            drinkPosts.add(
+                                OwnDrinkPost(
+                                    post.title,
+                                    post.description,
+                                    post.image,
+                                    post.location,
+                                    post.creator,
+                                    Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
+                                    post.likes,
+                                    post.id
+                                )
+                            )
+                        }
+                    }
                 }
+                val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
+                binding.mainItemsList.adapter = customAdapter
+                binding.mainItemsList.layoutManager =
+                    androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+
+            }
+
+            override fun onError(e: Throwable) {
+                Toast.makeText(
+                    activity,
+                    "Can't load posts. Check Internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onComplete() {
+                binding.mainItemsList.visibility = View.VISIBLE
+                binding.mainScrollProgressBar.visibility = View.GONE
             }
         }
-        val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
-        binding.mainItemsList.adapter = customAdapter
-        binding.mainItemsList.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-
+        (activity as MainActivity).service.listPostsRequest(
+            observer
+        )
         val dividerItemDecoration = DividerItemDecoration(
             context,
             DividerItemDecoration.VERTICAL
