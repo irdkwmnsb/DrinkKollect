@@ -121,11 +121,8 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onComplete() {
-
                 binding.mainItemsList.visibility = View.VISIBLE
                 binding.profileProgressBar.visibility = View.GONE
-                Toast.makeText(activity, "I'm in onComplete", Toast.LENGTH_SHORT).show()
-//                findNavController().navigate(R.id.action_LoginFragment_to_MainScrollFragment)
             }
         }
         (activity as MainActivity).service.listUserPostsRequest(
