@@ -98,20 +98,24 @@
                 android:textColor="?colorOnSurfaceVariant"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <!--    app:helperText="@string/invalid_password_ru"-->
 
-
-        <!--    app:helperText="@string/passwords_mismatch_ru"-->
-
-
-        <!--    app:helperText="@string/wrong_login_ru"-->
-
+        <TextView
+            android:id="@+id/registerTextViewError"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerEditTextPasswordRepeatLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:textColor="?attr/colorError"
+            android:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/registerEditTextPasswordRepeatLayout"
+            android:layout_below="@id/registerTextViewError"
             android:layout_centerHorizontal="true"
             android:backgroundTint="@android:color/transparent"
             android:text="@string/register"

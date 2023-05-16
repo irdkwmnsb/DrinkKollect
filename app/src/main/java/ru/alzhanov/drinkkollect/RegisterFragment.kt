@@ -31,12 +31,14 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.registerTextViewError.visibility = View.GONE
         binding.buttonRegister.setOnClickListener {
             val username = binding.registerEditTextUsername.text.toString()
             val password = binding.registerEditTextPassword.text.toString()
             val passwordRepeat = binding.registerEditTextPasswordRepeat.text.toString()
             if (password != passwordRepeat) {
-                binding.registerEditTextPasswordRepeatLayout.error = resources.getString(R.string.passwords_mismatch)
+                binding.registerTextViewError.text = resources.getString(R.string.passwords_mismatch)
+                binding.registerTextViewError.visibility = View.VISIBLE
                 return@setOnClickListener
             }
             val observer = object: Observer<Unit> {
@@ -45,6 +47,7 @@ class RegisterFragment : Fragment() {
                     binding.registerEditTextPasswordLayout.visibility = View.GONE
                     binding.registerEditTextPasswordRepeatLayout.visibility = View.GONE
                     binding.buttonRegister.visibility = View.GONE
+                    binding.registerTextViewError.visibility = View.GONE
                     binding.registerProgressBar.visibility = View.VISIBLE
                 }
 

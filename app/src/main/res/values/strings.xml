@@ -72,7 +72,7 @@
     <string name="registration">Sign up</string>
     <string name="go_back_to_login">Go back to login</string>
     <string name="wrong_login">Wrong login…</string>
-    <string name="passwords_mismatch">Passwords missmatch…</string>
+    <string name="passwords_mismatch">Passwords mismatch</string>
     <string name="drink_name">Drink name</string>
     <string name="your_opinion">How was it?</string>
     <string name="where_found">Where did you get that?</string>

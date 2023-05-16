@@ -69,7 +69,7 @@
     <string name="registration">Регистрация</string>
     <string name="go_back_to_login">Вернуться к авторизации</string>
     <string name="wrong_login">Неверный логин…</string>
-    <string name="passwords_mismatch">Пароли не совпадают…</string>
+    <string name="passwords_mismatch">Пароли не совпадают</string>
     <string name="drink_name">Название напитка</string>
     <string name="your_opinion">Ваши впечатления?</string>
     <string name="where_found">А где вы это взяли?</string>
