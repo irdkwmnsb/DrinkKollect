@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.visibility = View.VISIBLE
                 }
                 R.id.ProfileFragment -> {
-                    binding.toolbar.title = "@irdkwmnsb"
+                    binding.toolbar.title = service.getUsername()
                     binding.toolbar.visibility = View.VISIBLE
                 }
                 else -> {

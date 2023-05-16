@@ -2,6 +2,7 @@ package ru.alzhanov.drinkkollect
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
@@ -11,9 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import drinkollect.v1.DrinkollectOuterClass
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import ru.alzhanov.drinkkollect.databinding.FragmentNewPostBinding
 
 class NewPostFragment : Fragment() {
@@ -32,7 +38,6 @@ class NewPostFragment : Fragment() {
                 if (result.resultCode == AppCompatActivity.RESULT_OK && data != null) {
                     val imageView = view?.findViewById<ImageView>(R.id.imageDrink)
                     imageView?.setImageURI(imageuri)
-                    // TODO what to do with uploaded pic
                     updateBindingWithPic()
                 }
             }
@@ -51,7 +56,6 @@ class NewPostFragment : Fragment() {
                     imageuri = data.data
                     val imageView = view?.findViewById<ImageView>(R.id.imageDrink)
                     imageView?.setImageURI(imageuri)
-                    // TODO what to do with taken pic
                     updateBindingWithPic()
                 }
             }
@@ -87,7 +91,9 @@ class NewPostFragment : Fragment() {
             if (isGranted) {
                 openUploadPhotoForResult()
             } else {
-                // TODO i guess do nothing with no permissions
+                AlertDialog.Builder(this.activity).setTitle("Grant permission")
+                    .setMessage("Please grant permission for using gallery for uploading pictures.")
+                    .setPositiveButton("OK", null).create().show()
             }
         }
         binding.buttonAddPhoto.setOnClickListener {
@@ -106,7 +112,9 @@ class NewPostFragment : Fragment() {
                 )
                 openTakePicForResult()
             } else {
-                // TODO i guess do nothing with no permissions
+                AlertDialog.Builder(this.activity).setTitle("Grant permission")
+                    .setMessage("Please grant permission for using camera.")
+                    .setPositiveButton("OK", null).create().show()
             }
         }
         binding.buttonTakePhoto.setOnClickListener {
@@ -115,6 +123,38 @@ class NewPostFragment : Fragment() {
         binding.buttonRemovePhoto.setOnClickListener {
             imageuri = null
             updateBindingWithoutPic()
+        }
+        binding.buttonNewPostDone.setOnClickListener {
+            if ((activity as MainActivity).service.getUsername() == null) {
+                findNavController().navigate(R.id.action_NewPostFragment_to_LoginFragment)
+            } else {
+                val observer = object : Observer<Unit> {
+                    override fun onSubscribe(d: Disposable) {}
+
+                    override fun onNext(t: Unit) {}
+
+                    override fun onError(e: Throwable) {
+                        Toast.makeText(
+                            (activity as MainActivity),
+                            "Something went wrong. Try again",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+
+                    override fun onComplete() {
+                        findNavController().navigate(R.id.action_NewPostFragment_to_MainScrollFragment)
+                    }
+                }
+                (activity as MainActivity).service.createPostRequest(
+                    observer,
+                    binding.editTextDrinkName.editText?.text.toString(),
+                    binding.editTextDrinkDescription.editText?.text.toString(),
+                    binding.editTextDrinkLocation.editText?.text.toString(),
+                    // TODO get S3Resource from imageuri
+                    DrinkollectOuterClass.S3Resource.getDefaultInstance()
+                )
+            }
         }
     }
 

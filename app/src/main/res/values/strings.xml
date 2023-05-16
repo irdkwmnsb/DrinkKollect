@@ -72,7 +72,7 @@
     <string name="registration">Sign up</string>
     <string name="go_back_to_login">Go back to login</string>
     <string name="wrong_login">Wrong login…</string>
-    <string name="passwords_mismatch">Passwords missmatch…</string>
+    <string name="passwords_mismatch">Passwords mismatch</string>
     <string name="drink_name">Drink name</string>
     <string name="your_opinion">How was it?</string>
     <string name="where_found">Where did you get that?</string>
@@ -81,6 +81,7 @@
     <string name="friends">Friends</string>
     <string name="total_in_collection">Collection</string>
     <string name="are_you_sure">Are you sure?</string>
+    <string name="please_auth">You are not logged in. Please log in to like posts</string>
     <string name="deletion_warning">After you delete your account all the information will be lost</string>
     <string name="delete">Delete</string>
     <string name="return_back">Back</string>

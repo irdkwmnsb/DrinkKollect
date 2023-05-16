@@ -5,7 +5,7 @@
     <string name="second_fragment_label">Второй фрагмент</string>
     <string name="next">Дальше</string>
     <string name="previous">Назад</string>
-
+    <string name="please_auth">Вы не вошли в аккаунт. ПОжалуйста, авторизируйтесь, чтобы ставить на посты лайки.</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -69,7 +69,7 @@
     <string name="registration">Регистрация</string>
     <string name="go_back_to_login">Вернуться к авторизации</string>
     <string name="wrong_login">Неверный логин…</string>
-    <string name="passwords_mismatch">Пароли не совпадают…</string>
+    <string name="passwords_mismatch">Пароли не совпадают</string>
     <string name="drink_name">Название напитка</string>
     <string name="your_opinion">Ваши впечатления?</string>
     <string name="where_found">А где вы это взяли?</string>
