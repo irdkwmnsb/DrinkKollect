@@ -88,6 +88,9 @@
     <string name="new_password">Новый пароль</string>
     <string name="want">Хочу</string>
     <string name="just_now">Только что</string>
+    <string name="you_need_to_be_logged_in_to_create_posts">Вы должны быть залогинены, чтобы создавать посты</string>
+    <string name="you_need_to_be_logged_in_to_like_posts">Вы должны быть залогинены, чтобы лайкать посты</string>
+    <string name="you_need_to_be_logged_in">Вы должны быть залогинены, чтобы иметь возможность зайти в профиль</string>
     <!-- Русский язык требует указать строки для one, few, many и other (на всякий случай).
         (https://developer.alexanderklimov.ru/android/theory/plurals.php) -->
     <plurals name="drinks_in_collection">

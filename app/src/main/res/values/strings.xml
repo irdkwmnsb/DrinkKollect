@@ -52,7 +52,7 @@
     <string name="main_scroll_menu">Main page menu</string>
     <string name="change_account">Log out</string>
     <string name="change_password">Change password</string>
-    <string name="delete_account">Delege account</string>
+    <string name="delete_account">Delete account</string>
     <string name="done_action">Done</string>
     <string name="add_post_fab">Add post button</string>
     <string name="password">Password</string>
@@ -94,6 +94,9 @@
     <string name="just_now">Just now</string>
     <string name="stay">Stay</string>
     <string name="logout">Logout</string>
+    <string name="you_need_to_be_logged_in_to_create_posts">You need to be logged in to create posts</string>
+    <string name="you_need_to_be_logged_in_to_like_posts">You need to be logged in to like posts</string>
+    <string name="you_need_to_be_logged_in">You need to be logged in to go to profile</string>
     <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
         <item quantity="zero">%d drinks</item>

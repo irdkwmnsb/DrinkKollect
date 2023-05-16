@@ -73,7 +73,10 @@ class MainScrollFragment : Fragment() {
                                     post.image,
                                     post.location,
                                     post.creator,
-                                    Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
+                                    Instant.fromEpochSeconds(
+                                        post.timestamp.seconds,
+                                        post.timestamp.nanos
+                                    ),
                                     post.liked,
                                     post.id
                                 )
@@ -86,7 +89,10 @@ class MainScrollFragment : Fragment() {
                                     post.image,
                                     post.location,
                                     post.creator,
-                                    Instant.fromEpochSeconds(post.timestamp.seconds, post.timestamp.nanos),
+                                    Instant.fromEpochSeconds(
+                                        post.timestamp.seconds,
+                                        post.timestamp.nanos
+                                    ),
                                     post.likes,
                                     post.id
                                 )
@@ -137,14 +143,27 @@ class MainScrollFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                //TODO if user is unknown, then ProfileFragment else LoginFragment
-                findNavController().navigate(R.id.action_MainScrollFragment_to_ProfileFragment)
+                if ((activity as MainActivity).service.getUsername() == null) {
+                    UnauthDialog(getString(R.string.you_need_to_be_logged_in)).show(
+                        requireActivity().supportFragmentManager,
+                        "LoginDialog"
+                    )
+                } else {
+                    findNavController().navigate(R.id.action_MainScrollFragment_to_ProfileFragment)
+                }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.addPostFab.setOnClickListener {
-            findNavController().navigate(R.id.action_MainScrollFragment_to_NewPostFragment)
+            if ((activity as MainActivity).service.getUsername() == null) {
+                UnauthDialog(getString(R.string.you_need_to_be_logged_in_to_create_posts)).show(
+                    requireActivity().supportFragmentManager,
+                    "LoginDialog"
+                )
+            } else {
+                findNavController().navigate(R.id.action_MainScrollFragment_to_NewPostFragment)
+            }
         }
     }
 
