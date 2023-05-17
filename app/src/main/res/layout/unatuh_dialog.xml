@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/default_dialog_bg">
+
+    <TextView
+        android:id="@+id/do_you_want_to_stay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/are_you_sure"
+        android:textColor="?colorOnSurface"
+        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Title.Large"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        />
+
+    <Button
+        android:id="@+id/stay_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stay"
+        android:layout_below="@id/do_you_want_to_stay"
+        android:backgroundTint="?colorPrimary"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        />
+
+    <Button
+        android:id="@+id/go_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/log_in"
+        android:backgroundTint="@android:color/transparent"
+        android:textColor="?colorPrimary"
+        app:strokeColor="?colorPrimary"
+        app:strokeWidth="1dp"
+        android:layout_below="@id/do_you_want_to_stay"
+        android:layout_toStartOf="@id/stay_here"
+        android:layout_alignTop="@id/stay_here"
+        android:layout_alignBottom="@id/stay_here"
+        android:layout_marginEnd="10dp"
+        />
+
+</RelativeLayout>

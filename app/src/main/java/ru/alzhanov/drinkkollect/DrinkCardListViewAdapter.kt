@@ -38,11 +38,10 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
             var like = drinkPost.like
             binding.label.setOnClickListener {
                 if ((itemView.context as MainActivity).service.getUsername() == null) {
-                    Toast.makeText(
-                        itemView.context,
-                        "Please log in to like posts",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    UnauthDialog((itemView.context as MainActivity).getString(R.string.you_need_to_be_logged_in_to_like_posts)).show(
+                        (itemView.context as MainActivity).supportFragmentManager,
+                        "LoginDialog"
+                    )
                 } else {
                     val observer = object : Observer<Unit> {
                         override fun onSubscribe(d: Disposable) {}
