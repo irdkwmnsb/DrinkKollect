@@ -13,7 +13,7 @@
         android:textColor="?colorOnSurface"
         android:textSize="24sp"
         android:textAppearance="@style/TextAppearance.DrinkKollect.Title.Large"
-        android:layout_marginStart="24dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         />
 
