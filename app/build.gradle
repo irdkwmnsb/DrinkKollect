@@ -70,13 +70,24 @@ dependencies  {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    implementation 'com.auth0.android:jwtdecode:2.0.2'
+//    implementation 'io.minio:minio:8.5.2' {
+//        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+//    }
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.28.0'
+
     // GRPC
 //    protobuf 'com.google.protobuf:protobuf-java:3.22.3'
     implementation "io.grpc:grpc-netty:1.54.1"  // CURRENT_GRPC_VERSION
     implementation "io.grpc:grpc-protobuf:1.54.1"  // CURRENT_GRPC_VERSION
     implementation "io.grpc:grpc-stub:1.54.1"  // CURRENT_GRPC_VERSION
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     compileOnly "org.apache.tomcat:annotations-api:6.0.53"
 //    api 'com.google.protobuf:protobuf-java:3.22.3'
+
+    // FRESCO
+    implementation 'com.facebook.fresco:fresco:3.0.0'
+
 }
 
 protobuf {

@@ -1,6 +1,7 @@
 package ru.alzhanov.drinkkollect
 
 import android.util.Log
+import com.auth0.android.jwt.JWT
 import drinkollect.v1.DrinkollectGrpc
 import drinkollect.v1.DrinkollectOuterClass
 import drinkollect.v1.DrinkollectOuterClass.S3Resource
@@ -22,10 +23,6 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         Metadata.Key.of("authorization", ASCII_STRING_MARSHALLER)
 
     private var jwt: String? = null
-    private var username: String? = null
-    fun getUsername(): String? {
-        return username
-    }
 
     private val channel = ManagedChannelBuilder
         .forAddress(host, port)
@@ -38,6 +35,10 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
     private fun onLostJwt() {
         jwt = null
         service = DrinkollectGrpc.newBlockingStub(channel)
+    }
+
+    fun getUsername(): String? {
+        return jwt?.let { JWT(it).getClaim("username").asString() } ?: run { null }
     }
 
     private fun onGotJwt(token: String) {
@@ -84,7 +85,6 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             .setUsername(username)
             .setPassword(password)
             .build()
-        this.username = username
         tokenAchievingRequest(observer, request) { req ->
             service.register(req).token
         }
@@ -96,7 +96,6 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             .setUsername(username)
             .setPassword(password)
             .build()
-        this.username = username
         tokenAchievingRequest(observer, request) { req ->
             service.login(req).token
         }
@@ -217,7 +216,6 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
 
     fun logout() {
         onLostJwt()
-        username = null
     }
 
     override fun close() {
