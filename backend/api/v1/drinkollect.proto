@@ -34,6 +34,32 @@ service Drinkollect {
   // ListUserPosts lists the post of a specific user and returns the total number of posts the user has.
   // This endpoint doesn't require authorization.
   rpc ListUserPosts(ListUserPostsRequest) returns (ListUserPostsResponse);
+
+  // SendFriendRequest sends a friend request to a specific user.
+  // InvalidArgument is returned if the specified user doesn't exist or the user is already a friend.
+  rpc SendFriendRequest(SendFriendRequestRequest) returns (google.protobuf.Empty);
+  // AcceptFriendRequest accepts a friend request from a specific user.
+  // InvalidArgument is returned if the specified user doesn't exist or the user hasn't sent a friend request.
+  rpc AcceptFriendRequest(AcceptFriendRequestRequest) returns (google.protobuf.Empty);
+  // RejectFriendRequest rejects a friend request from a specific user.
+  // InvalidArgument is returned if the specified user doesn't exist or the user hasn't sent a friend request.
+  rpc RejectFriendRequest(RejectFriendRequestRequest) returns (google.protobuf.Empty);
+  // ListFriendRequests lists all friend requests sent to the current user.
+  rpc ListFriendRequests(ListFriendRequestsRequest) returns (ListFriendRequestsResponse);
+
+  // ListFriends lists all friends of the user.
+  // This endpoint doesn't require authorization.
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse);
+  // RemoveFriend removes a friend from the user's friend list.
+  // InvalidArgument is returned if the specified user doesn't exist or the user isn't a friend.
+  rpc RemoveFriend(RemoveFriendRequest) returns (google.protobuf.Empty);
+
+  // ListUsers finds users by username wildcard.
+  // This endpoint doesn't require authorization.
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+
+  // ListFriendsPosts lists all posts of the current user's friends.
+  rpc ListFriendsPosts(ListFriendsPostsRequest) returns (ListFriendsPostsResponse);
 }
 
 // S3Resource describes a resource stored in S3. The actual URL is constructed by the client, and the backend
@@ -114,3 +140,62 @@ message ListUserPostsResponse {
   repeated Post posts = 1;
   string next_page_token = 2;
 }
+
+message SendFriendRequestRequest {
+  string username = 1;
+}
+
+message AcceptFriendRequestRequest {
+  string username = 1;
+}
+
+message RejectFriendRequestRequest {
+  string username = 1;
+}
+
+message ListFriendRequestsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListFriendRequestsResponse {
+  repeated string usernames = 1;
+  string next_page_token = 2;
+}
+
+message ListFriendsRequest {
+  string username = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListFriendsResponse {
+  repeated string usernames = 1;
+  string next_page_token = 2;
+}
+
+message RemoveFriendRequest {
+  string username = 1;
+}
+
+message ListUsersRequest {
+  string username = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListUsersResponse {
+  repeated string usernames = 1;
+  string next_page_token = 2;
+}
+
+message ListFriendsPostsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListFriendsPostsResponse {
+  repeated Post posts = 1;
+  string next_page_token = 2;
+}
+
