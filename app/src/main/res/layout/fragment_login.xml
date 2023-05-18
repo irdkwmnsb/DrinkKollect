@@ -66,8 +66,8 @@
                 android:background="@drawable/rounded_auth_top"
                 android:hint="@string/login"
                 android:imeOptions="flagNoExtractUi"
-                android:maxLines="1"
                 android:textColor="?colorOnSurfaceVariant"
+                android:inputType="text"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

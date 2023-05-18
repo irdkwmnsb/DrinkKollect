@@ -58,7 +58,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="welcome">Welcome!</string>
-    <string name="wrong_password">Wrong password…</string>
+    <string name="wrong_password">Wrong password</string>
     <string name="log_in">Log in</string>
     <string name="register">Sign up</string>
     <string name="i_want_to_watch">I\'m just looking</string>
@@ -71,7 +71,7 @@
     <string name="password_repeat">Repeat password</string>
     <string name="registration">Sign up</string>
     <string name="go_back_to_login">Go back to login</string>
-    <string name="wrong_login">Wrong login…</string>
+    <string name="wrong_login">Wrong login</string>
     <string name="passwords_mismatch">Passwords mismatch</string>
     <string name="drink_name">Drink name</string>
     <string name="your_opinion">How was it?</string>
@@ -81,7 +81,6 @@
     <string name="friends">Friends</string>
     <string name="total_in_collection">Collection</string>
     <string name="are_you_sure">Are you sure?</string>
-    <string name="please_auth">You are not logged in. Please log in to like posts</string>
     <string name="deletion_warning">After you delete your account all the information will be lost</string>
     <string name="delete">Delete</string>
     <string name="return_back">Back</string>
@@ -96,11 +95,11 @@
     <string name="logout">Logout</string>
     <string name="you_need_to_be_logged_in_to_create_posts">You need to be logged in to create posts</string>
     <string name="you_need_to_be_logged_in_to_like_posts">You need to be logged in to like posts</string>
-    <string name="you_need_to_be_logged_in">You need to be logged in to go to profile</string>
+    <string name="you_need_to_be_logged_in">You need to be logged in to open profile</string>
     <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
         <item quantity="zero">%d drinks</item>
-        <item quantity="one">%d dirnk</item>
+        <item quantity="one">%d drink</item>
         <item quantity="two">%d drinks</item>
         <item quantity="few">%d drinks</item>
         <item quantity="many">%d drinks</item>

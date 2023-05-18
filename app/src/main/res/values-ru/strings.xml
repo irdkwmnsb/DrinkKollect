@@ -5,7 +5,6 @@
     <string name="second_fragment_label">Второй фрагмент</string>
     <string name="next">Дальше</string>
     <string name="previous">Назад</string>
-    <string name="please_auth">Вы не вошли в аккаунт. ПОжалуйста, авторизируйтесь, чтобы ставить на посты лайки.</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -68,7 +67,7 @@
     <string name="password_repeat">Пароль ещё раз</string>
     <string name="registration">Регистрация</string>
     <string name="go_back_to_login">Вернуться к авторизации</string>
-    <string name="wrong_login">Неверный логин…</string>
+    <string name="wrong_login">Неверный логин</string>
     <string name="passwords_mismatch">Пароли не совпадают</string>
     <string name="drink_name">Название напитка</string>
     <string name="your_opinion">Ваши впечатления?</string>
@@ -78,7 +77,7 @@
     <string name="friends">Друзья</string>
     <string name="total_in_collection">Всего в коллекции</string>
     <string name="are_you_sure">Вы уверены?</string>
-    <string name="deletion_warning">После удаления аккаунта вся информация о нем потеряется</string>
+    <string name="deletion_warning">После удаления аккаунта вся информация о нём потеряется</string>
     <string name="delete">Удалить</string>
     <string name="return_back">Вернуться</string>
     <string name="password_change">Смена пароля</string>
@@ -88,9 +87,9 @@
     <string name="new_password">Новый пароль</string>
     <string name="want">Хочу</string>
     <string name="just_now">Только что</string>
-    <string name="you_need_to_be_logged_in_to_create_posts">Вы должны быть залогинены, чтобы создавать посты</string>
-    <string name="you_need_to_be_logged_in_to_like_posts">Вы должны быть залогинены, чтобы лайкать посты</string>
-    <string name="you_need_to_be_logged_in">Вы должны быть залогинены, чтобы иметь возможность зайти в профиль</string>
+    <string name="you_need_to_be_logged_in_to_create_posts">Чтобы создавать посты, вам нужно авторизоваться</string>
+    <string name="you_need_to_be_logged_in_to_like_posts">Чтобы лайкать посты, вам нужно авторизоваться</string>
+    <string name="you_need_to_be_logged_in">Чтобы зайти в профиль, вам нужно авторизоваться</string>
     <!-- Русский язык требует указать строки для one, few, many и other (на всякий случай).
         (https://developer.alexanderklimov.ru/android/theory/plurals.php) -->
     <plurals name="drinks_in_collection">
