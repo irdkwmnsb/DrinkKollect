@@ -158,6 +158,7 @@ func mustGRPC(addr string, service *app.Service, authorizer *auth.Authorizer) (n
 			"/drinkollect.v1.Drinkollect/Register",
 			"/drinkollect.v1.Drinkollect/ListPosts",
 			"/drinkollect.v1.Drinkollect/ListUserPosts",
+			"/drinkollect.v1.Drinkollect/ListFriends",
 		)),
 	)
 	reflection.Register(server)

@@ -185,11 +185,35 @@ func (g *Genji) checkExists(tx *genji.Tx, table, column string, id any) (bool, e
 	var exists bool
 	existsCheckDoc, err := tx.QueryDocument(query, id)
 	if err != nil {
+		if genji.IsNotFoundError(err) {
+			return false, nil
+		}
 		return false, wrapError("checkExists", err)
 	}
 
 	if err := document.Scan(existsCheckDoc, &exists); err != nil {
+		zap.L().Error("checkExists scan", zap.Any("err", err))
 		return false, wrapScanError("checkExists", err)
+	}
+
+	return exists, nil
+}
+
+func (g *Genji) checkExists2(tx *genji.Tx, table, column1 string, id1 any, column2 string, id2 any) (bool, error) {
+	query := fmt.Sprintf(`select true from %s where %s = ? and %s = ?`, table, column1, column2)
+
+	var exists bool
+	existsCheckDoc, err := tx.QueryDocument(query, id1, id2)
+	if err != nil {
+		if genji.IsNotFoundError(err) {
+			return false, nil
+		}
+		return false, wrapError("checkExists2", err)
+	}
+
+	if err := document.Scan(existsCheckDoc, &exists); err != nil {
+		zap.L().Error("checkExists2 scan", zap.Any("err", err))
+		return false, wrapScanError("checkExists2", err)
 	}
 
 	return exists, nil

@@ -180,13 +180,10 @@ message RemoveFriendRequest {
 
 message ListUsersRequest {
   string username = 1;
-  int32 page_size = 2;
-  string page_token = 3;
 }
 
 message ListUsersResponse {
   repeated string usernames = 1;
-  string next_page_token = 2;
 }
 
 message ListFriendsPostsRequest {

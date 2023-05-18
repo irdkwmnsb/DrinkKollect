@@ -43,6 +43,26 @@ var migrations = []migration{
 		create unique index on post_likes(username, post_id);
 		`,
 	},
+	{
+		"friends",
+		`
+		create table friends (
+			from_username text not null,
+			to_username text not null,
+			created_at integer not null
+		);
+
+		create unique index on friends(from_username, to_username);
+
+		create table friend_requests (
+			from_username text not null,
+			to_username text not null,
+			created_at integer not null
+		);
+
+		create unique index on friend_requests(from_username, to_username);
+		`,
+	},
 }
 
 type migrator struct {
@@ -62,6 +82,8 @@ func (m migrator) execute() error {
 		return fmt.Errorf("getting version from migrations_version table: %w", err)
 	}
 
+	zap.S().Infow("current migrations version", "component", "storage", "version", curVersion)
+
 	toapply := migrations[curVersion+1:]
 	if len(toapply) == 0 {
 		zap.S().Infow("no new migrations to apply", "component", "storage")
@@ -69,17 +91,18 @@ func (m migrator) execute() error {
 	}
 
 	for version, mi := range toapply {
-		if err := m.executeMigration(version, mi.name, mi.sql); err != nil {
+		version_i := curVersion + version + 1
+		if err := m.executeMigration(version_i, mi.name, mi.sql); err != nil {
 			return err
 		}
 
-		zap.S().Infow(fmt.Sprintf("applied migration %q", mi.name), "component", "storage", "version", version)
+		zap.S().Infow(fmt.Sprintf("applied migration %q", mi.name), "component", "storage", "version", version_i)
 	}
 	return nil
 }
 
 func (m *migrator) currentVersion() (int, error) {
-	const query = `select version from migrations_version order by version limit 1`
+	const query = `select version from migrations_version order by version desc limit 1`
 
 	doc, err := m.db.QueryDocument(query)
 	if err != nil {

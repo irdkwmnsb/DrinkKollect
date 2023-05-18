@@ -1,8 +1,11 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/genjidb/genji"
 	"github.com/genjidb/genji/document"
+	"github.com/genjidb/genji/types"
 )
 
 // User is the DB model describing a single user.
@@ -24,15 +27,40 @@ func (g *Genji) GetUser(username string) (User, error) {
 
 	doc, err := g.db.QueryDocument(query, username)
 	if err != nil {
-		return User{}, wrapError("GetUserPasswordHash", err)
+		return User{}, wrapError("GetUser", err)
 	}
 
 	var user User
 	if err := document.StructScan(doc, &user); err != nil {
-		return User{}, wrapScanError("GetUserPasswordHash", err)
+		return User{}, wrapScanError("GetUser", err)
 	}
 
 	return user, nil
+}
+
+const wildcardLimit = 20
+
+// GetUsersWildcard gets a list of users with usernames matching the given wildcard.
+func (g *Genji) GetUsersWildcard(username string) ([]User, error) {
+	query := fmt.Sprintf(`select * from user where username like ? limit %d`, wildcardLimit)
+
+	var users []User
+	res, err := g.db.Query(query, username)
+	if err != nil {
+		return nil, wrapError("GetUsersWildcard", err)
+	}
+	if err := res.Iterate(func(d types.Document) error {
+		var user User
+		if err := document.StructScan(d, &user); err != nil {
+			return wrapScanError("GetUsersWildcard", err)
+		}
+
+		users = append(users, user)
+		return nil
+	}); err != nil {
+		return nil, wrapError("GetUsersWildcard", err)
+	}
+	return users, nil
 }
 
 // UpdateUserPasswordHash updates the given user's password hash. If no such user exists, a NotFound error will be returned.

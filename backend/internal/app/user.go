@@ -131,3 +131,19 @@ func (s *Service) DeleteAccount(ctx context.Context, _ *emptypb.Empty) (*emptypb
 
 	return &emptypb.Empty{}, nil
 }
+
+func (s *Service) ListUsers(ctx context.Context, req *desc.ListUsersRequest) (*desc.ListUsersResponse, error) {
+
+	users, err := s.storage.GetUsersWildcard("%" + req.Username + "%")
+	if err != nil {
+		zap.S().Errorw("listing users", "error", err)
+		return nil, internalServerError
+	}
+
+	usernames := make([]string, len(users))
+	for i, user := range users {
+		usernames[i] = user.Username
+	}
+
+	return &desc.ListUsersResponse{Usernames: usernames}, nil
+}
