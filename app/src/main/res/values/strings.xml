@@ -96,6 +96,8 @@
     <string name="you_need_to_be_logged_in_to_create_posts">You need to be logged in to create posts</string>
     <string name="you_need_to_be_logged_in_to_like_posts">You need to be logged in to like posts</string>
     <string name="you_need_to_be_logged_in">You need to be logged in to open profile</string>
+    <string name="search_users" translatable="false">search users</string>
+    <string name="search_hint">Search users</string>
     <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
         <item quantity="zero">%d drinks</item>

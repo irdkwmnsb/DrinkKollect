@@ -106,4 +106,5 @@
     </plurals>
     <string name="stay">Остаться</string>
     <string name="logout">Выйти</string>
+    <string name="search_hint">Поиск пользователей</string>
 </resources>
