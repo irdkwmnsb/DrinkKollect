@@ -176,6 +176,36 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             .subscribe(observer)
     }
 
+    fun sendFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.SendFriendRequestRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.sendFriendRequest(req)
+        }
+    }
+
+    fun acceptFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.AcceptFriendRequestRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.acceptFriendRequest(req)
+        }
+    }
+
+    fun rejectFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.RejectFriendRequestRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.rejectFriendRequest(req)
+        }
+    }
+
     fun createPostRequest(
         observer: Observer<Unit>,
         title: String,
@@ -196,7 +226,6 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
     }
 
     fun togglePostLikeRequest(observer: Observer<Unit>, id: Long) {
-//        try {
         val request = DrinkollectOuterClass.TogglePostLikeRequest
             .newBuilder()
             .setId(id)
@@ -204,10 +233,6 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         nothingAchievingRequest(observer, request) { req ->
             service.togglePostLike(req)
         }
-//        } catch (e: Exception) {
-//            e.message.orEmpty().let { Log.i("request error: ", it) }
-//            throw e
-//        }
     }
 
     fun changePasswordRequest(observer: Observer<Unit>, oldPassword: String, newPassword: String) {

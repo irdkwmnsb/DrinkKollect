@@ -7,35 +7,42 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import drinkollect.v1.DrinkollectOuterClass.Post
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.DrinkCardLayoutBinding
-import ru.alzhanov.drinkkollect.models.DrinkPost
-import ru.alzhanov.drinkkollect.models.OtherDrinkPost
-import ru.alzhanov.drinkkollect.models.OwnDrinkPost
 import kotlin.math.roundToInt
 import kotlin.time.DurationUnit
 
 
 class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHolder(inflate.root) {
     val binding = inflate
-    fun bind(drinkPost: DrinkPost) {
+    fun bind(drinkPost: Post) {
+        val isOwn =
+            (binding.root.context as MainActivity).service.getUsername() == drinkPost.creator
         binding.image.clipToOutline = true // https://issuetracker.google.com/issues/37036728
-        binding.title.text = drinkPost.name
+        binding.title.text = drinkPost.title
         binding.description.text = drinkPost.description
         binding.location.text = drinkPost.location
-        binding.username.text = drinkPost.author
-        binding.timestamp.text = getRelativeTimeAgo(drinkPost.timestamp)
-        if (drinkPost is OwnDrinkPost) {
+        binding.username.text = drinkPost.creator
+        binding.timestamp.text = getRelativeTimeAgo(
+            Instant.fromEpochSeconds(
+                drinkPost.timestamp.seconds,
+                drinkPost.timestamp.nanos
+            )
+        )
+        if (isOwn) {
             binding.label.text = binding.root.resources.getQuantityString(
                 R.plurals.people_want,
                 drinkPost.likes.toInt(),
-                drinkPost.likes
+                drinkPost.likes.toInt()
             )
-        } else if (drinkPost is OtherDrinkPost) {
-            var like = drinkPost.like
+        } else {
+            binding.label.text = binding.root.resources.getText(R.string.want)
+            var like = drinkPost.liked
+            manipulate(like)
             binding.label.setOnClickListener {
                 if ((itemView.context as MainActivity).service.getUsername() == null) {
                     UnauthDialog((itemView.context as MainActivity).getString(R.string.you_need_to_be_logged_in_to_like_posts)).show(
@@ -59,57 +66,7 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
 
                         override fun onComplete() {
                             like = !like
-                            binding.label.text = binding.root.resources.getText(R.string.want)
-                            // set background color from attr
-                            if (like) {
-                                binding.label.closeIcon = ResourcesCompat.getDrawable(
-                                    binding.root.resources,
-                                    R.drawable.ic_baseline_star_24,
-                                    null
-                                )
-                                val typedValue = TypedValue()
-                                binding.root.context.theme.resolveAttribute(
-                                    R.attr.colorSecondaryContainer,
-                                    typedValue,
-                                    true
-                                )
-                                binding.label.chipBackgroundColor =
-                                    ResourcesCompat.getColorStateList(
-                                        binding.root.resources,
-                                        typedValue.resourceId,
-                                        null
-                                    )
-
-                            } else {
-                                binding.label.closeIcon = ResourcesCompat.getDrawable(
-                                    binding.root.resources,
-                                    R.drawable.ic_baseline_star_border_24,
-                                    null
-                                )
-                                binding.label.chipBackgroundColor =
-                                    ResourcesCompat.getColorStateList(
-                                        binding.root.resources,
-                                        R.color.transparent,
-                                        null
-                                    )
-                                val dim = TypedValue.applyDimension(
-                                    TypedValue.COMPLEX_UNIT_DIP,
-                                    1f,
-                                    binding.root.resources.displayMetrics
-                                )
-                                val typedValue = TypedValue()
-                                binding.root.context.theme.resolveAttribute(
-                                    R.attr.colorOutline,
-                                    typedValue,
-                                    true
-                                )
-                                binding.label.chipStrokeWidth = dim
-                                binding.label.chipStrokeColor = ResourcesCompat.getColorStateList(
-                                    binding.root.resources,
-                                    typedValue.resourceId,
-                                    null
-                                )
-                            }
+                            manipulate(like)
                         }
                     }
                     (itemView.context as MainActivity).service.togglePostLikeRequest(
@@ -118,57 +75,59 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
                     )
                 }
             }
-            binding.label.text = binding.root.resources.getText(R.string.want)
-            // set background color from attr
-            if (like) {
-                binding.label.closeIcon = ResourcesCompat.getDrawable(
-                    binding.root.resources,
-                    R.drawable.ic_baseline_star_24,
-                    null
-                )
-                val typedValue = TypedValue()
-                binding.root.context.theme.resolveAttribute(
-                    R.attr.colorSecondaryContainer,
-                    typedValue,
-                    true
-                )
-                binding.label.chipBackgroundColor = ResourcesCompat.getColorStateList(
+        }
+    }
+
+    private fun manipulate(like: Boolean) {
+        if (like) {
+            binding.label.closeIcon = ResourcesCompat.getDrawable(
+                binding.root.resources,
+                R.drawable.ic_baseline_star_24,
+                null
+            )
+            val typedValue = TypedValue()
+            binding.root.context.theme.resolveAttribute(
+                R.attr.colorSecondaryContainer,
+                typedValue,
+                true
+            )
+            binding.label.chipBackgroundColor =
+                ResourcesCompat.getColorStateList(
                     binding.root.resources,
                     typedValue.resourceId,
                     null
                 )
 
-            } else {
-                binding.label.closeIcon = ResourcesCompat.getDrawable(
-                    binding.root.resources,
-                    R.drawable.ic_baseline_star_border_24,
-                    null
-                )
-                binding.label.chipBackgroundColor = ResourcesCompat.getColorStateList(
+        } else {
+            binding.label.closeIcon = ResourcesCompat.getDrawable(
+                binding.root.resources,
+                R.drawable.ic_baseline_star_border_24,
+                null
+            )
+            binding.label.chipBackgroundColor =
+                ResourcesCompat.getColorStateList(
                     binding.root.resources,
                     R.color.transparent,
                     null
                 )
-                val dim = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    1f,
-                    binding.root.resources.displayMetrics
-                )
-                val typedValue = TypedValue()
-                binding.root.context.theme.resolveAttribute(
-                    R.attr.colorOutline,
-                    typedValue,
-                    true
-                )
-                binding.label.chipStrokeWidth = dim
-                binding.label.chipStrokeColor = ResourcesCompat.getColorStateList(
-                    binding.root.resources,
-                    typedValue.resourceId,
-                    null
-                )
-            }
+            val dim = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                1f,
+                binding.root.resources.displayMetrics
+            )
+            val typedValue = TypedValue()
+            binding.root.context.theme.resolveAttribute(
+                R.attr.colorOutline,
+                typedValue,
+                true
+            )
+            binding.label.chipStrokeWidth = dim
+            binding.label.chipStrokeColor = ResourcesCompat.getColorStateList(
+                binding.root.resources,
+                typedValue.resourceId,
+                null
+            )
         }
-        //binding.image.setImageResource(drinkPost.image.hashCode())
     }
 
     private val periods = listOf(
@@ -200,7 +159,7 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
 
 class DrinkCardListViewAdapter(
     private val context: Activity,
-    private val valuesList: ArrayList<DrinkPost>
+    private val valuesList: MutableList<Post>
 ) :
     RecyclerView.Adapter<DrinkCardViewHolder>() {
 

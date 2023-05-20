@@ -43,7 +43,7 @@ class SearchUsersFragment : Fragment() {
             }
 
             override fun onComplete() {
-                val customAdapter = UsersListViewAdapter(requireActivity(), results)
+                val customAdapter = UsersViewHolder.UsersListViewAdapter(requireActivity(), results)
                 binding.usersList.adapter = customAdapter
                 binding.usersList.layoutManager =
                     androidx.recyclerview.widget.LinearLayoutManager(requireContext())

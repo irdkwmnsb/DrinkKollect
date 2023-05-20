@@ -98,6 +98,9 @@
     <string name="you_need_to_be_logged_in">You need to be logged in to open profile</string>
     <string name="search_users" translatable="false">search users</string>
     <string name="search_hint">Search users</string>
+    <string name="send_friend_request">Add to friends</string>
+    <string name="log_in_to_send_friend_requests">You need to be logged in to send friend requests</string>
+    <string name="cancel_friend_request">Cancel request</string>
     <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
         <item quantity="zero">%d drinks</item>

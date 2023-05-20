@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -9,18 +10,28 @@
         android:id="@+id/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/chip_send_friend_request"
         android:layout_margin="20dp"
-        android:text="@string/action_settings"
-        app:layout_constraintStart_toStartOf="@id/container"
-        app:layout_constraintTop_toTopOf="@id/container"
-        android:textSize="14sp"/>
+        android:text="@string/app_name"
+        android:textSize="18sp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_follow"
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_send_friend_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_margin="20dp"
-        app:layout_constraintEnd_toEndOf="@id/container"
-        app:layout_constraintTop_toTopOf="@id/container"
-        app:layout_constraintBaseline_toBaselineOf="@id/user"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/TextAppearance.DrinkKollect.Label.Large"
+        android:textColor="?colorOnSecondaryContainer"
+        app:chipBackgroundColor="?colorSecondaryContainer"
+        app:chipStrokeWidth="0dp"
+        app:closeIcon="@null"
+        app:closeIconEnabled="true"
+        tools:text="@string/send_friend_request" />
+
+</RelativeLayout>

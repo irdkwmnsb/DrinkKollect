@@ -18,11 +18,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import drinkollect.v1.DrinkollectOuterClass
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.FragmentMainScrollBinding
-import ru.alzhanov.drinkkollect.models.DrinkPost
-import ru.alzhanov.drinkkollect.models.OtherDrinkPost
-import ru.alzhanov.drinkkollect.models.OwnDrinkPost
 
 
 /**
@@ -54,45 +50,7 @@ class MainScrollFragment : Fragment() {
             }
 
             override fun onNext(t: MutableList<DrinkollectOuterClass.Post>) {
-                val drinkPosts: ArrayList<DrinkPost> = ArrayList()
-                if (t.size != 0) {
-                    for (post in t) {
-                        if (post.creator != (activity as MainActivity).service.getUsername()) {
-                            drinkPosts.add(
-                                OtherDrinkPost(
-                                    post.title,
-                                    post.description,
-                                    post.image,
-                                    post.location,
-                                    post.creator,
-                                    Instant.fromEpochSeconds(
-                                        post.timestamp.seconds,
-                                        post.timestamp.nanos
-                                    ),
-                                    post.liked,
-                                    post.id
-                                )
-                            )
-                        } else {
-                            drinkPosts.add(
-                                OwnDrinkPost(
-                                    post.title,
-                                    post.description,
-                                    post.image,
-                                    post.location,
-                                    post.creator,
-                                    Instant.fromEpochSeconds(
-                                        post.timestamp.seconds,
-                                        post.timestamp.nanos
-                                    ),
-                                    post.likes,
-                                    post.id
-                                )
-                            )
-                        }
-                    }
-                }
-                val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
+                val customAdapter = DrinkCardListViewAdapter(requireActivity(), t)
                 binding.mainItemsList.adapter = customAdapter
                 binding.mainItemsList.layoutManager =
                     androidx.recyclerview.widget.LinearLayoutManager(requireContext())
