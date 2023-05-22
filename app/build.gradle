@@ -86,8 +86,7 @@ dependencies  {
 //    api 'com.google.protobuf:protobuf-java:3.22.3'
 
     // FRESCO
-    implementation 'com.facebook.fresco:fresco:3.0.0'
-
+    implementation 'com.facebook.fresco:fresco:2.6.0' // downgraded until https://github.com/facebook/fresco/issues/2714 is fixed.
 }
 
 protobuf {
