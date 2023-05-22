@@ -99,6 +99,15 @@
     <string name="you_need_to_be_logged_in_to_create_posts">You need to be logged in to create posts</string>
     <string name="you_need_to_be_logged_in_to_like_posts">You need to be logged in to like posts</string>
     <string name="you_need_to_be_logged_in">You need to be logged in to open profile</string>
+    <string name="search_users" translatable="false">search users</string>
+    <string name="search_hint">Search users</string>
+    <string name="send_friend_request">Add to friends</string>
+    <string name="log_in_to_send_friend_requests">You need to be logged in to send friend requests</string>
+    <string name="cancel_friend_request">Cancel request</string>
+    <string name="friend_requests">Friend requests</string>
+    <string name="text_friends">Friends</string>
+    <string name="log_in_to_accept_friend_requests">You need to be logged in to accept friend requests</string>
+    <string name="removed">Removed</string>
     <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
         <item quantity="zero">%d drinks</item>

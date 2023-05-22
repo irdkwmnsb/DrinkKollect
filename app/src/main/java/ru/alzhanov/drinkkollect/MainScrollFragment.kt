@@ -1,23 +1,25 @@
 package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import drinkollect.v1.DrinkollectOuterClass
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.FragmentMainScrollBinding
-import ru.alzhanov.drinkkollect.models.DrinkPost
-import ru.alzhanov.drinkkollect.models.OtherDrinkPost
-import ru.alzhanov.drinkkollect.models.OwnDrinkPost
 
 
 /**
@@ -30,6 +32,7 @@ class MainScrollFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val sharedViewModel: UsernameViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,45 +52,7 @@ class MainScrollFragment : Fragment() {
             }
 
             override fun onNext(t: MutableList<DrinkollectOuterClass.Post>) {
-                val drinkPosts: ArrayList<DrinkPost> = ArrayList()
-                if (t.size != 0) {
-                    for (post in t) {
-                        if (post.creator != (activity as MainActivity).service.getUsername()) {
-                            drinkPosts.add(
-                                OtherDrinkPost(
-                                    post.title,
-                                    post.description,
-                                    post.image,
-                                    post.location,
-                                    post.creator,
-                                    Instant.fromEpochSeconds(
-                                        post.timestamp.seconds,
-                                        post.timestamp.nanos
-                                    ),
-                                    post.liked,
-                                    post.id
-                                )
-                            )
-                        } else {
-                            drinkPosts.add(
-                                OwnDrinkPost(
-                                    post.title,
-                                    post.description,
-                                    post.image,
-                                    post.location,
-                                    post.creator,
-                                    Instant.fromEpochSeconds(
-                                        post.timestamp.seconds,
-                                        post.timestamp.nanos
-                                    ),
-                                    post.likes,
-                                    post.id
-                                )
-                            )
-                        }
-                    }
-                }
-                val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
+                val customAdapter = DrinkCardListViewAdapter(requireActivity(), t)
                 binding.mainItemsList.adapter = customAdapter
                 binding.mainItemsList.layoutManager =
                     androidx.recyclerview.widget.LinearLayoutManager(requireContext())
@@ -114,7 +79,7 @@ class MainScrollFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        getContext()?.let {
+        context?.let {
             ContextCompat.getDrawable(it, R.drawable.drink_list_divider)
                 ?.let { dividerItemDecoration.setDrawable(it) }
         }
@@ -130,13 +95,28 @@ class MainScrollFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                if ((activity as MainActivity).service.getUsername() == null) {
-                    UnauthDialog(getString(R.string.you_need_to_be_logged_in)).show(
-                        requireActivity().supportFragmentManager,
-                        "LoginDialog"
-                    )
-                } else {
-                    findNavController().navigate(R.id.action_MainScrollFragment_to_ProfileFragment)
+                val curUsername = (activity as MainActivity).service.getUsername()
+                when (menuItem.itemId) {
+                    R.id.button_search -> {
+                        findNavController().navigate(R.id.action_MainScrollFragment_to_SearchUsersFragment)
+                    }
+
+                    R.id.button_profile -> {
+                        if (curUsername == null) {
+                            UnauthDialog(getString(R.string.you_need_to_be_logged_in)).show(
+                                requireActivity().supportFragmentManager,
+                                "LoginDialog"
+                            )
+                        } else {
+                            findNavController().navigate(R.id.action_MainScrollFragment_to_ProfileFragment)
+                        }
+                    }
+
+                    else -> {
+                        if (curUsername == null) {
+                            findNavController().navigate(R.id.action_MainScrollFragment_to_LoginFragment)
+                        }
+                    }
                 }
                 return true
             }

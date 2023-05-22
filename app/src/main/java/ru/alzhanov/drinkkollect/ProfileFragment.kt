@@ -1,7 +1,12 @@
 package ru.alzhanov.drinkkollect
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -11,10 +16,7 @@ import androidx.navigation.fragment.findNavController
 import drinkollect.v1.DrinkollectOuterClass
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.datetime.Instant
 import ru.alzhanov.drinkkollect.databinding.FragmentProfileBinding
-import ru.alzhanov.drinkkollect.models.DrinkPost
-import ru.alzhanov.drinkkollect.models.OwnDrinkPost
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -43,6 +45,9 @@ class ProfileFragment : Fragment() {
         if (username == null) {
             findNavController().navigate(R.id.action_ProfileFragment_to_LoginFragment)
             return
+        }
+        binding.profileHeaderFriends.setOnClickListener {
+            findNavController().navigate(R.id.action_ProfileFragment_to_FriendsFragment)
         }
         val menuHost: MenuHost = requireActivity()
 
@@ -86,27 +91,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onNext(t: MutableList<DrinkollectOuterClass.Post>) {
-                val drinkPosts: ArrayList<DrinkPost> = ArrayList()
-                if (t.size != 0) {
-                    for (post in t) {
-                        drinkPosts.add(
-                            OwnDrinkPost(
-                                post.title,
-                                post.description,
-                                post.image,
-                                post.location,
-                                post.creator,
-                                Instant.fromEpochSeconds(
-                                    post.timestamp.seconds,
-                                    post.timestamp.nanos
-                                ),
-                                post.likes,
-                                post.id
-                            )
-                        )
-                    }
-                }
-                val customAdapter = DrinkCardListViewAdapter(requireActivity(), drinkPosts)
+                val customAdapter = DrinkCardListViewAdapter(requireActivity(), t)
                 binding.mainItemsList.adapter = customAdapter
                 binding.mainItemsList.layoutManager =
                     androidx.recyclerview.widget.LinearLayoutManager(requireContext())

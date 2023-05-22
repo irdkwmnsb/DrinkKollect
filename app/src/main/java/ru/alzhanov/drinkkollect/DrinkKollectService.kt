@@ -101,10 +101,10 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         }
     }
 
-    private fun <RequestType> postsAchievingRequest(
-        observer: Observer<MutableList<DrinkollectOuterClass.Post>>,
+    private fun <RequestType, T> listAchievingRequest(
+        observer: Observer<MutableList<T>>,
         request: RequestType,
-        requestAction: (RequestType) -> MutableList<DrinkollectOuterClass.Post>
+        requestAction: (RequestType) -> MutableList<T>
     ) {
         Observable.create { emitter ->
             try {
@@ -128,7 +128,7 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
                 .newBuilder()
                 .setUsername(username)
                 .build()
-        postsAchievingRequest(observer, request) { req ->
+        listAchievingRequest(observer, request) { req ->
             service.listUserPosts(req).postsList
         }
     }
@@ -140,8 +140,39 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             DrinkollectOuterClass.ListPostsRequest
                 .newBuilder()
                 .build()
-        postsAchievingRequest(observer, request) { req ->
+        listAchievingRequest(observer, request) { req ->
             service.listPosts(req).postsList
+        }
+    }
+
+
+    fun listUsersRequest(observer: Observer<MutableList<String>>, username: String) {
+        val request =
+            DrinkollectOuterClass.ListUsersRequest
+                .newBuilder()
+                .setUsername(username)
+                .build()
+        listAchievingRequest(observer, request) { req ->
+            service.listUsers(req).usernamesList
+        }
+    }
+
+    fun listFriendRequestsRequest(observer: Observer<MutableList<String>>) {
+        val request = DrinkollectOuterClass.ListFriendRequestsRequest
+            .newBuilder()
+            .build()
+        listAchievingRequest(observer, request) { req ->
+            service.listFriendRequests(req).usernamesList
+        }
+    }
+
+    fun listFriendsRequest(observer: Observer<MutableList<String>>, username: String) {
+        val request = DrinkollectOuterClass.ListFriendsRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        listAchievingRequest(observer, request) { req ->
+            service.listFriends(req).usernamesList
         }
     }
 
@@ -162,7 +193,39 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
     }
-    fun createPostRequest(observer: Observer<Unit>,
+
+    fun sendFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.SendFriendRequestRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.sendFriendRequest(req)
+        }
+    }
+
+    fun acceptFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.AcceptFriendRequestRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.acceptFriendRequest(req)
+        }
+    }
+
+    fun rejectFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.RejectFriendRequestRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.rejectFriendRequest(req)
+        }
+    }
+
+    fun createPostRequest(
+        observer: Observer<Unit>,
         title: String,
         description: String?,
         location: String?,
@@ -181,18 +244,13 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
     }
 
     fun togglePostLikeRequest(observer: Observer<Unit>, id: Long) {
-//        try {
-            val request = DrinkollectOuterClass.TogglePostLikeRequest
-                .newBuilder()
-                .setId(id)
-                .build()
-            nothingAchievingRequest(observer, request) { req ->
-                service.togglePostLike(req)
-            }
-//        } catch (e: Exception) {
-//            e.message.orEmpty().let { Log.i("request error: ", it) }
-//            throw e
-//        }
+        val request = DrinkollectOuterClass.TogglePostLikeRequest
+            .newBuilder()
+            .setId(id)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.togglePostLike(req)
+        }
     }
 
     fun changePasswordRequest(observer: Observer<Unit>, oldPassword: String, newPassword: String) {
@@ -212,6 +270,16 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         }).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
+    }
+
+    fun removeFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.RemoveFriendRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.removeFriend(req)
+        }
     }
 
     fun logout() {

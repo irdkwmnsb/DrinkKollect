@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // transitions between fragments
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -40,14 +39,22 @@ class MainActivity : AppCompatActivity() {
                 R.id.LoginFragment -> {
                     binding.toolbar.visibility = View.GONE
                 }
+
                 R.id.RegisterFragment -> {
                     binding.toolbar.title = getString(R.string.registration)
                     binding.toolbar.visibility = View.VISIBLE
                 }
+
                 R.id.ProfileFragment -> {
                     binding.toolbar.title = service.getUsername()
                     binding.toolbar.visibility = View.VISIBLE
                 }
+
+                R.id.FriendsFragment -> {
+                    binding.toolbar.title = service.getUsername()
+                    binding.toolbar.visibility = View.VISIBLE
+                }
+
                 else -> {
                     binding.toolbar.title = "DrinkKollect"
                     binding.toolbar.visibility = View.VISIBLE
