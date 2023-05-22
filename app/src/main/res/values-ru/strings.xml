@@ -110,4 +110,7 @@
     <string name="send_friend_request">Добавить в друзья</string>
     <string name="log_in_to_send_friend_requests">Чтобы добавлять в друзья, вам нужно авторизоваться</string>
     <string name="cancel_friend_request">Отменить запрос</string>
+    <string name="friend_requests">Заявки в друзья</string>
+    <string name="text_friends">Друзья</string>
+    <string name="log_in_to_accept_friend_requests">You need to be logged in to accept friend requests</string>
 </resources>

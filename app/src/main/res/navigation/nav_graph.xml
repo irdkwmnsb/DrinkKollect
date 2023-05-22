@@ -93,6 +93,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_FriendsFragment"
+            app:destination="@id/FriendsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -138,6 +145,25 @@
     <fragment
         android:id="@+id/UserProfileFragment"
         android:name="ru.alzhanov.drinkkollect.UserProfileFragment"
-        tools:layout="@layout/fragment_user_profile">
+        tools:layout="@layout/fragment_user_profile" />
+
+    <fragment
+        android:id="@+id/FriendsFragment"
+        android:name="ru.alzhanov.drinkkollect.FriendsFragment"
+        tools:layout="@layout/fragment_friends">
+        <action
+            android:id="@+id/action_FriendsFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_FriendsFragment_to_UserProfileFragment"
+            app:destination="@id/UserProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

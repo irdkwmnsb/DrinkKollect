@@ -46,7 +46,7 @@ class SearchUsersFragment : Fragment() {
             }
 
             override fun onComplete() {
-                val customAdapter = UsersListViewAdapter(requireActivity(), results)
+                val customAdapter = UsersListViewAdapter(requireActivity(), results, true)
                 customAdapter.setOnItemClickListener { user ->
                     sharedViewModel.setUsername(user)
                     if ((activity as MainActivity).service.getUsername() != user) {

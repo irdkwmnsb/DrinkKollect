@@ -45,6 +45,11 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.visibility = View.VISIBLE
                 }
 
+                R.id.FriendsFragment -> {
+                    binding.toolbar.title = service.getUsername()
+                    binding.toolbar.visibility = View.VISIBLE
+                }
+
                 else -> {
                     binding.toolbar.title = "DrinkKollect"
                     binding.toolbar.visibility = View.VISIBLE

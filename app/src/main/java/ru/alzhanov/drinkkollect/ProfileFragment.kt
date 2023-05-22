@@ -46,6 +46,9 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_ProfileFragment_to_LoginFragment)
             return
         }
+        binding.profileHeaderFriends.setOnClickListener {
+            findNavController().navigate(R.id.action_ProfileFragment_to_FriendsFragment)
+        }
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
