@@ -54,7 +54,11 @@ class FriendsFragment : Fragment() {
                 )
                 customAdapter.setOnItemClickListener { user ->
                     sharedViewModel.setUsername(user)
-                    findNavController().navigate(R.id.action_SearchUsersFragment_to_UserProfileFragment)
+                    if (curUsername != user) {
+                        findNavController().navigate(R.id.action_FriendsFragment_to_UserProfileFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_FriendsFragment_to_ProfileFragment)
+                    }
                 }
                 binding.friendsList.adapter = customAdapter
                 binding.friendsList.layoutManager =

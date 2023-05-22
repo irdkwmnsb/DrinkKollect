@@ -77,6 +77,11 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
                 }
             }
         }
+        val image = drinkPost.image
+        val s3 = (binding.root.context as MainActivity).s3service
+        val url = s3.getUrl(image.bucket, image.id)
+        Log.i("DrinkCardViewHolder", "url: $url")
+        binding.image.setImageURI(url)
     }
 
     private fun manipulate(like: Boolean) {
@@ -129,11 +134,6 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
                 null
             )
         }
-        val image = drinkPost.image
-        val s3 = (binding.root.context as MainActivity).s3service
-        val url = s3.getUrl(image.bucket, image.id)
-        Log.i("DrinkCardViewHolder", "url: $url")
-        binding.image.setImageURI(url)
     }
 
     private val periods = listOf(
