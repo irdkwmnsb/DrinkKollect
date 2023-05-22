@@ -1,25 +1,43 @@
 package ru.alzhanov.drinkkollect
 
-import android.app.Activity
+import android.os.Bundle
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import drinkollect.v1.DrinkollectOuterClass
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
-import ru.alzhanov.drinkkollect.databinding.UserInListLayoutBinding
+import ru.alzhanov.drinkkollect.databinding.FragmentUserProfileBinding
 
-class UsersViewHolder(inflate: UserInListLayoutBinding) : RecyclerView.ViewHolder(inflate.root) {
-    val binding = inflate
-    val rootView: View = itemView.rootView
-    fun bind(user: String) {
-        binding.user.text = user
+class UserProfileFragment : Fragment() {
+    private var _binding: FragmentUserProfileBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+    private val sharedViewModel: UsernameViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val curUsername = (activity as MainActivity).service.getUsername()
+        val profileUsername = sharedViewModel.username.value
         binding.chipSendFriendRequest.setOnClickListener {
-            if ((itemView.context as MainActivity).service.getUsername() == null) {
-                UnauthDialog((itemView.context as MainActivity).getString(R.string.log_in_to_send_friend_requests)).show(
-                    (itemView.context as MainActivity).supportFragmentManager,
+            if (curUsername == null) {
+                UnauthDialog((activity as MainActivity).getString(R.string.log_in_to_send_friend_requests)).show(
+                    (activity as MainActivity).supportFragmentManager,
                     "LoginDialog"
                 )
             } else {
@@ -29,7 +47,7 @@ class UsersViewHolder(inflate: UserInListLayoutBinding) : RecyclerView.ViewHolde
 
                     override fun onError(e: Throwable) {
                         Toast.makeText(
-                            (itemView.context as MainActivity),
+                            (activity as MainActivity),
                             "Something went wrong. Try again",
                             Toast.LENGTH_SHORT
                         )
@@ -44,20 +62,61 @@ class UsersViewHolder(inflate: UserInListLayoutBinding) : RecyclerView.ViewHolde
                     }
 
                 }
-                (itemView.context as MainActivity).service.sendFriendRequest(
+                (activity as MainActivity).service.sendFriendRequest(
                     observer,
-                    (itemView.context as MainActivity).service.getUsername()!!
+                    (activity as MainActivity).service.getUsername()!!
                 )
             }
         }
         manipulate()
+        binding.chipSendFriendRequest.visibility = View.VISIBLE
+        binding.profileName.text = profileUsername
+        val observer = object : Observer<MutableList<DrinkollectOuterClass.Post>> {
+            override fun onSubscribe(d: Disposable) {
+                binding.mainItemsList.visibility = View.GONE
+                binding.profileProgressBar.visibility = View.VISIBLE
+            }
+
+            override fun onNext(t: MutableList<DrinkollectOuterClass.Post>) {
+                val customAdapter = DrinkCardListViewAdapter(requireActivity(), t)
+                binding.mainItemsList.adapter = customAdapter
+                binding.mainItemsList.layoutManager =
+                    androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+            }
+
+            override fun onError(e: Throwable) {
+                Toast.makeText(
+                    activity,
+                    "Can't load posts. Check Internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onComplete() {
+                binding.mainItemsList.visibility = View.VISIBLE
+                binding.profileProgressBar.visibility = View.GONE
+            }
+        }
+        if (profileUsername != null) {
+            (activity as MainActivity).service.listUserPostsRequest(
+                observer,
+                profileUsername
+            )
+        }
+
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun manipulate() {
         //TODO add a check if the request was already sent
 //        if (req not sent) {
         binding.chipSendFriendRequest.text =
-            (itemView.context as MainActivity).getString(R.string.send_friend_request)
+            (activity as MainActivity).getString(R.string.send_friend_request)
         binding.chipSendFriendRequest.closeIcon = ResourcesCompat.getDrawable(
             binding.root.resources,
             R.drawable.ic_baseline_star_24,
@@ -80,7 +139,7 @@ class UsersViewHolder(inflate: UserInListLayoutBinding) : RecyclerView.ViewHolde
          */
 //        } else {
 //            binding.chipSendFriendRequest.text =
-//                (itemView.context as MainActivity).getString(R.string.cancel_friend_request)
+//                (activity as MainActivity).getString(R.string.cancel_friend_request)
 //            binding.chipSendFriendRequest.closeIcon = ResourcesCompat.getDrawable(
 //                binding.root.resources,
 //                R.drawable.ic_baseline_star_border_24,
@@ -112,41 +171,3 @@ class UsersViewHolder(inflate: UserInListLayoutBinding) : RecyclerView.ViewHolde
 //        }
     }
 }
-
-class UsersListViewAdapter(
-    private val context: Activity,
-    private val valuesList: MutableList<String>
-) :
-    RecyclerView.Adapter<UsersViewHolder>() {
-    private var onItemClickListener: ((String) -> Unit)? = null
-    fun setOnItemClickListener(listener: (String) -> Unit) {
-        onItemClickListener = listener
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
-        val binding = UserInListLayoutBinding.inflate(
-            context.layoutInflater,
-            parent,
-            false
-        )
-
-        return UsersViewHolder(
-            binding
-        )
-    }
-
-    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
-        holder.rootView.setOnClickListener {
-            onItemClickListener?.let {
-                it(valuesList[position])
-            }
-        }
-        holder.bind(valuesList[position])
-    }
-
-    override fun getItemCount(): Int {
-        return valuesList.size
-    }
-}
-
-

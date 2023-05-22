@@ -158,6 +158,15 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
         }
     }
 
+    fun listFriendRequestsRequest(observer: Observer<MutableList<String>>) {
+        val request = DrinkollectOuterClass.ListFriendRequestsRequest
+            .newBuilder()
+            .build()
+        listAchievingRequest(observer, request) { req ->
+            service.listFriendRequests(req).usernamesList
+        }
+    }
+
     private fun <RequestType> nothingAchievingRequest(
         observer: Observer<Unit>,
         request: RequestType,

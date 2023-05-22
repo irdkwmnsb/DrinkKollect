@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import ru.alzhanov.drinkkollect.databinding.FragmentSearchUsersBinding
 
 class SearchUsersFragment : Fragment() {
     private var _binding: FragmentSearchUsersBinding? = null
+    private val sharedViewModel: UsernameViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -43,7 +46,15 @@ class SearchUsersFragment : Fragment() {
             }
 
             override fun onComplete() {
-                val customAdapter = UsersViewHolder.UsersListViewAdapter(requireActivity(), results)
+                val customAdapter = UsersListViewAdapter(requireActivity(), results)
+                customAdapter.setOnItemClickListener { user ->
+                    sharedViewModel.setUsername(user)
+                    if ((activity as MainActivity).service.getUsername() != user) {
+                        findNavController().navigate(R.id.action_SearchUsersFragment_to_UserProfileFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_SearchUsersFragment_to_ProfileFragment)
+                    }
+                }
                 binding.usersList.adapter = customAdapter
                 binding.usersList.layoutManager =
                     androidx.recyclerview.widget.LinearLayoutManager(requireContext())

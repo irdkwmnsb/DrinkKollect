@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -31,6 +32,7 @@ class MainScrollFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val sharedViewModel: UsernameViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,7 +79,7 @@ class MainScrollFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        getContext()?.let {
+        context?.let {
             ContextCompat.getDrawable(it, R.drawable.drink_list_divider)
                 ?.let { dividerItemDecoration.setDrawable(it) }
         }
@@ -93,13 +95,14 @@ class MainScrollFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                val curUsername = (activity as MainActivity).service.getUsername()
                 when (menuItem.itemId) {
                     R.id.button_search -> {
                         findNavController().navigate(R.id.action_MainScrollFragment_to_SearchUsersFragment)
                     }
 
                     R.id.button_profile -> {
-                        if ((activity as MainActivity).service.getUsername() == null) {
+                        if (curUsername == null) {
                             UnauthDialog(getString(R.string.you_need_to_be_logged_in)).show(
                                 requireActivity().supportFragmentManager,
                                 "LoginDialog"
@@ -110,7 +113,7 @@ class MainScrollFragment : Fragment() {
                     }
 
                     else -> {
-                        if ((activity as MainActivity).service.getUsername() == null) {
+                        if (curUsername == null) {
                             findNavController().navigate(R.id.action_MainScrollFragment_to_LoginFragment)
                         }
                     }
