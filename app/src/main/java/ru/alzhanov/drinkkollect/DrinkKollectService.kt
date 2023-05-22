@@ -1,5 +1,6 @@
 package ru.alzhanov.drinkkollect
 
+import android.content.Context
 import android.util.Log
 import com.auth0.android.jwt.JWT
 import drinkollect.v1.DrinkollectGrpc
@@ -18,11 +19,35 @@ import java.io.Closeable
 import java.util.concurrent.Executor
 
 
-class DrinkKollectService(host: String, port: Int) : Closeable {
+class DrinkKollectService(host: String, port: Int, val activity: MainActivity?) : Closeable {
     val AUTHORIZATION_METADATA_KEY: Metadata.Key<String> =
         Metadata.Key.of("authorization", ASCII_STRING_MARSHALLER)
 
-    private var jwt: String? = null
+    private var jwt: String? = loadJwt()
+    private var preferencesKey = activity?.getString(R.string.preference_file_key)
+    private val sharedPref = activity?.getSharedPreferences(preferencesKey, Context.MODE_PRIVATE)
+
+
+    fun reloadJwt() {
+        jwt = loadJwt()
+    }
+    private fun loadJwt(): String? {
+        val jwt = sharedPref?.getString("storedJwt", null)
+        Log.i("DrinkKollectService", "Reading jwt: $jwt")
+        return jwt
+    }
+
+    private fun storeJwt(jwt: String?) {
+        if(sharedPref != null) {
+            Log.i("DrinkKollectService", "Storing jwt: $jwt")
+            with(sharedPref.edit()) {
+                putString("storedJwt", jwt)
+                apply()
+                commit()
+            }
+            Log.i("DrinkKollectService", "Sanity check: ${loadJwt()}")
+        }
+    }
 
     private val channel = ManagedChannelBuilder
         .forAddress(host, port)
@@ -39,6 +64,10 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
 
     fun getUsername(): String? {
         return jwt?.let { JWT(it).getClaim("username").asString() } ?: run { null }
+    }
+
+    fun isLoggedIn(): Boolean {
+        return jwt != null
     }
 
     private fun onGotJwt(token: String) {
@@ -58,6 +87,7 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             override fun thisUsesUnstableApi() {
             }
         })
+        storeJwt(token)
     }
 
     private fun <RequestType> tokenAchievingRequest(
@@ -284,6 +314,7 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
 
     fun logout() {
         onLostJwt()
+        storeJwt(null)
     }
 
     override fun close() {
