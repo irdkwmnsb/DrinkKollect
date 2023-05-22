@@ -273,6 +273,16 @@ class DrinkKollectService(host: String, port: Int) : Closeable {
             .subscribe(observer)
     }
 
+    fun removeFriendRequest(observer: Observer<Unit>, username: String) {
+        val request = DrinkollectOuterClass.RemoveFriendRequest
+            .newBuilder()
+            .setUsername(username)
+            .build()
+        nothingAchievingRequest(observer, request) { req ->
+            service.removeFriend(req)
+        }
+    }
+
     fun logout() {
         onLostJwt()
         username = null

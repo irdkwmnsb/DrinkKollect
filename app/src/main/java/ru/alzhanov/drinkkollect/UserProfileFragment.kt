@@ -62,10 +62,12 @@ class UserProfileFragment : Fragment() {
                     }
 
                 }
-                (activity as MainActivity).service.sendFriendRequest(
-                    observer,
-                    (activity as MainActivity).service.getUsername()!!
-                )
+                if (profileUsername != null) {
+                    (activity as MainActivity).service.sendFriendRequest(
+                        observer,
+                        profileUsername
+                    )
+                }
             }
         }
         manipulate()

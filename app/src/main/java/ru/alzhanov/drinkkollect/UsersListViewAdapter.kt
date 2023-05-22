@@ -21,119 +21,147 @@ class UsersViewHolder(
     fun bind(user: String) {
         binding.user.text = user
         val curUser = (itemView.context as MainActivity).service.getUsername()
-        if (user != curUser) {
-            if (showSendRequest) {
-                binding.buttonsLayout.visibility = View.GONE
-                binding.chipSendFriendRequest.visibility = View.VISIBLE
-                binding.chipSendFriendRequest.setOnClickListener {
-                    if (curUser == null) {
-                        UnauthDialog((itemView.context as MainActivity).getString(R.string.log_in_to_send_friend_requests)).show(
-                            (itemView.context as MainActivity).supportFragmentManager,
-                            "LoginDialog"
-                        )
-                    } else {
-                        val observer = object : Observer<Unit> {
-                            override fun onSubscribe(d: Disposable) {
-                            }
-
-                            override fun onError(e: Throwable) {
-                                Toast.makeText(
-                                    (itemView.context as MainActivity),
-                                    "Something went wrong. Try again",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-
-                            override fun onComplete() {
-                                manipulate()
-                            }
-
-                            override fun onNext(t: Unit) {
-                            }
-
-                        }
-                        (itemView.context as MainActivity).service.sendFriendRequest(
-                            observer,
-                            curUser
-                        )
-                    }
-                }
-                manipulate()
-            } else {
-                binding.buttonsLayout.visibility = View.VISIBLE
-                if (showRemoveFromFriends) {
-                    binding.buttonAcceptRequest.visibility = View.GONE
-                } else {
-                    binding.buttonAcceptRequest.visibility = View.VISIBLE
-                }
-                binding.chipSendFriendRequest.visibility = View.GONE
+        if (showSendRequest) {
+            binding.buttonsLayout.visibility = View.GONE
+            binding.chipSendFriendRequest.visibility = View.VISIBLE
+            binding.chipSendFriendRequest.setOnClickListener {
                 if (curUser == null) {
-                    UnauthDialog((itemView.context as MainActivity).getString(R.string.log_in_to_accept_friend_requests)).show(
+                    UnauthDialog((itemView.context as MainActivity).getString(R.string.log_in_to_send_friend_requests)).show(
                         (itemView.context as MainActivity).supportFragmentManager,
                         "LoginDialog"
                     )
                 } else {
-                    binding.buttonAcceptRequest.setOnClickListener {
-                        val observer = object : Observer<Unit> {
-                            override fun onSubscribe(d: Disposable) {
-                            }
-
-                            override fun onError(e: Throwable) {
-                                Toast.makeText(
-                                    (itemView.context as MainActivity),
-                                    "Something went wrong. Try again",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-
-                            override fun onComplete() {
-                                manipulate()
-                            }
-
-                            override fun onNext(t: Unit) {
-                            }
-
+                    val observer = object : Observer<Unit> {
+                        override fun onSubscribe(d: Disposable) {
                         }
-                        (itemView.context as MainActivity).service.acceptFriendRequest(
-                            observer,
-                            user
-                        )
-                    }
-                    binding.buttonRejectRequest.setOnClickListener {
-                        val observer = object : Observer<Unit> {
-                            override fun onSubscribe(d: Disposable) {
-                            }
 
-                            override fun onError(e: Throwable) {
-                                Toast.makeText(
-                                    (itemView.context as MainActivity),
-                                    "Something went wrong. Try again",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-
-                            override fun onComplete() {
-                                manipulate()
-                            }
-
-                            override fun onNext(t: Unit) {
-                            }
-
+                        override fun onError(e: Throwable) {
+                            Toast.makeText(
+                                (itemView.context as MainActivity),
+                                "Something went wrong. Try again",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                         }
-                        (itemView.context as MainActivity).service.rejectFriendRequest(
-                            observer,
-                            user
-                        )
+
+                        override fun onComplete() {
+                            manipulate()
+                        }
+
+                        override fun onNext(t: Unit) {
+                        }
+
                     }
+                    (itemView.context as MainActivity).service.sendFriendRequest(
+                        observer,
+                        user
+                    )
                 }
             }
+            manipulate()
         } else {
-            binding.buttonsLayout.visibility = View.GONE
+            binding.buttonsLayout.visibility = View.VISIBLE
+            if (showRemoveFromFriends) {
+                binding.buttonAcceptRequest.visibility = View.GONE
+                binding.buttonRejectRequest.visibility = View.GONE
+//                binding.buttonRejectRequest.setOnClickListener {
+//                    val observer = object : Observer<Unit> {
+//                        override fun onSubscribe(d: Disposable) {
+//                        }
+//
+//                        override fun onError(e: Throwable) {
+//                            Toast.makeText(
+//                                (itemView.context as MainActivity),
+//                                "Something went wrong. Try again",
+//                                Toast.LENGTH_SHORT
+//                            )
+//                                .show()
+//                        }
+//
+//                        override fun onComplete() {
+//                            binding.buttonRejectRequest.icon = null
+//                            binding.buttonRejectRequest.width = 200
+//                            binding.buttonRejectRequest.text =
+//                                (itemView.context as MainActivity).getString(R.string.removed)
+//                        }
+//
+//                        override fun onNext(t: Unit) {
+//                        }
+//
+//                    }
+//                    (itemView.context as MainActivity).service.removeFriendRequest(
+//                        observer,
+//                        user
+//                    )
+//                }
+            } else {
+                binding.buttonAcceptRequest.visibility = View.VISIBLE
+                binding.buttonRejectRequest.setOnClickListener {
+                    val observer = object : Observer<Unit> {
+                        override fun onSubscribe(d: Disposable) {
+                        }
+
+                        override fun onError(e: Throwable) {
+                            Toast.makeText(
+                                (itemView.context as MainActivity),
+                                "Something went wrong. Try again",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                        override fun onComplete() {
+                            binding.buttonsLayout.visibility = View.GONE
+                        }
+
+                        override fun onNext(t: Unit) {
+                        }
+
+                    }
+                    (itemView.context as MainActivity).service.rejectFriendRequest(
+                        observer,
+                        user
+                    )
+                }
+            }
             binding.chipSendFriendRequest.visibility = View.GONE
+            if (curUser == null) {
+                UnauthDialog((itemView.context as MainActivity).getString(R.string.log_in_to_accept_friend_requests)).show(
+                    (itemView.context as MainActivity).supportFragmentManager,
+                    "LoginDialog"
+                )
+            } else {
+                binding.buttonAcceptRequest.setOnClickListener {
+                    val observer = object : Observer<Unit> {
+                        override fun onSubscribe(d: Disposable) {
+                        }
+
+                        override fun onError(e: Throwable) {
+                            Toast.makeText(
+                                (itemView.context as MainActivity),
+                                "Something went wrong. Try again",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                        override fun onComplete() {
+                            binding.buttonsLayout.visibility = View.GONE
+                        }
+
+                        override fun onNext(t: Unit) {
+                        }
+
+                    }
+                    (itemView.context as MainActivity).service.acceptFriendRequest(
+                        observer,
+                        user
+                    )
+                }
+
+            }
         }
+
     }
 
     private fun manipulate() {

@@ -104,6 +104,7 @@
     <string name="friend_requests">Friend requests</string>
     <string name="text_friends">Friends</string>
     <string name="log_in_to_accept_friend_requests">You need to be logged in to accept friend requests</string>
+    <string name="removed">Removed</string>
     <!-- Yes, MessageFormat exists, but it's not necessary here -->
     <plurals name="drinks_in_collection">
         <item quantity="zero">%d drinks</item>
