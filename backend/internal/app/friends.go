@@ -16,6 +16,7 @@ import (
 
 var (
 	friendNotFoundError        = status.Error(codes.NotFound, "Пользователь не найден!")
+	friendRequestToSelfError   = status.Error(codes.InvalidArgument, "Вы не можете отправить запрос дружбы себе.")
 	friendRequestNotFoundError = status.Error(codes.NotFound, "Запрос на дружбу не найден!")
 	friendRequestAlreadyExists = status.Error(codes.AlreadyExists, "Вы уже отправили запрос на дружбу этому пользователю!")
 )
@@ -23,6 +24,10 @@ var (
 func (s *Service) SendFriendRequest(ctx context.Context, req *desc.SendFriendRequestRequest) (*emptypb.Empty, error) {
 	username := auth.UsernameFromCtx(ctx)
 	zap.S().Infow("sending friend request", "username", username, "friend", req.Username)
+
+	if username == req.Username {
+		return nil, friendRequestToSelfError
+	}
 
 	// Token might be used for a deleted user. In this case we shouldn't do anything.
 	if err := s.storage.SendFriendRequest(username, req.Username); db.IsNotFound(err) {
