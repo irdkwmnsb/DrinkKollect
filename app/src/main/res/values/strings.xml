@@ -2,6 +2,9 @@
     <string name="app_name" translatable="false">DrinkKollect</string>
     <string name="api_host" translatable="false">bb139961.alzhanov.ru</string>
     <string name="api_port" translatable="false">18081</string>
+    <string name="s3_host" translatable="false">s3.alzhanov.ru</string>
+    <string name="s3_access_key" translatable="false">pH99rhmmtyXbeAgy</string>
+    <string name="s3_secret_key" translatable="false">ATrVJPF7gFrrIMbPJ7smPXly1iN1jh7p</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

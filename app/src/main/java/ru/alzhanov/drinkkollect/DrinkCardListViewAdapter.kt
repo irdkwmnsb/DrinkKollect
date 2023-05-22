@@ -2,6 +2,7 @@ package ru.alzhanov.drinkkollect
 
 import android.app.Activity
 import android.icu.text.RelativeDateTimeFormatter
+import android.util.Log
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.Toast
@@ -128,6 +129,11 @@ class DrinkCardViewHolder(inflate: DrinkCardLayoutBinding) : RecyclerView.ViewHo
                 null
             )
         }
+        val image = drinkPost.image
+        val s3 = (binding.root.context as MainActivity).s3service
+        val url = s3.getUrl(image.bucket, image.id)
+        Log.i("DrinkCardViewHolder", "url: $url")
+        binding.image.setImageURI(url)
     }
 
     private val periods = listOf(

@@ -19,6 +19,11 @@ class MainActivity : AppCompatActivity() {
     private val host by lazy { resources.getString(R.string.api_host) }
     private val port by lazy { Integer.parseInt(resources.getString(R.string.api_port)) }
     val service by lazy { DrinkKollectService(host, port) }
+    val s3service by lazy { DrinkKollectS3Service(resources.getString(R.string.s3_host),
+        resources.getString(R.string.s3_access_key),
+        resources.getString(R.string.s3_secret_key)
+    )}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)

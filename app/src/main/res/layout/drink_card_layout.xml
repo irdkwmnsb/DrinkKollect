@@ -68,13 +68,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:minHeight="192dp"
         android:contentDescription="@string/card_image_description"
-        android:src="@drawable/rich"
 
         app:layout_constraintBottom_toTopOf="@id/barrier2"
         app:layout_constraintStart_toEndOf="@id/barrier_v1"
