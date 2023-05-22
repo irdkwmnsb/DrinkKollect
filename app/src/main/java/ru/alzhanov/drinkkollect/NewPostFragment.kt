@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +18,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import drinkollect.v1.DrinkollectOuterClass
+import drinkollect.v1.DrinkollectOuterClass.S3Resource
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import ru.alzhanov.drinkkollect.databinding.FragmentNewPostBinding
+
 
 class NewPostFragment : Fragment() {
     private var _binding: FragmentNewPostBinding? = null
@@ -128,34 +130,70 @@ class NewPostFragment : Fragment() {
             if ((activity as MainActivity).service.getUsername() == null) {
                 findNavController().navigate(R.id.action_NewPostFragment_to_LoginFragment)
             } else {
-                val observer = object : Observer<Unit> {
-                    override fun onSubscribe(d: Disposable) {}
+                val imageKey = getRandomKey() + ".jpeg"
+                val bucket = "drinkkollect"
+                val image = S3Resource.newBuilder().setBucket(bucket).setId(imageKey).build()
+                binding.root.context.contentResolver.openInputStream(imageuri!!).use {
+                    val observerUpload = object : Observer<Unit> {
+                        override fun onSubscribe(d: Disposable) {}
 
-                    override fun onNext(t: Unit) {}
+                        override fun onNext(t: Unit) {}
 
-                    override fun onError(e: Throwable) {
-                        Toast.makeText(
-                            (activity as MainActivity),
-                            "Something went wrong. Try again",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        override fun onError(e: Throwable) {
+                            // Print stacktrace
+                            Log.e("Upload", "Error uploading image", e)
+                            Toast.makeText(
+                                (activity as MainActivity),
+                                "Something went wrong. Try again",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                        override fun onComplete() {
+                            val observer = object : Observer<Unit> {
+                                override fun onSubscribe(d: Disposable) {}
+
+                                override fun onNext(t: Unit) {}
+
+                                override fun onError(e: Throwable) {
+                                    Toast.makeText(
+                                        (activity as MainActivity),
+                                        "Something went wrong. Try again",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+
+                                override fun onComplete() {
+                                    findNavController().navigate(R.id.action_NewPostFragment_to_MainScrollFragment)
+                                }
+                            }
+
+                            (activity as MainActivity).service.createPostRequest(
+                                observer,
+                                binding.editTextDrinkName.editText?.text.toString(),
+                                binding.editTextDrinkDescription.editText?.text.toString(),
+                                binding.editTextDrinkLocation.editText?.text.toString(),
+                                image
+                            )
+                        }
                     }
 
-                    override fun onComplete() {
-                        findNavController().navigate(R.id.action_NewPostFragment_to_MainScrollFragment)
-                    }
+                    (activity as MainActivity).s3service.createUploadRequest(
+                        observerUpload,
+                        bucket,
+                        imageKey,
+                        it!!
+                    )
                 }
-                (activity as MainActivity).service.createPostRequest(
-                    observer,
-                    binding.editTextDrinkName.editText?.text.toString(),
-                    binding.editTextDrinkDescription.editText?.text.toString(),
-                    binding.editTextDrinkLocation.editText?.text.toString(),
-                    // TODO get S3Resource from imageuri
-                    DrinkollectOuterClass.S3Resource.getDefaultInstance()
-                )
             }
         }
+    }
+
+    private fun getRandomKey(): String {
+        val alphabet = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        return List(10) { alphabet.random() }.joinToString("")
     }
 
     private fun updateBindingWithoutPic() {
@@ -192,4 +230,5 @@ class NewPostFragment : Fragment() {
             outState.putString("imageuri", imageuri.toString())
         }
     }
+
 }
